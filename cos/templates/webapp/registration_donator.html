@@ -1,0 +1,33 @@
+{% extends "webapp/base.html" %}
+
+{% block body_block %}
+<div class="jumbotron">
+    
+
+    {% if underage %}
+    <h1>Please return to the main Page</h1>
+    <p>Underage cant provide any data!</p>
+
+    {% elif registered %}
+
+
+    <h1>Thank you for registering</h1>
+
+    {% else %}
+    <h1>Register Here</h1>
+    <h3>Fill out the form:</h3>
+    <p>Please if you are underage dont regist or fake your age!</p>
+
+    <form enctype="multipart/form-data" method="POST">
+
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        {{ donator_form.as_p }}
+        <input type="submit" name="" value="Register">
+
+
+    </form>
+
+    {% endif %}
+    {% endblock %}
+</div>

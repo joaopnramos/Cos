@@ -1,0 +1,9 @@
+{% extends "webapp/base.html" %}
+{% block body_block %}
+    <h1>Registro</h1>
+    <p>Selecione que tipo de conta pretende criar </p>
+    <a class="btn btn-primary" href="{% url 'webapp:donator_reg' %}" role="button">Doador</a>
+    <a class="btn btn-primary" href="{% url 'webapp:scientist_reg' %}" role="button">Cientista</a>
+    
+
+{% endblock %}
