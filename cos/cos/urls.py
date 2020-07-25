@@ -22,5 +22,6 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name="webapp/index.html"), name="index"),
     path('admin/', admin.site.urls),
     path("webapp/", include("webapp.urls")),
+    path("logout/", views.user_logout, name="logout"),
 
 ]
