@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import *
+# from django.core.validators import MinLengthValidator, MaxValueValidator
 
 #Form de criar user em geral!
 class UserForm(forms.ModelForm):
@@ -22,15 +23,34 @@ class UserForm(forms.ModelForm):
             )
 
 #Form de criar um cientista
-class ScientistForm(forms.ModelForm):
-    class Meta():
-        model = Scientist
-        fields = ("phone", "first_name", "last_name", "work_local", "bi", "address")
-        
+class ScientistForm(forms.Form):
+
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
+    address = forms.CharField(required=True)
+    work_local = forms.CharField(required=True)
+    bi = forms.IntegerField(required=True)
+    phone = forms.IntegerField(required=True)
 
 #Form de criar um donator
 class DonatorForm(forms.ModelForm):
     class Meta():
         model = Donator
         fields = ("age",)
-        
+    
+    def clean(self):
+        if int(self.cleaned_data['age']) <18:
+            raise forms.ValidationError('underage!')
+        return self.cleaned_data
+
+
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ('name', 'description')
+    # description = forms.CharField(required=True, widget=forms.Textarea(attrs={"rows":5, "cols":20}))
+    # name = forms.CharField(max_length=100, required=True)
+
+
+    
+ 

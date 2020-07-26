@@ -5,6 +5,9 @@ from webapp.forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
+from .decorators import scientist_required, donator_required
+from webapp import models
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 #Start View
@@ -29,7 +32,13 @@ def scietist_register(request):
             user = user_form.save()
             user.set_password(user.password)
             user.save()
-            scientist_profile = scientist_form.save(commit=False)
+            first_name = scientist_form.cleaned_data.get("first_name")
+            last_name = scientist_form.cleaned_data.get("last_name")
+            phone = scientist_form.cleaned_data.get("phone")
+            address = scientist_form.cleaned_data.get("address")
+            work_local = scientist_form.cleaned_data.get("work_local")
+            bi = scientist_form.cleaned_data.get("bi")
+            scientist_profile = Scientist(first_name=first_name, last_name=last_name, address=address,work_local=work_local, bi=bi, phone=phone)
             scientist_profile.user = user
             scientist_profile.save()
             registered = True
@@ -60,7 +69,7 @@ def donator_register(request):
             if int(donator_form["age"].value()) < 18:
                 return render(request, "webapp/registration_donator.html",{"underage":True})
 
-          
+            
             user = user_form.save()
             user.set_password(user.password)
             user.save()
@@ -68,9 +77,9 @@ def donator_register(request):
             donator_profile.user = user
             donator_profile.save()
             registered = True
+            print("deu merda")
         else:
             print(user_form.errors, donator_form.errors)
-            print("deu merda")
     else:
         user_form = UserForm
         donator_form = DonatorForm
@@ -104,8 +113,45 @@ def user_login(request):
         return render(request, "webapp/login.html")
 
 
+#Logout!
 @login_required
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
+
+
+
+@scientist_required
+@login_required
+def ProjectCreateView(request):
+
+    if request.method == "POST":
+        project_form = ProjectForm(data=request.POST)
+        if project_form.is_valid:
+            if request.user:
+                project = project_form.save(commit=False)
+                project.scientist = request.user.scientist
+                project.save()
+                return HttpResponse("<h1>Project Created!!</h1>")
+        
+        else:
+            print(project_form.errors)
+
+    
+
+    else:
+        project_form = ProjectForm
+
+    
+    return render(request, "webapp/project_form.html", {"project_form":project_form})
+
+
+
+class ProjectListView(ListView):
+    context_object_name = "projects"
+    model = models.Project
+
+
+
+
 

@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+
+
 #Cientista!
 class Scientist(models.Model):
     user = models.OneToOneField(User, related_name='scientist', on_delete=models.CASCADE)
@@ -13,6 +15,7 @@ class Scientist(models.Model):
     bi = models.IntegerField()
     address = models.CharField(max_length=100, blank=True)
     is_scientist = models.BooleanField(default=True)
+ 
     
 
     def __str__(self):
@@ -23,14 +26,13 @@ class Donator(models.Model):
     age = models.IntegerField()
     user = models.OneToOneField(User, related_name='donator', on_delete=models.CASCADE)
     is_donator = models.BooleanField(default=True)
+   
 
-    
-    
 
 #Projetos dos cientistas
 class Project(models.Model):
-    scientist = models.ForeignKey(Scientist, on_delete=models.CASCADE)
-    donator = models.ForeignKey(Donator , on_delete=models.CASCADE)
+    scientist = models.ForeignKey(Scientist, on_delete=models.CASCADE, related_name="scientist")
+    donator = models.ManyToManyField(Donator,)
     name = models.CharField(max_length=50)
     description = models.TextField(max_length=500)
 
