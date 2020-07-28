@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.urls import reverse
 # Create your models here.
 
 
@@ -22,22 +22,26 @@ class Scientist(models.Model):
         return self.first_name + " " + self.last_name
 
 #Doador de dados
-class Donator(models.Model):
-    age = models.IntegerField()
-    user = models.OneToOneField(User, related_name='donator', on_delete=models.CASCADE)
-    is_donator = models.BooleanField(default=True)
-   
 
+   
 
 #Projetos dos cientistas
 class Project(models.Model):
     scientist = models.ForeignKey(Scientist, on_delete=models.CASCADE, related_name="scientist")
-    donator = models.ManyToManyField(Donator,)
     name = models.CharField(max_length=50)
-    description = models.TextField(max_length=500)
+    description = models.CharField(max_length=500)
+
+    def get_absolute_url(self):
+        return reverse("webapp:detail", kwargs={"pk": self.pk})
 
     def __str__(self):
         return self.name
+
+class Donator(models.Model):
+    age = models.IntegerField()
+    user = models.OneToOneField(User, related_name='donator', on_delete=models.CASCADE)
+    is_donator = models.BooleanField(default=True)
+    projects = models.ManyToManyField(Project, through="DataGive")
     
 class Primitivas(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="primitivas")
@@ -51,3 +55,8 @@ class Data(models.Model):
     data = models.FileField(upload_to='uploads/')
     def __str__(self):
         return "informação deste projeto" + self.project.name
+
+
+class DataGive(models.Model):
+    donator = models.ForeignKey(Donator, on_delete=models.CASCADE, related_name="give_data")
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="give_data")

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.generic import View, TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from webapp.forms import *
@@ -7,7 +7,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from .decorators import scientist_required, donator_required
 from webapp import models
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 
 
 #Start View
@@ -143,15 +144,49 @@ def ProjectCreateView(request):
         project_form = ProjectForm
 
     
-    return render(request, "webapp/project_form.html", {"project_form":project_form})
+    return render(request, "webapp/project_form.html", {"form":project_form})
 
 
-
+@method_decorator([login_required, scientist_required], name='dispatch')
 class ProjectListView(ListView):
     context_object_name = "projects"
     model = models.Project
 
+@method_decorator([login_required, scientist_required], name='dispatch')
+class ProjectDetailView(DetailView):
+    context_object_name = "project"
+    model = models.Project
+    template_name = "webapp/project_detail.html"
+
+@method_decorator([login_required, scientist_required], name='dispatch')
+class ProjectUpdateView(UpdateView):
+    model = models.Project
+    fields = ("name", "description",)
+    success_url = reverse_lazy('webapp:list')
+    
+
+@method_decorator([login_required, scientist_required], name='dispatch')
+class ProjectDeleteView(DeleteView):
+    model = models.Project
+    success_url = reverse_lazy("webapp:list")
 
 
+def DataGiveView(request, pk):
+
+    in_project = False
+
+    if request.method == "POST":
+        project = get_object_or_404(Project, pk=pk)
+        donator = request.user.donator
+        datagive = DataGive(project=project, donator=donator)
+        datagive.save()
+        in_project = True
+
+    return render(request, "webapp/project_registry.html", {"in_project": in_project})
 
 
+def DonatorList(request):
+
+    pd_list = Project.objects.order_by("name")
+
+    return render(request, "webapp/project_donator_list.html", context={"pd_list":pd_list})
