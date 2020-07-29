@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic import View, TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from webapp.forms import *
@@ -171,6 +171,7 @@ class ProjectDeleteView(DeleteView):
     success_url = reverse_lazy("webapp:list")
 
 
+
 def DataGiveView(request, pk):
 
     in_project = False
@@ -190,3 +191,6 @@ def DonatorList(request):
     pd_list = Project.objects.order_by("name")
 
     return render(request, "webapp/project_donator_list.html", context={"pd_list":pd_list})
+
+
+
