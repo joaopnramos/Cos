@@ -9,7 +9,7 @@ from .decorators import scientist_required, donator_required
 from webapp import models
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-
+from django.contrib import messages
 
 #Start View
 
@@ -191,6 +191,25 @@ def DonatorList(request):
     pd_list = Project.objects.order_by("name")
 
     return render(request, "webapp/project_donator_list.html", context={"pd_list":pd_list})
+
+@login_required
+@scientist_required
+def profileScientist(request):
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        if u_form.is_valid():
+            u_form.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect('/webapp/profile/')
+            #return render(request, 'webapp/profile.html')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+
+    context = {
+        'u_form': u_form
+    }
+    return render(request, 'webapp/profile.html', context)
+
 
 
 

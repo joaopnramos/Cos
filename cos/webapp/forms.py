@@ -52,5 +52,11 @@ class ProjectForm(forms.ModelForm):
     # name = forms.CharField(max_length=100, required=True)
 
 
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+
     
  

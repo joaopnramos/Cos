@@ -9,6 +9,8 @@ from django.urls import reverse
 class Scientist(models.Model):
     user = models.OneToOneField(User, related_name='scientist', on_delete=models.CASCADE)
     phone = models.IntegerField()
+    image = models.ImageField()
+    email = models.EmailField(max_length=254, null=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     work_local = models.CharField(max_length=100)
@@ -25,6 +27,7 @@ class Scientist(models.Model):
 
 class Donator(models.Model):
     age = models.IntegerField()
+    email = models.EmailField(max_length=254, null=True)
     user = models.OneToOneField(User, related_name='donator', on_delete=models.CASCADE)
     is_donator = models.BooleanField(default=True)
     

@@ -14,6 +14,7 @@ urlpatterns = [
     path("update/<int:pk>", views.ProjectUpdateView.as_view(), name="update" ),
     path("delete/<int:pk>", views.ProjectDeleteView.as_view(), name="delete" ),
     path("donator/list_all",views.DonatorList, name = "donator_list"),
-    path("donator/<int:pk>", views.DataGiveView, name= "register_don_project")
+    path("donator/<int:pk>", views.DataGiveView, name= "register_don_project"),
+    path("profile/", views.profileScientist, name='profile'),
 
     ]

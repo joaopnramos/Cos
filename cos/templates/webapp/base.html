@@ -12,14 +12,17 @@
           <ul class="navbar-nav">
               <li><a class="navbar-brand" href="{%url "index" %}">Home</a></li>
               <li><a class="navbar-link" href="{% url "admin:index" %}">Admin</a></li>
-              
-
               {% if user.is_authenticated %}
-              <li><a class="navbar-link" href="{% url "logout" %}">Logout</a></li>
+                <li><a class="navbar-link" href="{% url "logout" %}">Logout</a></li>
+                {% if user.scientist.is_scientist %}
+                <li> <a class="nav-item nav-link" href="{% url "webapp:profile" %}">Profile</a></li>
+                {% endif %}
               {% else %}
               <li><a class="navbar-link" href="{% url "webapp:user_login" %}">Login</a></li>
               <li><a class="navbar-link" href="{% url "webapp:register" %}">Register</a></li>
+            
               {% endif %}
+
           </ul>
     </nav>
 
