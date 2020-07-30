@@ -1,0 +1,42 @@
+conda create --name ... django
+conda activate ...
+conda info --envs
+conda install..
+django-admin startproject ...
+python manage.py startapp ...
+
+Apos criar models
+
+python manage.py migrate
+python manage.py makemigrations ...
+python manage.py migrate again
+___
+python manage.py shell
+>>>import...
+>>>...objects.all()
+>>>t = Topic(top_name = "Social Network")
+>>> t.save
+>>> quit()
+___
+
+Add models to admin.py
+create super user
+
+-----
+
+
+Popilating Models lecture
+
+Popular modulos com fake data
+
+
+-----
+
+Models Teamplates views paradigms
+
+
+
+
+
+
+
