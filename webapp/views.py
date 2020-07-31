@@ -5,7 +5,7 @@ from webapp.forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
-from .decorators import scientist_required, donator_required
+from .decorators import scientist_required, donator_required, owner_required
 from webapp import models
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -140,14 +140,14 @@ class ProjectDetailView(DetailView):
     model = models.Project
     template_name = "webapp/project_detail.html"
 
-@method_decorator([login_required, scientist_required], name='dispatch')
+@method_decorator([login_required, scientist_required, owner_required], name='dispatch')
 class ProjectUpdateView(UpdateView):
     model = models.Project
     fields = ("name", "description",)
     success_url = reverse_lazy('webapp:list')
     
 
-@method_decorator([login_required, scientist_required], name='dispatch')
+@method_decorator([login_required, scientist_required, owner_required], name='dispatch')
 class ProjectDeleteView(DeleteView):
     model = models.Project
     success_url = reverse_lazy("webapp:list")
@@ -176,6 +176,7 @@ def DonatorList(request):
 
 
 #Profile
+
 @login_required
 @scientist_required
 def profileScientist(request):

@@ -10,10 +10,12 @@
         
     </div>
 
-
+{% if project.scientist.user.id == request.user.id %}
     <div class="container">
         <p><a class="btn btn-warning" href="{% url 'webapp:update' pk=project.pk  %}">Update</a></p>
         <p><a class="btn btn-warning" href="{% url 'webapp:delete' pk=project.pk  %}">Delete</a></p>
     </div>
+{% endif %}
+    
 
 {% endblock body_block %}

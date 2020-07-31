@@ -15,5 +15,4 @@ urlpatterns = [
     path("donator/list_all", views.DonatorList, name="donator_list"),
     path("donator/<int:pk>", views.DataGiveView, name="register_don_project"),
     path("profile/", views.profileScientist, name='profile'),
-
 ]
