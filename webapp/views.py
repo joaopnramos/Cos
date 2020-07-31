@@ -190,7 +190,8 @@ def profileScientist(request):
     context = {'u_form': u_form}
     return render(request, 'webapp/profile.html', context)
 
-
+@login_required
+@scientist_required
 def privateScientistProjectView(request):
     context = {}
     user_id = request.user.scientist.id
@@ -198,7 +199,8 @@ def privateScientistProjectView(request):
     context["data"] = projects_list
     return render(request, "webapp/privateprojects.html", context)
 
-
+@login_required
+@donator_required
 def privateDonatorProjectView(request):
     context = {}
     pj_list = []
