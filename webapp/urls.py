@@ -15,4 +15,8 @@ urlpatterns = [
     path("donator/list_all", views.DonatorList, name="donator_list"),
     path("donator/<int:pk>", views.DataGiveView, name="register_don_project"),
     path("profile/", views.profileScientist, name='profile'),
+    path("myscientistprojects/", views.privateScientistProjectView, name="mySprojects"),
+    path("mydonatorprojects/", views.privateDonatorProjectView, name="myDprojects"),
+    path("myscientistprojects/<int:pk>", views.ProjectDetailView.as_view(), name="scientist_list_detail"),
+    path("mydonatorprojects/<int:pk>", views.ProjectDetailView.as_view(), name="donator_list_detail"),
 ]

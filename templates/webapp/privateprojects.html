@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Users</title>
+  </head>
+  <body>
+    <h1>Here are your Projects!</h1>
+
+    {% if data %}
+
+
+    <ol>
+      {% for project in data %}
+      <li>Project Info</li>
+        <ul>
+          <li><a href={{project.id}}>Project Name: {{project.name}}</a></li>
+        </ul>
+        {% endfor %}
+    </ol>
+
+    {% endif %}
+
+  </body>
+</html>

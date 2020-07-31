@@ -12,15 +12,14 @@ from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 
-#Start View
-
+# Start View
 
 
 class RegisterView(TemplateView):
     template_name = "webapp/generic_register.html"
 
 
-#Registro do Cientista!!
+# Registro do Cientista!!
 def scietist_register(request):
 
     registered = False
@@ -38,23 +37,25 @@ def scietist_register(request):
             address = scientist_form.cleaned_data.get("address")
             work_local = scientist_form.cleaned_data.get("work_local")
             bi = scientist_form.cleaned_data.get("bi")
-            scientist_profile = Scientist(first_name=first_name, last_name=last_name, address=address,work_local=work_local, bi=bi, phone=phone)
+            scientist_profile = Scientist(
+                first_name=first_name, last_name=last_name, address=address, work_local=work_local, bi=bi, phone=phone)
             scientist_profile.user = user
             scientist_profile.save()
             registered = True
         else:
             print(user_form.errors, scientist_form.errors)
-            print("deu merda")
     else:
         user_form = UserForm
         scientist_form = ScientistForm
 
-    return render(request, "webapp/registration_scientist.html", 
-                                {"user_form":user_form,
-                                 "scientist_form":ScientistForm,
-                                 "registered": registered})
+    return render(request, "webapp/registration_scientist.html",
+                  {"user_form": user_form,
+                   "scientist_form": ScientistForm,
+                   "registered": registered})
 
-#Registro do donator!
+# Registro do donator!
+
+
 def donator_register(request):
 
     registered = False
@@ -64,7 +65,7 @@ def donator_register(request):
         donator_form = DonatorForm(data=request.POST)
         if user_form.is_valid() and donator_form.is_valid():
             if int(donator_form["age"].value()) < 18:
-                return render(request, "webapp/registration_donator.html",{"underage":True})
+                return render(request, "webapp/registration_donator.html", {"underage": True})
             user = user_form.save()
             user.set_password(user.password)
             user.save()
@@ -78,15 +79,15 @@ def donator_register(request):
         user_form = UserForm
         donator_form = DonatorForm
 
-    return render(request, "webapp/registration_donator.html", 
-                                {"user_form":user_form,
-                                 "donator_form":donator_form,
-                                 "registered": registered})
+    return render(request, "webapp/registration_donator.html",
+                  {"user_form": user_form,
+                   "donator_form": donator_form,
+                   "registered": registered})
 
 
-#Login generalista
+# Login generalista
 def user_login(request):
-    if request.method =="POST":
+    if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
         user = authenticate(username=username, password=password)
@@ -95,21 +96,21 @@ def user_login(request):
             return HttpResponseRedirect(reverse("index"))
 
         else:
-            messages.error(request,'username or password not correct')
+            messages.error(request, 'username or password not correct')
             return redirect('user_login')
     else:
         form = AuthenticationForm()
         return render(request, "webapp/login.html", {'form': form})
 
 
-#Logout!
+# Logout!
 @login_required
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
 
-#View que permite a criação de um projeto!
+# View que permite a criação de um projeto!
 @scientist_required
 @login_required
 def ProjectCreateView(request):
@@ -126,7 +127,7 @@ def ProjectCreateView(request):
             print(project_form.errors)
     else:
         project_form = ProjectForm
-    return render(request, "webapp/project_form.html", {"form":project_form})
+    return render(request, "webapp/project_form.html", {"form": project_form})
 
 
 @method_decorator([login_required, scientist_required], name='dispatch')
@@ -134,18 +135,20 @@ class ProjectListView(ListView):
     context_object_name = "projects"
     model = models.Project
 
-@method_decorator([login_required, scientist_required], name='dispatch')
+
+@method_decorator([login_required], name='dispatch')
 class ProjectDetailView(DetailView):
     context_object_name = "project"
     model = models.Project
     template_name = "webapp/project_detail.html"
+
 
 @method_decorator([login_required, scientist_required, owner_required], name='dispatch')
 class ProjectUpdateView(UpdateView):
     model = models.Project
     fields = ("name", "description",)
     success_url = reverse_lazy('webapp:list')
-    
+
 
 @method_decorator([login_required, scientist_required, owner_required], name='dispatch')
 class ProjectDeleteView(DeleteView):
@@ -153,18 +156,14 @@ class ProjectDeleteView(DeleteView):
     success_url = reverse_lazy("webapp:list")
 
 
-
 def DataGiveView(request, pk):
-
     in_project = False
-
     if request.method == "POST":
         project = get_object_or_404(Project, pk=pk)
         donator = request.user.donator
         datagive = DataGive(project=project, donator=donator)
         datagive.save()
         in_project = True
-
     return render(request, "webapp/project_registry.html", {"in_project": in_project})
 
 
@@ -172,11 +171,10 @@ def DonatorList(request):
 
     pd_list = Project.objects.order_by("name")
 
-    return render(request, "webapp/project_donator_list.html", context={"pd_list":pd_list})
+    return render(request, "webapp/project_donator_list.html", context={"pd_list": pd_list})
 
 
-#Profile
-
+# Profile
 @login_required
 @scientist_required
 def profileScientist(request):
@@ -186,15 +184,31 @@ def profileScientist(request):
             u_form.save()
             messages.success(request, f'Your account has been updated!')
             return redirect('/webapp/profile/')
-            #return render(request, 'webapp/profile.html')
     else:
         u_form = UserUpdateForm(instance=request.user)
 
-    context = {
-        'u_form': u_form
-    }
+    context = {'u_form': u_form}
     return render(request, 'webapp/profile.html', context)
 
 
+def privateScientistProjectView(request):
+    context = {}
+    user_id = request.user.scientist.id
+    projects_list = Project.objects.filter(owner=user_id)
+    context["data"] = projects_list
+    return render(request, "webapp/privateprojects.html", context)
 
 
+def privateDonatorProjectView(request):
+    context = {}
+    pj_list = []
+    user = request.user.donator
+    datagive_objects = DataGive.objects.filter(donator=user)
+    for pj in datagive_objects:
+        pj_list.append(pj.project)
+    # context["data"] = projects_list.project
+
+    context["data"] = pj_list
+    print(context)
+
+    return render(request, "webapp/privateprojects.html", context)
