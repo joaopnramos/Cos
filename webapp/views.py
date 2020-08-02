@@ -36,7 +36,7 @@ def scietist_register(request):
             address = scientist_form.cleaned_data.get("address")
             work_local = scientist_form.cleaned_data.get("work_local")
             bi = scientist_form.cleaned_data.get("bi")
-            if 90000000 < bi < 99999999 and 90000000 < phone < 999999999:
+            if 10000000 < bi < 99999999 and 90000000 < phone < 999999999:
                 user = user_form.save()
                 user.set_password(user.password)
                 user.save()
@@ -164,9 +164,9 @@ class ProjectDeleteView(DeleteView):
 
 
 def DataGiveView(request, pk):
-    if DataGive.objects.filter(project=pk).filter(donator=request.user.id).exists():
-            pks = str(pk)
-            return HttpResponseRedirect("mydonatorprojects/"+ pks)
+    if DataGive.objects.filter(project=pk).filter(donator=request.user.donator.id).exists():
+        pks = str(pk)
+        return HttpResponseRedirect("mydonatorprojects/"+ pks)
 
     in_project = False
     if request.method == "POST":
