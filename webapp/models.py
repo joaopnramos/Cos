@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.core.validators import MaxValueValidator
+from webapp.choices import *
 # Create your models here.
 
 
@@ -8,13 +10,13 @@ from django.urls import reverse
 #Cientista!
 class Scientist(models.Model):
     user = models.OneToOneField(User, related_name='scientist', on_delete=models.CASCADE)
-    phone = models.IntegerField(unique=True)
+    phone = models.PositiveIntegerField(unique=True, validators=[MaxValueValidator(999999999)])
     image = models.ImageField()
     email = models.EmailField(max_length=254, null=True, unique=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     work_local = models.CharField(max_length=100)
-    bi = models.IntegerField()
+    bi = models.PositiveIntegerField(unique=True, validators=[MaxValueValidator(99999999)])
     address = models.CharField(max_length=100, blank=True)
     is_scientist = models.BooleanField(default=True)
  
@@ -39,6 +41,9 @@ class Project(models.Model):
     donator = models.ManyToManyField(Donator, blank=True)
     name = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=500)
+    periodChoice = models.CharField(max_length=2, choices=PERIOD_CHOICES)
+    spacetimeChoice = models.CharField(max_length=2, choices=SPACE_TIME_CHOICES)
+    sensorsChoice = models.CharField(max_length=2, choices=SENSORS_CHOICES)
 
 
     def get_absolute_url(self):
@@ -47,20 +52,13 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
-#APAGAR
-class Primitivas(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="primitivas")
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
 
 #Scensors Data!
 class Data(models.Model):
-    project = models.OneToOneField(Project, related_name=("data"), on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="data")
     data = models.FileField(upload_to='uploads/')
     def __str__(self):
-        return "informação deste projeto" + self.project.name
+        return "informação deste projeto" + self.data
 
 #Model que permite ligar o donator aos projects
 class DataGive(models.Model):

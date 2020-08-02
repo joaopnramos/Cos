@@ -32,6 +32,8 @@ class ScientistForm(forms.Form):
     bi = forms.IntegerField(required=True)
     phone = forms.IntegerField(required=True)
 
+    
+
 #Form de criar um donator
 class DonatorForm(forms.ModelForm):
     class Meta():
@@ -43,12 +45,18 @@ class DonatorForm(forms.ModelForm):
             raise forms.ValidationError('underage!')
         return self.cleaned_data
 
+
 #Form de um projeto
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ('name', 'description')
-    # description = forms.CharField(required=True, widget=forms.Textarea(attrs={"rows":5, "cols":20}))
+        fields = ('name', 'description', "sensorsChoice", "periodChoice","spacetimeChoice")
+        labels = {
+        "sensorsChoice": "Choose The Sensor You Need",
+        "periodChoice":"Choose How Many Time The Program Will Run",
+        "spacetimeChoice": "Choose The period of time beetween data analysis" }
+
+    description = forms.CharField(required=True, widget=forms.Textarea(attrs={"rows":5, "cols":20}))
     # name = forms.CharField(max_length=100, required=True)
 
 #Form que serve para dar update ao user!
@@ -56,6 +64,12 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email']
+
+# class DataForm(forms.Form):
+#     file = forms.FileField()
+
+
+
 
 
     

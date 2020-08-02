@@ -28,20 +28,27 @@ def scietist_register(request):
         user_form = UserForm(data=request.POST)
         scientist_form = ScientistForm(data=request.POST)
         if user_form.is_valid() and scientist_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
+            
+            
             first_name = scientist_form.cleaned_data.get("first_name")
             last_name = scientist_form.cleaned_data.get("last_name")
             phone = scientist_form.cleaned_data.get("phone")
             address = scientist_form.cleaned_data.get("address")
             work_local = scientist_form.cleaned_data.get("work_local")
             bi = scientist_form.cleaned_data.get("bi")
-            scientist_profile = Scientist(
-                first_name=first_name, last_name=last_name, address=address, work_local=work_local, bi=bi, phone=phone)
-            scientist_profile.user = user
-            scientist_profile.save()
-            registered = True
+            if 90000000 < bi < 99999999 and 90000000 < phone < 999999999:
+                user = user_form.save()
+                user.set_password(user.password)
+                user.save()
+                scientist_profile = Scientist(
+                    first_name=first_name, last_name=last_name, address=address, work_local=work_local, bi=bi, phone=phone)
+                scientist_profile.user = user
+                scientist_profile.save()
+                registered = True
+
+            else:
+                messages.error(request, 'Phone number or bi')
+
         else:
             print(user_form.errors, scientist_form.errors)
     else:
@@ -157,6 +164,10 @@ class ProjectDeleteView(DeleteView):
 
 
 def DataGiveView(request, pk):
+    if DataGive.objects.filter(project=pk).filter(donator=request.user.id).exists():
+            pks = str(pk)
+            return HttpResponseRedirect("mydonatorprojects/"+ pks)
+
     in_project = False
     if request.method == "POST":
         project = get_object_or_404(Project, pk=pk)
@@ -190,6 +201,7 @@ def profileScientist(request):
     context = {'u_form': u_form}
     return render(request, 'webapp/profile.html', context)
 
+
 @login_required
 @scientist_required
 def privateScientistProjectView(request):
@@ -198,6 +210,7 @@ def privateScientistProjectView(request):
     projects_list = Project.objects.filter(owner=user_id)
     context["data"] = projects_list
     return render(request, "webapp/privateprojects.html", context)
+
 
 @login_required
 @donator_required
@@ -208,9 +221,21 @@ def privateDonatorProjectView(request):
     datagive_objects = DataGive.objects.filter(donator=user)
     for pj in datagive_objects:
         pj_list.append(pj.project)
-    # context["data"] = projects_list.project
 
     context["data"] = pj_list
     print(context)
 
     return render(request, "webapp/privateprojects.html", context)
+
+
+# def uploadDonatorFilesView(request, pk):
+#     if request.method == 'POST':
+#         form = DataForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             project = get_object_or_404(Project, pk=pk)
+#             data = Data(project=project, data=request.FILES["file"])
+#             data.save()
+#             return HttpResponse("Nice! You upload a file!")
+#     else:
+#         form = DataForm
+#     return render(request, 'webapp/upload_donator.html', {'form': form})
