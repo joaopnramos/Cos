@@ -28,8 +28,6 @@ def scietist_register(request):
         user_form = UserForm(data=request.POST)
         scientist_form = ScientistForm(data=request.POST)
         if user_form.is_valid() and scientist_form.is_valid():
-            
-            
             first_name = scientist_form.cleaned_data.get("first_name")
             last_name = scientist_form.cleaned_data.get("last_name")
             phone = scientist_form.cleaned_data.get("phone")
