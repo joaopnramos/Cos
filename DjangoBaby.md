@@ -317,3 +317,7 @@ __as_view()__ grab that class and show as view
 **CRUD**
 
 Create, Retrieve, Update and Delete
+
+**Tokens Command Verify!**
+
+curl -v -d "username=ramosd&password=asd&do=login" http://127.0.0.1:8000/webapp/api-token-auth/

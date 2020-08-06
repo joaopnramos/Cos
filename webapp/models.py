@@ -3,6 +3,18 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.validators import MaxValueValidator
 from webapp.choices import *
+
+#Token addition to user profile
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+from django.conf import settings
+
+# This code is triggered whenever a new user has been created and saved to the database
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
 # Create your models here.
 
 
@@ -19,6 +31,7 @@ class Scientist(models.Model):
     bi = models.PositiveIntegerField(unique=True, validators=[MaxValueValidator(99999999)])
     address = models.CharField(max_length=100, blank=True)
     is_scientist = models.BooleanField(default=True)
+    
  
     
 

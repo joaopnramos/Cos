@@ -11,6 +11,10 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
 
 # Start View
 
@@ -237,3 +241,10 @@ def privateDonatorProjectView(request):
 #     else:
 #         form = DataForm
 #     return render(request, 'webapp/upload_donator.html', {'form': form})
+
+
+class HelloView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get(self, request):
+        content = {'message': 'Hello, World!'}
+        return Response(content)
