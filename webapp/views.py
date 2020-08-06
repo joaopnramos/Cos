@@ -243,8 +243,3 @@ def privateDonatorProjectView(request):
 #     return render(request, 'webapp/upload_donator.html', {'form': form})
 
 
-class HelloView(APIView):
-    permission_classes = (IsAuthenticated,)
-    def get(self, request):
-        content = {'message': 'Hello, World!'}
-        return Response(content)

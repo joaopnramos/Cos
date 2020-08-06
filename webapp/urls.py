@@ -21,6 +21,6 @@ urlpatterns = [
     path("myscientistprojects/<int:pk>", views.ProjectDetailView.as_view(), name="scientist_list_detail"),
     path("donator/mydonatorprojects/<int:pk>", views.ProjectDetailView.as_view(), name="donator_list_detail"),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
-    path('hello/', views.HelloView.as_view(), name='hello'),
+    
     # path("uploaddonatorfiles/<int:pk>", views.uploadDonatorFilesView, name="uploadFiles"),
 ]
