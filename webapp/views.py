@@ -32,6 +32,7 @@ def scietist_register(request):
         user_form = UserForm(data=request.POST)
         scientist_form = ScientistForm(data=request.POST)
         if user_form.is_valid() and scientist_form.is_valid():
+            email = user_form.cleaned_data.get("email")
             first_name = scientist_form.cleaned_data.get("first_name")
             last_name = scientist_form.cleaned_data.get("last_name")
             phone = scientist_form.cleaned_data.get("phone")
@@ -43,7 +44,7 @@ def scietist_register(request):
                 user.set_password(user.password)
                 user.save()
                 scientist_profile = Scientist(
-                    first_name=first_name, last_name=last_name, address=address, work_local=work_local, bi=bi, phone=phone)
+                    first_name=first_name, last_name=last_name, address=address, work_local=work_local, bi=bi, phone=phone, email=email)
                 scientist_profile.user = user
                 scientist_profile.save()
                 registered = True
@@ -78,7 +79,9 @@ def donator_register(request):
             user = user_form.save()
             user.set_password(user.password)
             user.save()
-            donator_profile = donator_form.save(commit=False)
+            age = donator_form.cleaned_data.get("age")
+            email = user_form.cleaned_data.get("email")
+            donator_profile =Donator(age=age, email=email)
             donator_profile.user = user
             donator_profile.save()
             registered = True

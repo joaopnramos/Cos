@@ -24,7 +24,7 @@ class Scientist(models.Model):
     user = models.OneToOneField(User, related_name='scientist', on_delete=models.CASCADE)
     phone = models.PositiveIntegerField(unique=True, validators=[MaxValueValidator(999999999)])
     image = models.ImageField()
-    email = models.EmailField(max_length=254, null=True, unique=True)
+    email = models.EmailField(max_length=254, null=False, unique=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     work_local = models.CharField(max_length=100)
@@ -42,7 +42,7 @@ class Scientist(models.Model):
 #Doador de dados
 class Donator(models.Model):
     age = models.IntegerField()
-    email = models.EmailField(max_length=254, null=True, unique=True)
+    email = models.EmailField(max_length=254, null=False, unique=True)
     user = models.OneToOneField(User, related_name='donator', on_delete=models.CASCADE)
     is_donator = models.BooleanField(default=True)
     
