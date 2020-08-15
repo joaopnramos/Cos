@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.views.generic import View, TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, ListView, DetailView, UpdateView, DeleteView
 from webapp.forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
@@ -11,9 +11,7 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+
 
 
 # Start View

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.validators import MaxValueValidator
-from webapp.choices import *
+from webapp.choices import PERIOD_CHOICES ,SPACE_TIME_CHOICES, SENSORS_CHOICES
 
 #Token addition to user profile
 from django.db.models.signals import post_save
