@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django.core.validators import MaxValueValidator
+
 from webapp.choices import PERIOD_CHOICES ,SPACE_TIME_CHOICES, SENSORS_CHOICES
 
 #Token addition to user profile
@@ -49,6 +49,8 @@ class Donator(models.Model):
 
 #Projetos dos cientistas
 class Project(models.Model):
+    """ Objeto Projeto, criado apenas pelo cientista e ofere todos as
+        caracteristicas desejasdas pelo cientista """
     owner = models.IntegerField()
     scientist = models.ForeignKey(Scientist, on_delete=models.CASCADE, related_name="scientist")
     donator = models.ManyToManyField(Donator, blank=True)
@@ -62,8 +64,9 @@ class Project(models.Model):
 
     def get_absolute_url(self):
         return reverse("webapp:detail", kwargs={"pk": self.pk})
-    
+
     def project_finished(self):
+        """ Da um projeto como terminado """
         self.finished = True
         return self.finished
 
@@ -73,6 +76,8 @@ class Project(models.Model):
 
 #Scensors Data!
 class Data(models.Model):
+    """ A partir deste objeto é possiver fornecer os dados recolhidos a cada projeto """
+
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="data")
     data = models.FileField(upload_to='uploads/')
     def __str__(self):
@@ -80,11 +85,17 @@ class Data(models.Model):
 
 #Model que permite ligar o donator aos projects
 class DataGive(models.Model):
+    """ Serve para criar um objeto que liga os projetos e os donators,
+        a partir deste objeto os donators têm a possibilidade de se juntarem
+        a um projeto. """
     donator = models.ForeignKey(Donator, on_delete=models.CASCADE, related_name="give_data")
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="give_data")
     projectFinished = models.BooleanField(default=False)
 
     def projectDone(self):
+        """ Esta variavel boleana permite á query no telemovel saber se 
+            este projeto ainda é passivel de requisição de dados """
+            
         self.projectFinished = True
         return self.projectFinished
         
