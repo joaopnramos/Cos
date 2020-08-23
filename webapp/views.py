@@ -38,17 +38,18 @@ def scietist_register(request):
             work_local = scientist_form.cleaned_data.get("work_local")
             bi = scientist_form.cleaned_data.get("bi")
             if 10000000 < bi < 99999999 and 90000000 < phone < 999999999:
+                
+                scientist_profile = Scientist(
+                    first_name=first_name, last_name=last_name, address=address, work_local=work_local, bi=bi, phone=phone, email=email)
                 user = user_form.save()
                 user.set_password(user.password)
                 user.save()
-                scientist_profile = Scientist(
-                    first_name=first_name, last_name=last_name, address=address, work_local=work_local, bi=bi, phone=phone, email=email)
                 scientist_profile.user = user
                 scientist_profile.save()
                 registered = True
 
             else:
-                messages.error(request, 'Phone number or bi')
+                messages.error(request, 'Phone number or bi are wrong!')
 
         else:
             print(user_form.errors, scientist_form.errors)
@@ -72,8 +73,7 @@ def donator_register(request):
         user_form = UserForm(data=request.POST)
         donator_form = DonatorForm(data=request.POST)
         if user_form.is_valid() and donator_form.is_valid():
-            if int(donator_form["age"].value()) < 18:
-                return render(request, "webapp/registration_donator.html", {"underage": True})
+            
             user = user_form.save()
             user.set_password(user.password)
             user.save()
@@ -231,16 +231,6 @@ def privateDonatorProjectView(request):
     return render(request, "webapp/privateprojects.html", context)
 
 
-# def uploadDonatorFilesView(request, pk):
-#     if request.method == 'POST':
-#         form = DataForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             project = get_object_or_404(Project, pk=pk)
-#             data = Data(project=project, data=request.FILES["file"])
-#             data.save()
-#             return HttpResponse("Nice! You upload a file!")
-#     else:
-#         form = DataForm
-#     return render(request, 'webapp/upload_donator.html', {'form': form})
+
 
 

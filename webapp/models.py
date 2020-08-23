@@ -22,13 +22,13 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 #Cientista!
 class Scientist(models.Model):
     user = models.OneToOneField(User, related_name='scientist', on_delete=models.CASCADE)
-    phone = models.PositiveIntegerField(unique=True, validators=[MaxValueValidator(999999999)])
+    phone = models.PositiveIntegerField(unique=True)
     image = models.ImageField()
     email = models.EmailField(max_length=254, null=False, unique=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     work_local = models.CharField(max_length=100)
-    bi = models.PositiveIntegerField(unique=True, validators=[MaxValueValidator(99999999)])
+    bi = models.PositiveIntegerField(unique=True)
     address = models.CharField(max_length=100, blank=True)
     is_scientist = models.BooleanField(default=True)
     
@@ -57,10 +57,15 @@ class Project(models.Model):
     periodChoice = models.CharField(max_length=2, choices=PERIOD_CHOICES)
     spacetimeChoice = models.CharField(max_length=2, choices=SPACE_TIME_CHOICES)
     sensorsChoice = models.CharField(max_length=2, choices=SENSORS_CHOICES)
+    finished = models.BooleanField(default=False)
 
 
     def get_absolute_url(self):
         return reverse("webapp:detail", kwargs={"pk": self.pk})
+    
+    def project_finished(self):
+        self.finished = True
+        return self.finished
 
     def __str__(self):
         return self.name
@@ -77,3 +82,10 @@ class Data(models.Model):
 class DataGive(models.Model):
     donator = models.ForeignKey(Donator, on_delete=models.CASCADE, related_name="give_data")
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="give_data")
+    projectFinished = models.BooleanField(default=False)
+
+    def projectDone(self):
+        self.projectFinished = True
+        return self.projectFinished
+        
+    

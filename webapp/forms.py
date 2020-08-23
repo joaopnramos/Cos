@@ -32,6 +32,12 @@ class ScientistForm(forms.Form):
     bi = forms.IntegerField(required=True)
     phone = forms.IntegerField(required=True)
 
+    def clean_bi(self):
+        bi = self.cleaned_data["bi"]
+        if not 10000000 < bi < 99999999:
+            raise forms.ValidationError('Sorry, but your bi is incorrect')
+        return bi
+
     
 
 #Form de criar um donator
@@ -41,9 +47,10 @@ class DonatorForm(forms.ModelForm):
         fields = ("age",)
     
     def clean(self):
-        if int(self.cleaned_data['age']) <18:
-            raise forms.ValidationError('underage!')
-        return self.cleaned_data
+        cleaned_data = super().clean()
+        if cleaned_data.get('age') <18:
+            raise forms.ValidationError('Sorry, but users with age less than 18 can´t register to our website')
+        
 
 
 #Form de um projeto

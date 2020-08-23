@@ -320,4 +320,4 @@ Create, Retrieve, Update and Delete
 
 **Tokens Command Verify!**
 
-curl -v -d "username=ramosd&password=asd&do=login" http://127.0.0.1:8000/webapp/api-token-auth/
+curl -v -d "username=ramosd1&password=asd" http://www.citizensonscience.xyz/webapp/api-token-auth/
