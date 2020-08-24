@@ -4,7 +4,7 @@
 
 <h1>Welcome to a list of all the Projects!</h1>
     <ol>
-        {% for project in filter.qs %}
+        {% for project in projects %}
         <h2><li><a href="{{project.id}}">{{project.name}}</a></li></h2>
         
         {% endfor %}

@@ -162,7 +162,6 @@ class ProjectListView(ListView):
 
     
 
-
 @method_decorator([login_required], name='dispatch')
 class ProjectDetailView(DetailView):
     context_object_name = "project"
@@ -257,6 +256,16 @@ def privateDonatorProjectView(request):
     print(context)
 
     return render(request, "webapp/privateprojects.html", context)
+
+@login_required
+@scientist_required
+def finishthedproject(request,pk):
+    """ Permite ao cientista finalizar o projeto """
+    project = get_object_or_404(Project, pk=pk)
+    project.project_finished()
+    project.save()
+    pks = str(pk)
+    return HttpResponseRedirect(reverse("index"))
 
 
 

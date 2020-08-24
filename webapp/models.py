@@ -65,6 +65,7 @@ class Project(models.Model):
     def project_finished(self):
         """ Da um projeto como terminado """
         self.finished = True
+
         return self.finished
 
     def __str__(self):
