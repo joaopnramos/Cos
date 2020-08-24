@@ -37,8 +37,10 @@ def scietist_register(request):
             address = scientist_form.cleaned_data.get("address")
             work_local = scientist_form.cleaned_data.get("work_local")
             bi = scientist_form.cleaned_data.get("bi")
+            bis = Donator.objects.order_by("bi")
+            for u in bis:
+                if bi == u.bi:return messages.error(request, 'This bi already exists!')
             if 10000000 < bi < 99999999 and 90000000 < phone < 999999999:
-                
                 scientist_profile = Scientist(
                     first_name=first_name, last_name=last_name, address=address, work_local=work_local, bi=bi, phone=phone, email=email)
                 user = user_form.save()
@@ -226,9 +228,14 @@ def privateDonatorProjectView(request):
         pj_list.append(pj.project)
 
     context["data"] = pj_list
+    context["leave"] = True
     print(context)
 
     return render(request, "webapp/privateprojects.html", context)
+
+
+
+
 
 
 

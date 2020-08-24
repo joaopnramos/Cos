@@ -31,9 +31,6 @@ class Scientist(models.Model):
     bi = models.PositiveIntegerField(unique=True)
     address = models.CharField(max_length=100, blank=True)
     is_scientist = models.BooleanField(default=True)
-    
- 
-    
 
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -95,8 +92,6 @@ class DataGive(models.Model):
     def projectDone(self):
         """ Esta variavel boleana permite á query no telemovel saber se 
             este projeto ainda é passivel de requisição de dados """
-            
         self.projectFinished = True
-        return self.projectFinished
-        
+    
     
