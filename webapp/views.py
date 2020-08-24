@@ -14,15 +14,20 @@ from django.contrib.auth.forms import AuthenticationForm
 
 
 
+
 # Start View
 
-
 class RegisterView(TemplateView):
+
+    """ Pagina inicial do projeto """
+
     template_name = "webapp/generic_register.html"
 
 
 # Registro do Cientista!!
 def scietist_register(request):
+
+    """ View destinada ao registo do cientista """
 
     registered = False
 
@@ -37,7 +42,7 @@ def scietist_register(request):
             address = scientist_form.cleaned_data.get("address")
             work_local = scientist_form.cleaned_data.get("work_local")
             bi = scientist_form.cleaned_data.get("bi")
-            bis = Donator.objects.order_by("bi")
+            bis = Scientist.objects.order_by("bi")
             for u in bis:
                 if bi == u.bi:return messages.error(request, 'This bi already exists!')
             if 10000000 < bi < 99999999 and 90000000 < phone < 999999999:
@@ -69,6 +74,8 @@ def scietist_register(request):
 
 def donator_register(request):
 
+    """ View destinada ao registo do donator """
+
     registered = False
 
     if request.method == "POST":
@@ -99,6 +106,9 @@ def donator_register(request):
 
 # Login generalista
 def user_login(request):
+
+    """ Login generalista, este login serve tanto para os donators como para os cientistas """
+
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -118,6 +128,7 @@ def user_login(request):
 # Logout!
 @login_required
 def user_logout(request):
+    """ Permite fazer o logout """
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
@@ -126,6 +137,8 @@ def user_logout(request):
 @scientist_required
 @login_required
 def ProjectCreateView(request):
+    """ View que permite ao cientista criar um projeto """
+
     if request.method == "POST":
         project_form = ProjectForm(data=request.POST)
         if project_form.is_valid:
@@ -146,6 +159,8 @@ def ProjectCreateView(request):
 class ProjectListView(ListView):
     context_object_name = "projects"
     model = models.Project
+
+    
 
 
 @method_decorator([login_required], name='dispatch')
@@ -169,12 +184,17 @@ class ProjectDeleteView(DeleteView):
 
 
 def DataGiveView(request, pk):
+    """ Cria o objeto DataGive, ou seja, a partir da criação deste objeto o donator faz parte do projeto"""
+
     if DataGive.objects.filter(project=pk).filter(donator=request.user.donator.id).exists():
+        """ Serve para verificar se o donator ja faz parte do projeto e se sim ir para a detailview do mesmo """
+
         pks = str(pk)
         return HttpResponseRedirect("mydonatorprojects/"+ pks)
 
     in_project = False
     if request.method == "POST":
+        """ Criação do objeto DataGive """
         project = get_object_or_404(Project, pk=pk)
         donator = request.user.donator
         datagive = DataGive(project=project, donator=donator)
@@ -184,6 +204,7 @@ def DataGiveView(request, pk):
 
 
 def DonatorList(request):
+    """ Lista de todos os projetos do donator """
 
     pd_list = Project.objects.order_by("name")
 
@@ -194,6 +215,8 @@ def DonatorList(request):
 @login_required
 @scientist_required
 def profileScientist(request):
+    """ Perfil do cientista """
+
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         if u_form.is_valid():
@@ -210,6 +233,7 @@ def profileScientist(request):
 @login_required
 @scientist_required
 def privateScientistProjectView(request):
+    """ Vista dos proprios projetos dos cientistas """
     context = {}
     user_id = request.user.scientist.id
     projects_list = Project.objects.filter(owner=user_id)
@@ -220,6 +244,7 @@ def privateScientistProjectView(request):
 @login_required
 @donator_required
 def privateDonatorProjectView(request):
+    """ Vista dos projetos de qual o donator faz parte """
     context = {}
     pj_list = []
     user = request.user.donator

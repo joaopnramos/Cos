@@ -38,3 +38,4 @@ virtualenv==20.0.30
 virtualenv-clone==0.5.4
 wincertstore==0.2
 wrapt==1.12.1
+django-filter==2.3.0
