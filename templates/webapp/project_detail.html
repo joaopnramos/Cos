@@ -10,6 +10,11 @@
         
     </div>
 
+{% if project.finished %}
+<h3>Este projeto encontra-se finalizado!</h3>
+
+{% else %}
+
 {% if project.scientist.user.id == request.user.id %}
     <div class="container">
         <p><a class="btn btn-warning" href="{% url 'webapp:update' pk=project.pk  %}">Update</a></p>
@@ -18,8 +23,8 @@
     </div>
 {% endif %}
 
-{% if project.finished %}
-<h1>Hi </h1>
+
+
 {% endif %}
 
 {% comment %} {% if user.donator.is_donator %}
