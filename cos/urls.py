@@ -18,6 +18,8 @@ from django.urls import path, include
 from webapp import views
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
+from webapp import views
+
 
 
 urlpatterns = [
@@ -26,6 +28,7 @@ urlpatterns = [
     path("webapp/", include("webapp.urls")),
     path("login/", views.user_login, name="user_login"),
     path("logout/", views.user_logout, name="logout"),
+    path("activate/<uidb64>/<token>",views.Verification.as_view(), name="activate"),
     path('password-reset/', auth_views.PasswordResetView.as_view(
         template_name='webapp/password_reset.html'), name='password_reset'),
     path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(

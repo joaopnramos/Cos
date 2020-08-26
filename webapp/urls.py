@@ -1,6 +1,12 @@
 from django.urls import path
 from webapp import views
-from rest_framework.authtoken.views import obtain_auth_token 
+from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register("dataStart", views.DataViewSet, basename="Data-viewset")
+router.register("scientistStart", views.ScientistViewSet, basename="Scientist-viewset")
+router.register("projectStart", views.ProjectViewSet, basename="Project-viewset")
 
 app_name = "webapp"
 
@@ -8,6 +14,7 @@ urlpatterns = [
     path("register/", views.RegisterView.as_view(), name="register"),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     path("list/<int:pk>", views.ProjectDetailView.as_view(), name="detail"),
+    
 
     
     path("scientist_register/", views.scietist_register, name="scientist_reg"),
@@ -27,8 +34,7 @@ urlpatterns = [
     path("donator/mydonatorprojects/", views.privateDonatorProjectView, name="myDprojects"),
     path("donator/mydonatorprojects/<int:pk>", views.ProjectDetailView.as_view(), name="donator_list_detail"),
     path("donator_register/", views.donator_register, name="donator_reg"),
-    
-    
-    
+
     # path("uploaddonatorfiles/<int:pk>", views.uploadDonatorFilesView, name="uploadFiles"),
 ]
+urlpatterns = urlpatterns + router.urls

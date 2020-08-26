@@ -31,6 +31,7 @@ class Scientist(models.Model):
     bi = models.PositiveIntegerField(unique=True)
     address = models.CharField(max_length=100, blank=True)
     is_scientist = models.BooleanField(default=True)
+    verified = models.BooleanField(default=False)
 
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -76,7 +77,7 @@ class Data(models.Model):
     """ A partir deste objeto é possiver fornecer os dados recolhidos a cada projeto """
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="data")
-    data = models.FileField(upload_to='uploads/')
+    data = models.CharField( max_length=50)
     def __str__(self):
         return "informação deste projeto" + self.data
 
@@ -87,11 +88,12 @@ class DataGive(models.Model):
         a um projeto. """
     donator = models.ForeignKey(Donator, on_delete=models.CASCADE, related_name="give_data")
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="give_data")
-    projectFinished = models.BooleanField(default=False)
+    givingFinished = models.BooleanField(default=False)
 
     def projectDone(self):
         """ Esta variavel boleana permite á query no telemovel saber se 
             este projeto ainda é passivel de requisição de dados """
-        self.projectFinished = True
+        self.givingFinished = True
+        return self.givingFinished
     
     

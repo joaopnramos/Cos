@@ -1,17 +1,26 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, ListView, DetailView, UpdateView, DeleteView
-from webapp.forms import *
+from .forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from .decorators import scientist_required, donator_required, owner_required
 from webapp import models
+from .serializers import DataSerializer, ProjectSerializer, ScientistSerializer
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
-
+from rest_framework import  filters
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.authentication import TokenAuthentication
+from django.core.mail import EmailMessage
+from django.views import View
+from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.sites.shortcuts import get_current_site
+from .utils import tokengenerator
 
 
 
@@ -22,7 +31,6 @@ class RegisterView(TemplateView):
     """ Pagina inicial do projeto """
 
     template_name = "webapp/generic_register.html"
-
 
 # Registro do Cientista!!
 def scietist_register(request):
@@ -35,7 +43,7 @@ def scietist_register(request):
         user_form = UserForm(data=request.POST)
         scientist_form = ScientistForm(data=request.POST)
         if user_form.is_valid() and scientist_form.is_valid():
-            email = user_form.cleaned_data.get("email")
+            emails = user_form.cleaned_data.get("email")
             first_name = scientist_form.cleaned_data.get("first_name")
             last_name = scientist_form.cleaned_data.get("last_name")
             phone = scientist_form.cleaned_data.get("phone")
@@ -47,13 +55,27 @@ def scietist_register(request):
                 if bi == u.bi:return messages.error(request, 'This bi already exists!')
             if 10000000 < bi < 99999999 and 90000000 < phone < 999999999:
                 scientist_profile = Scientist(
-                    first_name=first_name, last_name=last_name, address=address, work_local=work_local, bi=bi, phone=phone, email=email)
+                    first_name=first_name, last_name=last_name, address=address, work_local=work_local, bi=bi, phone=phone, email=emails)
                 user = user_form.save()
                 user.set_password(user.password)
+                user.is_active = False
                 user.save()
                 scientist_profile.user = user
                 scientist_profile.save()
-                registered = True
+                uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+                
+                domain = get_current_site(request).domain
+                link=reverse("activate", kwargs={"uidb64": uidb64, "token": tokengenerator.make_token(user)})
+                email_subject="Activate you accounts"
+                activate_url= "http://" +domain+link
+                email_body ="Hi" + first_name + " " + last_name + "Please use this link to verify the account\n" + activate_url
+                email = EmailMessage(email_subject, email_body, "noreply@semycolon.com",[emails],)
+                email.send(fail_silently=False)
+
+                registered=True
+
+                
+                
 
             else:
                 messages.error(request, 'Phone number or bi are wrong!')
@@ -70,7 +92,6 @@ def scietist_register(request):
                    "registered": registered})
 
 # Registro do donator!
-
 
 def donator_register(request):
 
@@ -103,7 +124,6 @@ def donator_register(request):
                    "donator_form": donator_form,
                    "registered": registered})
 
-
 # Login generalista
 def user_login(request):
 
@@ -124,14 +144,12 @@ def user_login(request):
         form = AuthenticationForm()
         return render(request, "webapp/login.html", {'form': form})
 
-
 # Logout!
 @login_required
 def user_logout(request):
     """ Permite fazer o logout """
     logout(request)
     return HttpResponseRedirect(reverse("index"))
-
 
 # View que permite a criação de um projeto!
 @scientist_required
@@ -154,13 +172,10 @@ def ProjectCreateView(request):
         project_form = ProjectForm
     return render(request, "webapp/project_form.html", {"form": project_form})
 
-
 @method_decorator([login_required, scientist_required], name='dispatch')
 class ProjectListView(ListView):
     context_object_name = "projects"
     model = models.Project
-
-    
 
 @method_decorator([login_required], name='dispatch')
 class ProjectDetailView(DetailView):
@@ -168,19 +183,16 @@ class ProjectDetailView(DetailView):
     model = models.Project
     template_name = "webapp/project_detail.html"
 
-
 @method_decorator([login_required, scientist_required, owner_required], name='dispatch')
 class ProjectUpdateView(UpdateView):
     model = models.Project
     fields = ("name", "description",)
     success_url = reverse_lazy('webapp:list')
 
-
 @method_decorator([login_required, scientist_required, owner_required], name='dispatch')
 class ProjectDeleteView(DeleteView):
     model = models.Project
     success_url = reverse_lazy("webapp:list")
-
 
 def DataGiveView(request, pk):
     """ Cria o objeto DataGive, ou seja, a partir da criação deste objeto o donator faz parte do projeto"""
@@ -201,14 +213,14 @@ def DataGiveView(request, pk):
         in_project = True
     return render(request, "webapp/project_registry.html", {"in_project": in_project})
 
-
+@login_required
+@donator_required
 def DonatorList(request):
     """ Lista de todos os projetos do donator """
 
     pd_list = Project.objects.order_by("name")
 
     return render(request, "webapp/project_donator_list.html", context={"pd_list": pd_list})
-
 
 # Profile
 @login_required
@@ -228,7 +240,6 @@ def profileScientist(request):
     context = {'u_form': u_form}
     return render(request, 'webapp/profile.html', context)
 
-
 @login_required
 @scientist_required
 def privateScientistProjectView(request):
@@ -238,7 +249,6 @@ def privateScientistProjectView(request):
     projects_list = Project.objects.filter(owner=user_id)
     context["data"] = projects_list
     return render(request, "webapp/privateprojects.html", context)
-
 
 @login_required
 @donator_required
@@ -266,6 +276,50 @@ def finishthedproject(request,pk):
     project.save()
     pks = str(pk)
     return HttpResponseRedirect(reverse("index"))
+
+class DataViewSet(ModelViewSet):
+    """ Permite adicionar dados aos projetos """
+
+    serializer_class = DataSerializer
+    queryset = models.Data.objects.all()
+
+class ProjectViewSet(ModelViewSet):
+    """ Permite adicionar dados aos projetos """
+
+    serializer_class = ProjectSerializer
+    queryset = Project.objects.all()
+
+class ScientistViewSet(ModelViewSet):
+    """ Permite adicionar dados aos projetos """
+
+    serializer_class = ScientistSerializer
+    queryset = Scientist.objects.all()
+
+class Verification(View):
+    def get(self, request, uidb64, token):
+        try:
+            id = force_text(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=id)
+
+            if not tokengenerator.check_token(user, token):
+                return redirect("login" + "?message=" + "User already activated")
+            
+            if user.is_active:
+                return redirect("user_login")
+            
+            user.is_active = True
+            user.save()
+            messages.success(request, "Account activated sucessfully")
+        
+        except Exception as ex:
+            pass
+        return redirect("user_login")
+
+
+
+    
+    
+    
 
 
 
