@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from .decorators import scientist_required, donator_required, owner_required
 from webapp import models
-from .serializers import DataSerializer, ProjectSerializer, ScientistSerializer
+from .serializers import DataSerializer, ProjectSerializer, DataGiveSerializer
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib import messages
@@ -21,6 +21,7 @@ from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeEr
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from .utils import tokengenerator
+from rest_framework.permissions import IsAuthenticated
 
 
 
@@ -51,8 +52,11 @@ def scietist_register(request):
             work_local = scientist_form.cleaned_data.get("work_local")
             bi = scientist_form.cleaned_data.get("bi")
             bis = Scientist.objects.order_by("bi")
+            
             for u in bis:
-                if bi == u.bi:return messages.error(request, 'This bi already exists!')
+                if bi == u.bi:
+                    return messages.error(request, 'This bi already exists!')
+
             if 10000000 < bi < 99999999 and 90000000 < phone < 999999999:
                 scientist_profile = Scientist(
                     first_name=first_name, last_name=last_name, address=address, work_local=work_local, bi=bi, phone=phone, email=emails)
@@ -138,7 +142,7 @@ def user_login(request):
             return HttpResponseRedirect(reverse("index"))
 
         else:
-            messages.error(request, 'username or password not correct')
+            messages.error(request, 'username or password are incorrect')
             return redirect('user_login')
     else:
         form = AuthenticationForm()
@@ -282,18 +286,27 @@ class DataViewSet(ModelViewSet):
 
     serializer_class = DataSerializer
     queryset = models.Data.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,) 
 
 class ProjectViewSet(ModelViewSet):
     """ Permite adicionar dados aos projetos """
 
     serializer_class = ProjectSerializer
     queryset = Project.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,) 
 
-class ScientistViewSet(ModelViewSet):
+class DataGiveViewSet(ModelViewSet):
     """ Permite adicionar dados aos projetos """
 
-    serializer_class = ScientistSerializer
-    queryset = Scientist.objects.all()
+    serializer_class = DataGiveSerializer
+    queryset = DataGive.objects.filter(givingFinished=False)
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,) 
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ("donator",)
+
 
 class Verification(View):
     def get(self, request, uidb64, token):

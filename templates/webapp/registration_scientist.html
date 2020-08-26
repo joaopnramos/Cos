@@ -19,7 +19,8 @@
 
         </div>
     {% endfor %}
-
+    
+    {{ forms.non_field_errors }}
     <form enctype="multipart/form-data" method="POST">
 
         {% csrf_token %}

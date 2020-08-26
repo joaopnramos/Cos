@@ -31,14 +31,7 @@ class ScientistForm(forms.Form):
     work_local = forms.CharField(required=True)
     bi = forms.IntegerField(required=True)
     phone = forms.IntegerField(required=True)
-
-    def clean_bi(self):
-        bi = self.cleaned_data["bi"]
-        if not 10000000 < bi < 99999999:
-            raise forms.ValidationError('Sorry, but your bi is incorrect')
-        return bi
-
-    
+   
 
 #Form de criar um donator
 class DonatorForm(forms.ModelForm):
