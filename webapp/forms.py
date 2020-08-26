@@ -31,6 +31,16 @@ class ScientistForm(forms.Form):
     work_local = forms.CharField(required=True)
     bi = forms.IntegerField(required=True)
     phone = forms.IntegerField(required=True)
+
+    def clean_phone(self, *args, **kwargs):
+        phone = self.cleaned_data.get("phone")
+        phones = Scientist.objects.order_by("phone")
+        for u in phones:
+            if u.phone == phone:
+                raise forms.ValidationError("this phone already exists")
+
+            else:
+                return phone
    
 
 #Form de criar um donator

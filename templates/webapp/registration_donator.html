@@ -20,9 +20,11 @@
 
     <form enctype="multipart/form-data" method="POST">
 
+
         {% csrf_token %}
         {{ user_form.as_p }}
         {{ donator_form.as_p }}
+
         <input type="submit" name="" value="Register">
 
 
