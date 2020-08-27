@@ -3,9 +3,10 @@
 
 <style>
     body {
-        color: #343a40;
+        color: #000000;
         background-color: #f1f1f1;
         text-align: left;
+        letter-spacing: 4px;
         font-family: Montserrat, sans-serif;
 
     }
@@ -17,8 +18,43 @@
     .jumbotron {
         background-color: #ffffff;
         color: #000000;
-        padding: 10px 30px;
+        padding: 10px 25px;
         font-family: Montserrat, sans-serif;
+    }
+
+    .jumbotron h1 {
+        font-size: 63px;
+        color: #303030;
+    }
+
+    label {
+        display: inline-block;
+        max-width: 100%;
+        font-size: 15px;
+        margin-bottom: 5px;
+        font-weight: 700;
+    }
+
+    input, select {
+        color: #000000;
+        font-size: 15px;
+        letter-spacing: 4px;
+        font-family: Montserrat, sans-serif;
+    }
+
+    .btn-lg {
+        padding: 10px 16px;
+        letter-spacing: 4px;
+        font-family: Montserrat, sans-serif;
+        font-size: 15px;
+        line-height: 1.3333333;
+        border-radius: 6px;
+    }    
+    
+    .btn-secondary {
+        color: #fff;
+        background-color: #343A40;
+        border-color: #343A40;
     }
 
     .a {
@@ -29,7 +65,11 @@
 <div class="jumbotron">
     <div class="card mb-4 shadow-sm">
         <div class="card border-bottom border-gray">
+            {% if not form.instance.pk %}
             <h1>Create Project</h1>
+            {% else %}
+            <h1>Update Project</h1>
+            {% endif %}
         </div>
 
         <div class="card-body">

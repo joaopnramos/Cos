@@ -1,34 +1,85 @@
 {% extends "webapp/base.html" %}
 {% block body_block %}
 
-<style>
-    body{
-        font-family: Montserrat, sans-serif;
 
+
+<style>
+    body {
+        color: rgb(0, 0, 0);
+        background-color: #f1f1f1;
+        text-align: center;
+        letter-spacing: 4px;
+        font-family: Montserrat, sans-serif;
+    }
+
+    h4 {
+        font-size: 20px;
+        color: #ffffff;
+        margin-bottom: 30px;
+    }
+
+    h5 {
+        font-size: 15px;
+        line-height: 1.375em;
+        color: #000000;
+        margin: 20px 20px 20px 20px;
+    }
+
+    label {
+        color: #343a40;
+    }
+
+    .btn-secondary {
+        color: #fff;
+        background-color: #343a40;
+        border-color: #343a40;
+    }
+
+    .card {
+        width: 30rem;
+    }
+
+    .card-header {
+        background-color: #343a40;
     }
 </style>
 
-<div class="jumbotron">
-    
-    {% if in_project %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-    <h1>Thank you for registering</h1>
-
-    {% else %}
-    <h1>Register Here</h1>
-    <h3>Fill out the form:</h3>
-
-    <form enctype="multipart/form-data" method="POST">
-
-        {% csrf_token %}
-
-        <h1>You really want to be part of this project?</h1>
-
-        <input type="submit" name="" value="Yes">
-        <a href="{% url 'index' %}"><input type="button" value="No"></a>
-
-
-    </form>
+<div class="d-flex p-4 justify-content-center">
+    <div class="card-deck ">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header text-center">
+                {% if in_project %}
+                <h4>Thank you for registering</h4>
+                <a href="{% url 'webapp:donator_list' %}" class="btn btn-lg btn-light" type="button">Back to List</a>
+                {% else %}
+                <h4>Register Here</h4>
+            </div> 
+            <div class="card-body">
+                <form enctype="multipart/form-data" method="POST">
+                    {% csrf_token %}
+                    <h5>You really want to be part of this project?</h5>
+                    <input type="submit" class="btn btn-lg btn-secondary" name="" value="Yes">
+                    <a href="{% url 'webapp:donator_list' %}" class="btn btn-lg btn-danger" type="button">No</a>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-    {% endif %}
-    {% endblock %}
+
+
+
+
+{% endif %}
+{% endblock %}

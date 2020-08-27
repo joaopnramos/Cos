@@ -19,7 +19,7 @@ urlpatterns = [
     path("datagivedelete/<int:pk>", views.donator_exit_project, name= "datagivedelete"),
    
     path("",include(router.urls)),
-    path("scientist_register/", views.scietist_register, name="scientist_reg"),
+    path("scientist_register/", views.scientist_register, name="scientist_reg"),
     path("profile/", views.profileScientist, name='profile'),
     path("myscientistprojects/", views.privateScientistProjectView, name="mySprojects"),
     path("myscientistprojects/<int:pk>", views.ProjectDetailView.as_view(), name="scientist_list_detail"),

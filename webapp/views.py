@@ -35,7 +35,7 @@ class RegisterView(TemplateView):
 # Registro do Cientista!!
 
 
-def scietist_register(request):
+def scientist_register(request):
     """ View destinada ao registo do cientista """
 
     registered = False
@@ -55,7 +55,7 @@ def scietist_register(request):
 
             for u in bis:
                 if bi == u.bi:
-                    return messages.error(request, 'This bi already exists!')
+                    return messages.error(request, 'This BI already exists. Use another BI.')
             if 10000000 < bi < 99999999 and 90000000 < phone < 999999999:
                 scientist_profile = Scientist(
                     first_name=first_name, last_name=last_name, address=address, work_local=work_local, bi=bi, phone=phone, email=emails)
@@ -72,8 +72,9 @@ def scietist_register(request):
                                "uidb64": uidb64, "token": tokengenerator.make_token(user)})
                 email_subject = "Activate you accounts"
                 activate_url = "http://" + domain+link
-                email_body = "Hi" + first_name + " " + last_name + \
-                    "Please use this link to verify the account\n" + activate_url
+                email_body = "Hi " + first_name + " " + last_name + "! \n" \
+                    "Please use this link to verify the account:\n" + activate_url \
+                    + "\nIf this isn't you, ignore this email." + "\n\nFrom the CoS Team."
                 email = EmailMessage(
                     email_subject, email_body, "noreply@semycolon.com", [emails],)
                 email.send(fail_silently=False)
@@ -81,7 +82,7 @@ def scietist_register(request):
                 registered = True
 
             else:
-                messages.error(request, 'Phone number or bi are wrong!')
+                messages.error(request, 'Phone number or BI is wrong.')
 
         else:
             print(user_form.errors, scientist_form.errors)
@@ -142,7 +143,7 @@ def user_login(request):
             return HttpResponseRedirect(reverse("index"))
 
         else:
-            messages.error(request, 'username or password are incorrect')
+            messages.error(request, 'Username or Password is Incorrect.')
             return redirect('user_login')
     else:
         form = AuthenticationForm()
@@ -379,7 +380,7 @@ class Verification(View):
 
             user.is_active = True
             user.save()
-            messages.success(request, "Account activated sucessfully")
+            messages.success(request, "Account activated sucessfully.")
 
         except Exception as ex:
             pass

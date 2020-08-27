@@ -16,6 +16,8 @@
         }
 
         h1 {
+            text-align: center;
+            font-size: 15px;
             padding-top: 0px;
         }
 
@@ -31,6 +33,7 @@
 
         h4 {
             font-size: 19px;
+            text-align: center;
             line-height: 1.375em;
             color: #ffffff;
             font-weight: 400;
@@ -65,8 +68,7 @@
             </div>
             <div class="card-body">
                 {% if registered %}
-                <h1>Conta criada!</h1>
-                <a href="{% url 'user_login' %}" class="btn btn-lg btn-block btn-secondary">Log In</a>
+                <h1>Um email de verificação foi enviado para o seu email. Clique no link para ativar a conta e fazer o log in.</h1>
                 {% else %}
                 {% for message in messages %}
                 <div class="alert alert-success">

@@ -6,11 +6,12 @@
         color: rgb(0, 0, 0);
         background-color: #f1f1f1;
         text-align: center;
+        letter-spacing: 4px;
         font-family: Montserrat, sans-serif;
     }
 
     h4 {
-        font-size: 30px;
+        font-size: 19px;
         line-height: 1.375em;
         color: #ffffff;
         font-weight: bold;
@@ -21,7 +22,7 @@
         font-size: 20px;
         line-height: 1.375em;
         color: #000000;
-        margin-bottom: 30px;
+        margin: 20px 20px 20px 20px;
     }
 
     label {
@@ -35,7 +36,7 @@
     }
 
     .card {
-        width: 25rem;
+        width: 30rem;
     }
 
     .card-header {
@@ -59,14 +60,11 @@
     <div class="card-deck ">
         <div class="card mb-4 shadow-sm">
             <div class="card-header text-center">
-                <h4 class="my-0 font-weight-normal">Log In</h4>
-            </div>
+                <h4 class="my-0 font-weight-normal">Delete {{project.name}}?</h4>
+            </div> 
             <div class="card-body">
-                <h5>Delete {{project.name}}?</h5>
-
                 <form method="post">
                     {% csrf_token %}
-
                     <input type="submit" class="btn btn-lg btn-danger" value="Delete">
                     <a href="{% url 'webapp:detail' pk=project.pk %}">Cancel</a>
                 </form>
@@ -75,4 +73,4 @@
     </div>
 </div>
 
-{% endblock body_block %}
+{% endblock %}

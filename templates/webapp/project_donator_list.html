@@ -1,16 +1,119 @@
 {% extends 'webapp/base.html' %}
-
 {{% block body_block %}
+   
+<style>
 
-<h1>Welcome to a list of all the Projects!</h1>
-    <ol>
-        {% for project in pd_list %}
-        <h2><li><a href="{{project.id}}">{{project.name}}</a></li></h2>
-        
-        {% endfor %}
-    </ol>
+    body {
+        color: #000000;
+        background-color: #f1f1f1;
+        text-align: left;
+        letter-spacing: 4px;
+        font-family: Montserrat, sans-serif;
+
+    }
+
+    .jumbotron {
+        background-color: #ffffff;
+        color: #000000;
+        padding: 10px 25px;
+        font-family: Montserrat, sans-serif;
+    }
+
+    .jumbotron h1 {
+        font-size: 63px;
+        color: #303030;
+    }
+
+    .text-muted {
+        color: #000000!important;
+    }
+
+    .navbar {
+        position: relative;
+        min-height: 50px;
+        margin-bottom: 0px;
+        border: 1px solid transparent;
+    }
+
+    .btn-lg {
+        padding: 10px 16px;
+        letter-spacing: 4px;
+        font-family: Montserrat, sans-serif;
+        font-size: 15px;
+        line-height: 1.3333333;
+        border-radius: 6px;
+    }    
+    
+    .btn-secondary {
+        color: #fff;
+        background-color: #343A40;
+        border-color: #343A40;
+    }
+
+    h4 {
+        font-size: 20px;
+        font-weight: bold;
+        color: #343A40;
+    }
+
+    label {
+        display: inline-block;
+        max-width: 100%;
+        margin-left: 15px;
+        font-weight: 700;
+    }
+
+    small {
+        font-size: 15px;
+    }
+    .col{
+        position: relative;
+        width: 100%;
+        padding: 15px 15px 15px 15px;
+    }
 
 
+</style>
+
+<div class="jumbotron">
+    <h1 class="border-bottom border-gray pb-2 mb-0">List of all Projects!</h1>
+    {% for project in pd_list %}
+    <div class="row row-cols-1 row-cols-md-1">
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title ">{{project.name}}</h4>
+                    <hr class="hr-light">
+                    <div class="form-group row">
+                        <label for="id_username" class="row-4 row-form-label">Description: </label>
+                        <div class="row-4 text-left border-bottom">
+                            {{project.description}}<br>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="id_username" class="row-4 row-form-label">Sensors: </label>
+                        <div class="row-4 text-left border-bottom">
+                            {{project.sensorsChoice}}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="id_username" class="row-4 row-form-label">Amount of times program runs: </label>
+                        <div class="row-4 text-left border-bottom">
+                            {{project.periodChoice}}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="id_username" class="row-4 row-form-label">Time of analysis: </label>
+                        <div class="row-4 text-left border-bottom">
+                            {{project.spacetimeChoice}}
+                        </div>
+                    </div>
+                    <a type="button" class="btn btn-lg btn-secondary" href="{{project.id}}">Join Project </a>            
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
 
 {% endblock body_block %}
-

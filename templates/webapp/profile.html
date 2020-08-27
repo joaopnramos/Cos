@@ -2,47 +2,63 @@
 {% block body_block %}
 
 <style>
-  .helptext {
-    visibility: hidden;
-    display: none;
-  }
 
   body {
     color: #343a40;
     background-color: #f1f1f1;
     text-align: right;
+    letter-spacing: 4px;
     font-family: Montserrat, sans-serif;
-
   }
 
   h2 {
-    text-align: left;
-    font-size: 25px;
-    line-height: 1.375em;
     color: #000000;
-    font-weight: bold;
-    margin-bottom: 30px;
+    text-align: left;
+    font-weight: bolder;
   }
 
-  label {
-    color: #343a40;
-  }
-
-  .btn-secondary {
-    color: #fff;
-    background-color: #343a40;
-    border-color: #343a40;
-  }
-
-  .card-header {
-    background-color: #343a40;
+  h3 {
+    text-align: center;
   }
 
   .jumbotron {
     background-color: #ffffff;
-    color: rgb(0, 0, 0);
-    padding: 100px 25px;
+    color: #000000;
+    font-size: 13.5px !important;
+    padding: 100px 30px;
     font-family: Montserrat, sans-serif;
+  }
+
+  .a {
+    background-color: #343a40;
+  }
+
+  .form-control {
+    letter-spacing: 4px;
+    font-size: 13.5px !important;
+    font-family: Montserrat, sans-serif;
+  }
+
+  .btn-lg {
+    padding: 10px 16px;
+    letter-spacing: 4px;
+    font-family: Montserrat, sans-serif;
+    font-size: 15px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+  }
+
+  .btn-secondary {
+    color: #fff;
+    background-color: #343A40;
+    border-color: #343A40;
+    }
+
+  .col-md-12 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 20px;
+    padding-left: 30px;
   }
 </style>
 
@@ -68,35 +84,43 @@
             <form enctype="multipart/form-data" method="POST">
               {% csrf_token %}
               <div class="form-group row">
-                <label for="id_username" class="col-4 col-form-label">User Name</label>
-                <div class="col-8">
-                  <input id="username" required id="id_username" name="username" placeholder="Username"
-                    class="form-control here" required="required" type="text">
+                <label for="id_username" class="col-4 col-form-label">Username: </label>
+                <div class="col-4 text-left border-bottom">
                   {{user.username}}
                 </div>
+                <div class="col-4">
+                  <input id="username" required id="id_username" name="username" placeholder="Username"
+                    class="form-control here" required="required" type="text">
+                </div>
               </div>
               <div class="form-group row">
-                <label for="id_first_name" class="col-4 col-form-label">First Name</label>
-                <div class="col-8">
+                <label for="id_first_name" class="col-4 col-form-label">First Name: </label>
+                <div class="col-4 text-left border-bottom">
+                  {{user.scientist.first_name}}
+                </div>
+                <div class="col-4">
                   <input id="id_first_name" name="first_name" placeholder="First Name" class="form-control here"
                     type="text">
-                  {{user.first_name}}
                 </div>
               </div>
               <div class="form-group row">
-                <label for="id_last_name" class="col-4 col-form-label">Last Name</label>
-                <div class="col-8">
+                <label for="id_last_name" class="col-4 col-form-label">Last Name: </label>
+                <div class="col-4 text-left border-bottom">
+                  {{user.scientist.last_name}}
+                </div>
+                <div class="col-4">
                   <input id="id_last_name" name="last_name" placeholder="Last Name" class="form-control here"
                     type="text">
-                  {{user.last_name}}
                 </div>
               </div>
               <div class="form-group row">
-                <label for="id_email" class="col-4 col-form-label">Email</label>
-                <div class="col-8">
+                <label for="id_email" class="col-4 col-form-label">Email: </label>
+                <div class="col-4 text-left border-bottom">
+                  {{user.email}}
+                </div>
+                <div class="col-4">
                   <input id="id_email" name="email" placeholder="Email" class="form-control here" required="required"
                     type="email">
-                  {{user.email}}
                 </div>
               </div>
               <div class="form-group row">
@@ -107,7 +131,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <div class="offset-4 col-8">
+                <div class="offset-8 col-2">
                   <button name="submit" type="submit" class="btn btn-lg btn-secondary">Update My Profile</button>
                 </div>
               </div>

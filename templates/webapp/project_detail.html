@@ -6,12 +6,15 @@
         color: #343a40;
         background-color: #f1f1f1;
         text-align: right;
+        letter-spacing: 4px;
         font-family: Montserrat, sans-serif;
 
     }
 
-    h1 {
-        color: #343a40;
+    h2 {
+        color: #000000;
+        text-align: left;
+        font-weight: bolder;
     }
 
     h3 {
@@ -21,13 +24,50 @@
     .jumbotron {
         background-color: #ffffff;
         color: #000000;
-        padding: 10px 30px;
+        font-size: 13px !important;        
+        padding: 100px 30px;
         font-family: Montserrat, sans-serif;
     }
 
     .a {
         background-color: #343a40;
     }
+
+    .btn-lg {
+        padding: 10px 16px;
+        letter-spacing: 4px;
+        font-family: Montserrat, sans-serif;
+        font-size: 15px;
+        line-height: 1.3333333;
+        border-radius: 6px;
+    }
+
+    .btn-secondary {
+        color: #fff;
+        background-color: #343a40;
+        border-color: #343a40;
+    }
+
+    .col-md-12 {
+        position: relative;
+        min-height: 1px;
+        padding-right: 20px;
+        padding-left: 30px;
+    }
+
+    .alert-success {
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+    }
+
+    .alert {
+        padding: 15px;
+        margin-left: 50%;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
 </style>
 
 
@@ -53,43 +93,35 @@
                             {% csrf_token %}
                             <div class="form-group row">
                                 <label for="id_name" class="col-4 col-form-label">Name</label>
-                                <div class="col-8">
-                                    <input id="id_name" name="name" placeholder="{{ project.name }}"
-                                        class="form-control here" required="required" type="text">
+                                <div class="col-8 text-left border-bottom">
+                                    {{ project.name }}
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="id_description" class="col-4 col-form-label">Description</label>
-                                <div class="col-8">
-                                    <textarea required id="id_description" name="description"
-                                        placeholder="{{project.description}}" class="form-control here" type="text"
-                                        cols="20" rows="5"></textarea>
+                                <div class="col-8 text-left border-bottom">
+                                    {{project.description}}
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="id_sensorsChoice" class="col-4 col-form-label">Choose The Sensor you
                                     Need</label>
-                                <div class="col-8">
-                                    <select required id="id_sensorsChoice" name="sensorsChoice" placeholder="----"
-                                        class="form-control here">
-                                        <option></option>
-                                    </select>
+                                <div class="col-8 text-left border-bottom">
+                                    {{project.sensorsChoice}}
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="id_periodChoice" class="col-4 col-form-label">Choose How Many Times the
                                     Program will Run</label>
-                                <div class="col-8">
-                                    <select required id="id_periodChoice" name="periodChoice" placeholder="----"
-                                        class="form-control here" required="required"></select>
+                                <div class="col-8 text-left border-bottom">
+                                    {{project.periodChoice}}
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="id_spacetimeChoice" class="col-4 col-form-label">Choose the period of time
                                     between Data Analysis</label>
-                                <div class="col-8">
-                                    <select required id="id_spacetimeChoice" name="spacetimeChoice" placeholder="----"
-                                        class="form-control here"></select>
+                                <div class="col-8 text-left border-bottom">
+                                    {{project.spacetimeChoice}}
                                 </div>
                             </div>
                         </form>
@@ -98,26 +130,25 @@
                         <br>
                         <br>
                         <h3>Este projeto encontra-se finalizado!</h3>
-                        
+
                         {% else %}
-                    
+
                         {% if project.scientist.user.id == request.user.id %}
-                        <div class="container">
+                        <div class="container offset-4 col-2">
                             <a class="btn btn-lg btn-secondary"
                                 href="{% url 'webapp:update' pk=project.pk  %}">Update</a>
                             <a class="btn btn-lg btn-secondary"
                                 href="{% url 'webapp:delete' pk=project.pk  %}">Delete</a>
                             <a class="btn btn-lg btn-secondary" href="{% url 'webapp:finish' pk=project.pk  %}">Finish
                                 Project</a>
-                        {% endif %}
+                            {% endif %}
 
-                        {% endif %}
-                        {% if user.donator.is_donator %}
-                            <a class="btn btn-warning" href="{% url 'webapp:datagivedelete' pk=project.pk %}">Leave the Project</a>
-                        {% endif %}
+                            {% endif %}
+                            {% if user.donator.is_donator %}
+                            <a class="btn btn-lg btn-secondary" href="{% url 'webapp:datagivedelete' pk=project.pk %}">Leave the
+                                Project</a>
+                            {% endif %}
                         </div>
-
-
                     </div>
                 </div>
             </div>
