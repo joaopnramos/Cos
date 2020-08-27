@@ -37,6 +37,7 @@ urlpatterns = [
     path("donator/mydonatorprojects/", views.privateDonatorProjectView, name="myDprojects"),
     path("donator/mydonatorprojects/<int:pk>", views.ProjectDetailView.as_view(), name="donator_list_detail"),
     path("donator_register/", views.donator_register, name="donator_reg"),
+    path("datagivedelete/<int:pk>", views.donator_exit_project, name= "datagivedelete")
 
 
     # path("uploaddonatorfiles/<int:pk>", views.uploadDonatorFilesView, name="uploadFiles"),

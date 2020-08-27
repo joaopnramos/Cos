@@ -166,7 +166,8 @@ def ProjectCreateView(request):
                 project.owner = request.user.scientist.id
                 project.scientist = request.user.scientist
                 project.save()
-                return HttpResponse("<h1>Project Created!!</h1>")
+                ids = project.id
+                return redirect('webapp:detail', pk=ids)
         else:
             print(project_form.errors)
     else:
@@ -193,7 +194,7 @@ class ProjectDetailView(DetailView):
 class ProjectUpdateView(UpdateView):
     """ Esta view serve para atualizar o projeto """
     model = models.Project
-    fields = ("name", "description",)
+    fields = ("name", "description","periodChoice", "spacetimeChoice", "sensorsChoice")
     success_url = reverse_lazy('webapp:list')
 
 #Serve para apagar um projeto
@@ -206,6 +207,11 @@ class ProjectDeleteView(DeleteView):
 #Faz a entrada de um donator num projeto
 def DataGiveView(request, pk):
     """ Cria o objeto DataGive, ou seja, a partir da criação deste objeto o donator faz parte do projeto"""
+
+    pro =  Project.objects.filter(id=pk)
+    for pr in pro:
+        if pr.finished:
+            return redirect("webapp:myDprojects")
 
     if DataGive.objects.filter(project=pk).filter(donator=request.user.donator.id).exists():
         """ Serve para verificar se o donator ja faz parte do projeto e se sim ir para a detailview do mesmo """
@@ -229,7 +235,7 @@ def DataGiveView(request, pk):
 def DonatorList(request):
     """ Lista de todos os projetos do donator """
 
-    pd_list = Project.objects.order_by("name")
+    pd_list = Project.objects.filter(finished=False).order_by("name")
 
     return render(request, "webapp/project_donator_list.html", context={"pd_list": pd_list})
 
@@ -416,3 +422,11 @@ def download_apk(request):
             return response
     
     raise Http404
+
+def donator_exit_project(request,pk):
+    """ Permite ao cientista finalizar o projeto """
+    project = get_object_or_404(Project, pk=pk)
+    userid = request.user.donator.id
+    datag = DataGive.objects.filter(project=project).filter(donator=userid)
+    datag.delete()
+    return redirect("webapp:myDprojects")

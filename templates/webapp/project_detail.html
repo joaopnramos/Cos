@@ -27,10 +27,10 @@
 
 {% endif %}
 
-{% comment %} {% if user.donator.is_donator %}
-    <p><a class="btn btn-warning" href="{% url 'webapp:DataGiveDeleteView' %}">Leave the Project</a></p>
+{% if user.donator.is_donator %}
+    <p><a class="btn btn-warning" href="{% url 'webapp:datagivedelete' pk=project.pk %}">Leave the Project</a></p>
    
-{% endif %}  {% endcomment %}
+{% endif %}
 
 
     
