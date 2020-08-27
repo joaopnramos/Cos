@@ -1,35 +1,81 @@
 {% extends "webapp/base.html" %}
-
 {% block body_block %}
-<div class="jumbotron">
-    
 
-    {% if underage %}
-    <h1>Please return to the main Page</h1>
-    <p>Underage cant provide any data!</p>
+<style>
+    body{
+        font-family: Montserrat, sans-serif;
 
-    {% elif registered %}
+    }
+</style>
 
+<head>
+    <style>
+        .helptext {
+            visibility: hidden;
+            display: none;
+        }
 
-    <h1>Thank you for registering</h1>
+        body {
+            color: rgb(0, 0, 0);
+            background-color: #f1f1f1;
+            text-align: right;
+        }
 
-    {% else %}
-    <h1>Register Here</h1>
-    <h3>Fill out the form:</h3>
-    <p>Please if you are underage dont regist or fake your age!</p>
+        h4 {
+            font-size: 19px;
+            line-height: 1.375em;
+            color: #ffffff;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
 
-    <form enctype="multipart/form-data" method="POST">
+        label {
+            color: #343a40;
+        }
 
+        .btn-secondary {
+            color: #fff;
+            background-color: #343a40;
+            border-color: #343a40;
+        }
 
-        {% csrf_token %}
-        {{ user_form.as_p }}
-        {{ donator_form.as_p }}
+        .card-header {
+            background-color: #343a40;
+        }
+    </style>
+</head>
+<br>
+<br>
+<br>
+<br>
 
-        <input type="submit" name="" value="Register">
-
-
-    </form>
-
-    {% endif %}
-    {% endblock %}
+<div class="d-flex p-4 justify-content-center">
+    <div class="card-deck text-right" style="width: auto;">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Registro Doador</h4>
+            </div>
+            <div class="card-body">
+                {% if registered %}
+                <h1>Conta criada!</h1>
+                <a href="{% url 'user_login' %}" class="btn btn-lg btn-block btn-secondary">Log In</a>
+                {% else %}
+                {% for message in messages %}
+                <div class="alert alert-success">
+                    <a class="close" href="#" data-dismiss="alert">×</a>
+                    {{ message }}
+                </div>
+                {% endfor %}
+                <form enctype="multipart/form-data" method="POST">
+                    {% csrf_token %}
+                    {{ user_form.as_p }}
+                    {{ donator_form.as_p }}
+                    <input type="submit" value="Register" class="btn btn-lg btn-block btn-secondary">
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+
+{% endif %}
+{% endblock %}

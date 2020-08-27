@@ -1,15 +1,78 @@
 {% extends 'webapp/base.html' %}
-
 {% block body_block %}
 
-<h1>Delete {{project.name}}?</h1>
+<style>
+    body {
+        color: rgb(0, 0, 0);
+        background-color: #f1f1f1;
+        text-align: center;
+        font-family: Montserrat, sans-serif;
+    }
 
-<form method="post">
-    {% csrf_token %}
+    h4 {
+        font-size: 30px;
+        line-height: 1.375em;
+        color: #ffffff;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
 
-    <input type="submit" class="btn btn-danger" value="Delete">
-    <a href="{% url 'webapp:detail' pk=project.pk %}">Cancel</a>
-</form>
+    h5 {
+        font-size: 20px;
+        line-height: 1.375em;
+        color: #000000;
+        margin-bottom: 30px;
+    }
+
+    label {
+        color: #343a40;
+    }
+
+    .btn-secondary {
+        color: #fff;
+        background-color: #343a40;
+        border-color: #343a40;
+    }
+
+    .card {
+        width: 25rem;
+    }
+
+    .card-header {
+        background-color: #343a40;
+    }
+</style>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="d-flex p-4 justify-content-center">
+    <div class="card-deck ">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header text-center">
+                <h4 class="my-0 font-weight-normal">Log In</h4>
+            </div>
+            <div class="card-body">
+                <h5>Delete {{project.name}}?</h5>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <input type="submit" class="btn btn-lg btn-danger" value="Delete">
+                    <a href="{% url 'webapp:detail' pk=project.pk %}">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock body_block %}
-

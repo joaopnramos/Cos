@@ -1,28 +1,76 @@
 {% extends "webapp/base.html" %}
 {% block body_block%}
 
-<div class="jumbotron">
-    <h1>Please Login</h1>
+<style>
+    body {
+        color: rgb(0, 0, 0);
+        background-color: #f1f1f1;
+        text-align: right;
+        font-family: Montserrat, sans-serif;
 
-    {% for message in messages %}
-        <div class="alert alert-success">
-            <a class="close" href="#" data-dismiss="alert">×</a>
-            {{ message }}
+    }
+    h4 {
+                font-size: 19px;
+                line-height: 1.375em;
+                color: #ffffff;
+                font-weight: 400;
+                margin-bottom: 30px;
+            }
+    label {
+        color: #343a40;
+    }
 
+    .btn-secondary {
+        color: #fff;
+        background-color: #343a40;
+        border-color: #343a40;
+    }
+
+    .card-header {
+        background-color: #343a40;
+    }
+</style>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="d-flex p-4 justify-content-center">
+    <div class="card-deck ">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header text-center">
+                <h4 class="my-0 font-weight-normal">Log In</h4>
+            </div>
+            <div class="card-body">
+                {% for message in messages %}
+                <div class="alert alert-success">
+                    <a class="close" href="#" data-dismiss="alert">×</a>
+                    {{ message }}
+                </div>
+                {% endfor %}
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="form-group">
+                        <a class="text-muted ml-2">
+                            <a href="{% url "password_reset" %}">Forgot Password?</a>
+                        </a>
+                    </div>
+                    <input type="submit" value="Login" class="btn btn-lg btn-block btn-secondary">
+                </form>
+            </div>
         </div>
-    {% endfor %}
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <div class="form-group">
-            <small class="text-muted ml-2">
-                <a href="{% url "password_reset" %}">Forgot Password?</a>
-            </small>
-        </div>
-        <input type="submit" value="Login">
-    </form>
-
-
+    </div>
 </div>
+
+
 
 {% endblock %}

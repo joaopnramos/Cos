@@ -1,38 +1,129 @@
 {% extends 'webapp/base.html' %}
 {% block body_block %}
 
-    <div class="jumbotron">
-        <h1>Welcome to the School Detail Page</h1>
-        <h1>School details:</h1>
-        <p>Name: {{ project.name }}</p>
-        <p>Description: {{ project.description}}</p>
+<style>
+    body {
+        color: #343a40;
+        background-color: #f1f1f1;
+        text-align: right;
+        font-family: Montserrat, sans-serif;
 
-        
+    }
+
+    h1 {
+        color: #343a40;
+    }
+
+    h3 {
+        text-align: center;
+    }
+
+    .jumbotron {
+        background-color: #ffffff;
+        color: #000000;
+        padding: 10px 30px;
+        font-family: Montserrat, sans-serif;
+    }
+
+    .a {
+        background-color: #343a40;
+    }
+</style>
+
+
+<div class="jumbotron">
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Project {{project.name}} </h2>
+                        <hr>
+                    </div>
+                    {% for message in messages %}
+                    <div class="alert alert-success">
+                        <a class="close" href="#" data-dismiss="alert">×</a>
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form enctype="multipart/form-data" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="id_name" class="col-4 col-form-label">Name</label>
+                                <div class="col-8">
+                                    <input id="id_name" name="name" placeholder="{{ project.name }}"
+                                        class="form-control here" required="required" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="id_description" class="col-4 col-form-label">Description</label>
+                                <div class="col-8">
+                                    <textarea required id="id_description" name="description"
+                                        placeholder="{{project.description}}" class="form-control here" type="text"
+                                        cols="20" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="id_sensorsChoice" class="col-4 col-form-label">Choose The Sensor you
+                                    Need</label>
+                                <div class="col-8">
+                                    <select required id="id_sensorsChoice" name="sensorsChoice" placeholder="----"
+                                        class="form-control here">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="id_periodChoice" class="col-4 col-form-label">Choose How Many Times the
+                                    Program will Run</label>
+                                <div class="col-8">
+                                    <select required id="id_periodChoice" name="periodChoice" placeholder="----"
+                                        class="form-control here" required="required"></select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="id_spacetimeChoice" class="col-4 col-form-label">Choose the period of time
+                                    between Data Analysis</label>
+                                <div class="col-8">
+                                    <select required id="id_spacetimeChoice" name="spacetimeChoice" placeholder="----"
+                                        class="form-control here"></select>
+                                </div>
+                            </div>
+                        </form>
+                        {% if project.finished %}
+                        <br>
+                        <br>
+                        <br>
+                        <h3>Este projeto encontra-se finalizado!</h3>
+                        
+                        {% else %}
+                    
+                        {% if project.scientist.user.id == request.user.id %}
+                        <div class="container">
+                            <a class="btn btn-lg btn-secondary"
+                                href="{% url 'webapp:update' pk=project.pk  %}">Update</a>
+                            <a class="btn btn-lg btn-secondary"
+                                href="{% url 'webapp:delete' pk=project.pk  %}">Delete</a>
+                            <a class="btn btn-lg btn-secondary" href="{% url 'webapp:finish' pk=project.pk  %}">Finish
+                                Project</a>
+                        {% endif %}
+
+                        {% endif %}
+                        {% if user.donator.is_donator %}
+                            <a class="btn btn-warning" href="{% url 'webapp:datagivedelete' pk=project.pk %}">Leave the Project</a>
+                        {% endif %}
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-{% if project.finished %}
-<h3>Este projeto encontra-se finalizado!</h3>
-
-{% else %}
-
-{% if project.scientist.user.id == request.user.id %}
-    <div class="container">
-        <p><a class="btn btn-warning" href="{% url 'webapp:update' pk=project.pk  %}">Update</a></p>
-        <p><a class="btn btn-warning" href="{% url 'webapp:delete' pk=project.pk  %}">Delete</a></p>
-        <p><a class="btn btn-warning" href="{% url 'webapp:finish' pk=project.pk  %}">Finish the project</a></p>
-    </div>
-{% endif %}
-
-
-
-{% endif %}
-
-{% if user.donator.is_donator %}
-    <p><a class="btn btn-warning" href="{% url 'webapp:datagivedelete' pk=project.pk %}">Leave the Project</a></p>
-   
-{% endif %}
-
-
-    
 
 {% endblock body_block %}

@@ -1,24 +1,45 @@
 {% extends 'webapp/base.html' %}
 {% block body_block %}
 
-<h1>
-    {% if not form.instance.pk %}
-    Create Project
+<style>
+    body {
+        color: #343a40;
+        background-color: #f1f1f1;
+        text-align: left;
+        font-family: Montserrat, sans-serif;
 
+    }
 
-    {% else %}
-    Update Project
+    h1 {
+        color: #343a40;
+    }
 
-    {% endif %}
-</h1>
-    <form method="POST">
-        {% csrf_token %}
+    .jumbotron {
+        background-color: #ffffff;
+        color: #000000;
+        padding: 10px 30px;
+        font-family: Montserrat, sans-serif;
+    }
 
-        {{form.as_p}}
+    .a {
+        background-color: #343a40;
+    }
+</style>
 
-        <input type="submit" class="btn btn-primary" value="Submit">
+<div class="jumbotron">
+    <div class="card mb-4 shadow-sm">
+        <div class="card border-bottom border-gray">
+            <h1>Create Project</h1>
+        </div>
 
-    </form>
-
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" class="btn btn-lg btn-secondary" value="Submit">
+            </form>
+        </div>
+    </div>
+</div>
 
 {% endblock body_block %}

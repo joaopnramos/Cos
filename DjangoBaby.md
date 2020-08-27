@@ -16,7 +16,7 @@ Comandos:
 >
 >__settings.py__
 >>
->>Where we are going to savee allof our project settings
+>>Where we are going to savee allof our project settings.
 >
 >__urls.py__
 >>
