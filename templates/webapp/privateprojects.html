@@ -1,0 +1,62 @@
+{% extends 'webapp/base.html' %}
+{% block body_block %}
+
+
+<style>
+  body {
+    font-family: Montserrat, sans-serif;
+
+  }
+
+  h1 {
+    color: black;
+  }
+
+  .jumbotron {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px 25px;
+    font-family: Montserrat, sans-serif;
+  }
+
+  .a {
+    background-color: #343a40;
+  }
+</style>
+
+
+{% if data %}
+<div class="jumbotron">
+  <div class="my-3 p-3 bg-white rounded shadow-sm">
+    <!-- <h1 class="border-bottom border-gray pb-2 mb-0">List of your Projects</h1> -->
+    {% if Finalized %}
+    <h1 class="border-bottom border-gray pb-2 mb-0">Here are your finalized projects</h1>
+    {% else %}
+    {% if active %}
+    <h1 class="border-bottom border-gray pb-2 mb-0">Here are your active Projects!</h1>
+    {% endif %}
+    <h1 class="border-bottom border-gray pb-2 mb-0">Here are your Projects!</h1>
+    {% endif %}
+    {% for project in data %}
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <a type="button" class="btn btn-lg btn-secondary" href="{{project.id}}">{{project.name}}</a>
+        <small>
+          <br>
+          - Description: {{project.description}}
+          <br>
+          - Sensors: {{project.sensorsChoice}}
+          <br>
+          - Amount of times program runs: {{project.periodChoice}}
+          <br>
+          - Time of analysis: {{project.spacetimeChoice}}
+          <br>
+        </small>
+      </p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% endblock body_block %}

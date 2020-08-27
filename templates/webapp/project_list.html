@@ -1,0 +1,55 @@
+{% extends 'webapp/base.html' %}
+{{% block body_block %}
+   
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<style>
+
+    body{
+        font-family: Montserrat, sans-serif;
+    }
+
+    h1{
+        color: black;
+    }
+
+    .jumbotron {
+        background-color: #ffffff;
+        color: #000000;
+        padding: 10px 25px;
+        font-family: Montserrat, sans-serif;
+    }
+
+    .a {
+        background-color: #343a40;
+    }
+</style>
+
+<div class="jumbotron">
+    <div class="my-3 p-3 bg-white rounded shadow-sm">
+        <h1 class="border-bottom border-gray pb-2 mb-0">List of all Projects</h1>
+        {% for project in projects %}
+        <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <a type="button" class="btn btn-lg btn-secondary" href="{{project.id}}">{{project.name}}</a>
+                <small>
+                    <br>
+                    - Description: {{project.description}}
+                    <br>
+                    - Sensors: {{project.sensorsChoice}}
+                    <br>
+                    - Amount of times program runs: {{project.periodChoice}}
+                    <br>
+                    - Time of analysis: {{project.spacetimeChoice}}
+                    <br>
+                </small>
+            </p>
+        </div>
+{% endfor %}
+    </div>
+</div>
+
+{% endblock body_block %}

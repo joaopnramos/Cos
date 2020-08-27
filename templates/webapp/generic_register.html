@@ -1,0 +1,105 @@
+{% extends "webapp/base.html" %}
+{% block body_block %}
+<br>
+<br>
+<br>
+<br>
+
+<head>
+    <style>
+        html {
+            font-size: 12px;
+        }
+
+        @media (min-width: 768px) {
+            html {
+                font-size: 16px;
+            }
+        }
+
+        .container {
+            max-width: 960px;
+        }
+
+        .pricing-header {
+            max-width: 700px;
+        }
+
+        .card-deck .card {
+            min-width: 220px;
+        }
+
+        body {
+            color: rgb(0, 0, 0);
+            background-color: #f1f1f1;
+            text-align: right;
+            font-family: Montserrat, sans-serif;
+
+        }
+
+        h4 {
+            font-size: 19px;
+            line-height: 1.375em;
+            color: #ffffff;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        label {
+            color: #343a40;
+        }
+
+        .btn-secondary {
+            color: #fff;
+            background-color: #343a40;
+            border-color: #343a40;
+        }
+
+        .card-header {
+            background-color: #343a40;
+        }
+    </style>
+</head>
+
+<div class="container p-4">
+    <div class="card-deck mb-3 text-center">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Cientista</h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mt-3 mb-4">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae quidem blanditiis delectus
+                        corporis, possimus officia sint sequi ex tenetur id impedit est pariatur iure animi non a
+                        ratione reiciendis nihil sed consequatur atque repellendus fugit perspiciatis rerum et. Dolorum
+                        consequuntur fugit deleniti, soluta fuga nobis. Ducimus blanditiis velit sit iste delectus
+                        obcaecati debitis omnis, assumenda accusamus cumque perferendis eos aut quidem! Aut, totam
+                        rerum, cupiditate quae aperiam voluptas rem inventore quas, ex maxime culpa nam soluta labore at
+                        amet nihil laborum? Explicabo numquam, sit fugit, voluptatem autem atque quis quam voluptate
+                        fugiat earum rem hic, reprehenderit quaerat tempore at. Aperiam.</p>
+                </ul>
+                <a href="{% url 'webapp:scientist_reg' %}" class="btn btn-lg btn-block btn-secondary">Criar Conta</a>
+            </div>
+        </div>
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Doador</h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mt-3 mb-4">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae quidem blanditiis delectus
+                        corporis, possimus officia sint sequi ex tenetur id impedit est pariatur iure animi non a
+                        ratione reiciendis nihil sed consequatur atque repellendus fugit perspiciatis rerum et. Dolorum
+                        consequuntur fugit deleniti, soluta fuga nobis. Ducimus blanditiis velit sit iste delectus
+                        obcaecati debitis omnis, assumenda accusamus cumque perferendis eos aut quidem! Aut, totam
+                        rerum, cupiditate quae aperiam voluptas rem inventore quas, ex maxime culpa nam soluta labore at
+                        amet nihil laborum? Explicabo numquam, sit fugit, voluptatem autem atque quis quam voluptate
+                        fugiat earum rem hic, reprehenderit quaerat tempore at. Aperiam.</p>
+
+                </ul>
+                <a href="{% url 'webapp:donator_reg' %}" class="btn btn-lg btn-block btn-secondary">Criar Conta</a>
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}

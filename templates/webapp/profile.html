@@ -1,0 +1,122 @@
+{% extends "webapp/base.html" %}
+{% block body_block %}
+
+<style>
+  .helptext {
+    visibility: hidden;
+    display: none;
+  }
+
+  body {
+    color: #343a40;
+    background-color: #f1f1f1;
+    text-align: right;
+    font-family: Montserrat, sans-serif;
+
+  }
+
+  h2 {
+    text-align: left;
+    font-size: 25px;
+    line-height: 1.375em;
+    color: #000000;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+
+  label {
+    color: #343a40;
+  }
+
+  .btn-secondary {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+  }
+
+  .card-header {
+    background-color: #343a40;
+  }
+
+  .jumbotron {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    padding: 100px 25px;
+    font-family: Montserrat, sans-serif;
+  }
+</style>
+
+
+<div class="jumbotron">
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Your Profile</h2>
+            <hr>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            {% for message in messages %}
+            <div class="alert alert-success">
+              <a class="close" href="#" data-dismiss="alert">×</a>
+              {{ message }}
+            </div>
+            {% endfor %}
+            <form enctype="multipart/form-data" method="POST">
+              {% csrf_token %}
+              <div class="form-group row">
+                <label for="id_username" class="col-4 col-form-label">User Name</label>
+                <div class="col-8">
+                  <input id="username" required id="id_username" name="username" placeholder="Username"
+                    class="form-control here" required="required" type="text">
+                  {{user.username}}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="id_first_name" class="col-4 col-form-label">First Name</label>
+                <div class="col-8">
+                  <input id="id_first_name" name="first_name" placeholder="First Name" class="form-control here"
+                    type="text">
+                  {{user.first_name}}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="id_last_name" class="col-4 col-form-label">Last Name</label>
+                <div class="col-8">
+                  <input id="id_last_name" name="last_name" placeholder="Last Name" class="form-control here"
+                    type="text">
+                  {{user.last_name}}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="id_email" class="col-4 col-form-label">Email</label>
+                <div class="col-8">
+                  <input id="id_email" name="email" placeholder="Email" class="form-control here" required="required"
+                    type="email">
+                  {{user.email}}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="id_password" class="col-4 col-form-label">New Password</label>
+                <div class="col-8">
+                  <input id="id_password" name="password" placeholder="New Password" class="form-control here"
+                    type="password">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="offset-4 col-8">
+                  <button name="submit" type="submit" class="btn btn-lg btn-secondary">Update My Profile</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
