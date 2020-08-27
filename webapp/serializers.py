@@ -3,7 +3,7 @@ from .models import DataGive, Data, Project
 
 
 class DataSerializer(serializers.ModelSerializer):
-    """ Serializes a user profile project """
+    """ Serializa a Data, ou seja, transforma em gson e disponibiliza """
 
     class Meta:
         model = Data
@@ -11,13 +11,13 @@ class DataSerializer(serializers.ModelSerializer):
         
     
 class ProjectSerializer(serializers.ModelSerializer):
-
+    """ Serializa o Projeto, ou seja, transforma em gson e disponibiliza """
     class Meta:
         model = Project
         fields = "__all__"
       
 class DataGiveSerializer(serializers.ModelSerializer):
-    
+    """ Serializa o DataGive, ou seja, transforma em gson e disponibiliza """
 
     class Meta:
         model = DataGive

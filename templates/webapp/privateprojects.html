@@ -6,19 +6,20 @@
     <title>Users</title>
   </head>
   <body>
-    {% if leave %}
-    <h1>Here are your Projects!</h1>
+    {% if Finalized %}
     
-
+    <h1>Here are your finalized projects</h1>
+    
     {% else %}
+    {% if active %}
+    <h1>Here are your active Projects!</h1>
+    
+    {% endif %}
     <h1>Here are your Projects!</h1>
 
     {% endif %}
 
     {% if data %}
-
-    
-
 
     <ol>
       {% for project in data %}

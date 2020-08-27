@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, ListView, DetailView, UpdateView, DeleteView
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.urls import reverse
 from .decorators import scientist_required, donator_required, owner_required
 from webapp import models
@@ -22,13 +22,12 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from .utils import tokengenerator
 from rest_framework.permissions import IsAuthenticated
-
+from cos.settings import DOWNLOAD_DIR
+import os
 
 
 # Start View
-
 class RegisterView(TemplateView):
-
     """ Pagina inicial do projeto """
 
     template_name = "webapp/generic_register.html"
@@ -95,7 +94,6 @@ def scietist_register(request):
                    "registered": registered})
 
 # Registro do donator!
-
 def donator_register(request):
 
     """ View destinada ao registo do donator """
@@ -175,28 +173,37 @@ def ProjectCreateView(request):
         project_form = ProjectForm
     return render(request, "webapp/project_form.html", {"form": project_form})
 
+#Demonstra uma lista de todos os proejetos aos cientistas
 @method_decorator([login_required, scientist_required], name='dispatch')
 class ProjectListView(ListView):
+    """ Esta vista serve para ver todos os projeto """ 
     context_object_name = "projects"
     model = models.Project
 
+#Serve para demonstrar os detalhes de um projeto
 @method_decorator([login_required], name='dispatch')
 class ProjectDetailView(DetailView):
+    """ Esta view serve para ver os detalhes do projeto """
     context_object_name = "project"
     model = models.Project
     template_name = "webapp/project_detail.html"
 
+#Serve para atulizar um projeto e só está disponivel para os cientistas e para os donos no projeto
 @method_decorator([login_required, scientist_required, owner_required], name='dispatch')
 class ProjectUpdateView(UpdateView):
+    """ Esta view serve para atualizar o projeto """
     model = models.Project
     fields = ("name", "description",)
     success_url = reverse_lazy('webapp:list')
 
+#Serve para apagar um projeto
 @method_decorator([login_required, scientist_required, owner_required], name='dispatch')
 class ProjectDeleteView(DeleteView):
+    """ Esta view serve para apagar um projeto """
     model = models.Project
     success_url = reverse_lazy("webapp:list")
 
+#Faz a entrada de um donator num projeto
 def DataGiveView(request, pk):
     """ Cria o objeto DataGive, ou seja, a partir da criação deste objeto o donator faz parte do projeto"""
 
@@ -216,6 +223,7 @@ def DataGiveView(request, pk):
         in_project = True
     return render(request, "webapp/project_registry.html", {"in_project": in_project})
 
+#Lista de todos projetos existentes disponiveis para o donator
 @login_required
 @donator_required
 def DonatorList(request):
@@ -243,6 +251,7 @@ def profileScientist(request):
     context = {'u_form': u_form}
     return render(request, 'webapp/profile.html', context)
 
+#Projetos dos proprios cientistas
 @login_required
 @scientist_required
 def privateScientistProjectView(request):
@@ -253,6 +262,7 @@ def privateScientistProjectView(request):
     context["data"] = projects_list
     return render(request, "webapp/privateprojects.html", context)
 
+#Projetos de quais o donator faz parte
 @login_required
 @donator_required
 def privateDonatorProjectView(request):
@@ -266,10 +276,10 @@ def privateDonatorProjectView(request):
 
     context["data"] = pj_list
     context["leave"] = True
-    print(context)
 
     return render(request, "webapp/privateprojects.html", context)
 
+#Serve para os cientistas finalizarem os projetos
 @login_required
 @scientist_required
 def finishthedproject(request,pk):
@@ -280,6 +290,7 @@ def finishthedproject(request,pk):
     pks = str(pk)
     return HttpResponseRedirect(reverse("index"))
 
+#Rest Api end point do model Data
 class DataViewSet(ModelViewSet):
     """ Permite adicionar dados aos projetos """
 
@@ -288,16 +299,19 @@ class DataViewSet(ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,) 
 
+#Rest Api end point do model Project
 class ProjectViewSet(ModelViewSet):
-    """ Permite adicionar dados aos projetos """
+    """ Permite adicionar projetos através de gson, basicamente é um end point """
 
     serializer_class = ProjectSerializer
     queryset = Project.objects.all()
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,) 
 
+#Rest Api end point do model DataGive
 class DataGiveViewSet(ModelViewSet):
-    """ Permite adicionar dados aos projetos """
+    """ Permite adicionar dados aos projetos através de gson, basicamente é um end point """
+
 
     serializer_class = DataGiveSerializer
     queryset = DataGive.objects.filter(givingFinished=False)
@@ -306,8 +320,10 @@ class DataGiveViewSet(ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ("donator",)
 
-
+#Verificação do token
 class Verification(View):
+    """ Esta view serve para fazer a verificação da conta através
+        to token enviado por email """
     def get(self, request, uidb64, token):
         try:
             id = force_text(urlsafe_base64_decode(uidb64))
@@ -327,17 +343,76 @@ class Verification(View):
             pass
         return redirect("user_login")
 
+#Projetos ativos cientista
+def MyActiveProjectsD(request):
+    """ View que demonstra os projetos ativos do utilizador donator  """
+    context = {}
+    pj_list = []
+    user = request.user.donator
+    datagive_objects = DataGive.objects.filter(givingFinished=False).filter(donator=user)
+    for pj in datagive_objects:
+        pj_list.append(pj.project)
+
+    context["data"] = pj_list
+    context["Finalized"] = False
 
 
+    return render(request, "webapp/privateprojects.html", context)
+
+#Projetos arquivados Donator
+def MyArchivedProjectsD(request):
+    """ View que demonstra os projetos arquivados do utilizador donator  """
+    context = {}
+    pj_list = []
+    user = request.user.donator
+    datagive_objects = DataGive.objects.filter(givingFinished=True).filter(donator=user)
+    for pj in datagive_objects:
+        pj_list.append(pj.project)
+
+    context["data"] = pj_list
+    context["Finalized"] = True
+    return render(request, "webapp/privateprojects.html", context)
+
+#Projetos ativos Cientista
+def MyActiveProjectsS(request):
+    """ View que demonstra os projetos ativos do utilizador  """
+    context = {}
+    pj_list = []
     
+    user = request.user.scientist
+    scientist_objects = Project.objects.filter(finished=False).filter(scientist=user)
+    for pj in scientist_objects:
+        pj_list.append(pj)
+
+    context["data"] = pj_list
+    context["Finalized"] = False
+
+    return render(request, "webapp/privateprojects.html", context)
+
+#Prpjetos arquivados Cientista
+def MyArchivedProjectsS(request):
+    """ View que demonstra os projetos arquivados do utilizador  """
+    context = {}
+    pj_list = []
+    user = request.user.scientist
+    scientist_objects = Project.objects.filter(finished=True).filter(scientist=user)
+    for pj in scientist_objects:
+        pj_list.append(pj)
+
+    context["data"] = pj_list
+    context["Finalized"] = True
+
+    return render(request, "webapp/privateprojects.html", context)
+
+#Download Apk
+def download_apk(request):
+    # Full path of file
+    file_path = DOWNLOAD_DIR + '\cos.apk'
+    print(file_path)
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type="application/force_download")
+            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+            return response
     
-    
-
-
-
-
-
-
-
-
-
+    raise Http404

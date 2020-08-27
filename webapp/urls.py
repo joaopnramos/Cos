@@ -14,6 +14,7 @@ urlpatterns = [
     path("register/", views.RegisterView.as_view(), name="register"),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     path("list/<int:pk>", views.ProjectDetailView.as_view(), name="detail"),
+    path('apks/', views.download_apk, name='download_apk'),
     
 
     path("",include(router.urls)),
@@ -26,14 +27,17 @@ urlpatterns = [
     path("update/<int:pk>", views.ProjectUpdateView.as_view(), name="update"),
     path("delete/<int:pk>", views.ProjectDeleteView.as_view(), name="delete"),
     path("finish/<int:pk>", views.finishthedproject, name="finish"),
+    path("list/archived", views.MyArchivedProjectsS, name="archived_list"),
+    path("list/active", views.MyActiveProjectsS, name="active_list"),
     
-    #path("donator/list_all/archived", views.DonatorList, name="donator_list"),
-    #path("donator/list_all/active", views.DonatorList, name="donator_list"),
     path("donator/list_all", views.DonatorList, name="donator_list"),
+    path("donator/list_all/archived", views.MyArchivedProjectsD, name="donator_list"),
+    path("donator/list_all/active", views.MyActiveProjectsD, name="donator_list"),
     path("donator/<int:pk>", views.DataGiveView, name="register_don_project"),
     path("donator/mydonatorprojects/", views.privateDonatorProjectView, name="myDprojects"),
     path("donator/mydonatorprojects/<int:pk>", views.ProjectDetailView.as_view(), name="donator_list_detail"),
     path("donator_register/", views.donator_register, name="donator_reg"),
+
 
     # path("uploaddonatorfiles/<int:pk>", views.uploadDonatorFilesView, name="uploadFiles"),
 ]
