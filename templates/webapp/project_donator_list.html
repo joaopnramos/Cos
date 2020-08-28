@@ -77,6 +77,8 @@
 
 <div class="jumbotron">
     <h1 class="border-bottom border-gray pb-2 mb-0">List of all Projects!</h1>
+    {% if pd_list %}
+    
     {% for project in pd_list %}
     <div class="row row-cols-1 row-cols-md-1">
         <div class="col-md-9">
@@ -108,12 +110,16 @@
                             {{project.spacetimeChoice}}
                         </div>
                     </div>
-                    <a type="button" class="btn btn-lg btn-secondary" href="{{project.id}}">Join Project </a>            
+                    <a type="button" class="btn btn-lg btn-secondary" href="{{project.id}}">Know More </a>            
                 </div>
             </div>
         </div>
     </div>
 {% endfor %}
+{% else %}
+<h4>Sorry but at this moment there are no projects to show!</h4>
+<h5>It seems that there are no new projects!</h5>
+{% endif %}
 </div>
 
 {% endblock body_block %}

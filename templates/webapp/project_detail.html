@@ -141,6 +141,10 @@
                                 href="{% url 'webapp:delete' pk=project.pk  %}">Delete</a>
                             <a class="btn btn-lg btn-secondary" href="{% url 'webapp:finish' pk=project.pk  %}">Finish
                                 Project</a>
+                            <a class="btn btn-lg btn-secondary" href="{% url 'webapp:export_data' pk=project.pk  %}">Download Data from the project</a>
+                            {{number_of_donators}}
+                            {{number_of_data}}
+                            {{created_date}}
                             {% endif %}
 
                             {% endif %}
@@ -148,6 +152,7 @@
                             <a class="btn btn-lg btn-secondary" href="{% url 'webapp:datagivedelete' pk=project.pk %}">Leave the
                                 Project</a>
                             {% endif %}
+                            
                         </div>
                     </div>
                 </div>

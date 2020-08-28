@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import *
+from webapp.choices import SENSORS_CHOICES
 # from django.core.validators import MinLengthValidator, MaxValueValidator
 
 #Form de criar user em geral!
@@ -66,7 +67,9 @@ class ProjectForm(forms.ModelForm):
         "sensorsChoice": "Choose The Sensor You Need",
         "periodChoice":"Choose How Many Time The Program Will Run",
         "spacetimeChoice": "Choose The period of time beetween data analysis" }
+    
 
+    sensorsChoice = forms.MultipleChoiceField(choices=SENSORS_CHOICES)
     description = forms.CharField(required=True, widget=forms.Textarea(attrs={"rows":5, "cols":20}))
     # name = forms.CharField(max_length=100, required=True)
 

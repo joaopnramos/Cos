@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
-
+from multiselectfield import MultiSelectField
 from webapp.choices import PERIOD_CHOICES ,SPACE_TIME_CHOICES, SENSORS_CHOICES
 
 #Token addition to user profile
@@ -49,6 +49,7 @@ class Donator(models.Model):
 class Project(models.Model):
     """ Objeto Projeto, criado apenas pelo cientista e ofere todos as
         caracteristicas desejasdas pelo cientista """
+    created_at = models.DateTimeField(auto_now_add=True)
     owner = models.IntegerField()
     scientist = models.ForeignKey(Scientist, on_delete=models.CASCADE, related_name="scientist")
     donator = models.ManyToManyField(Donator, blank=True)
@@ -56,7 +57,7 @@ class Project(models.Model):
     description = models.CharField(max_length=500)
     periodChoice = models.CharField(max_length=2, choices=PERIOD_CHOICES)
     spacetimeChoice = models.CharField(max_length=2, choices=SPACE_TIME_CHOICES)
-    sensorsChoice = models.CharField(max_length=2, choices=SENSORS_CHOICES)
+    sensorsChoice = MultiSelectField(choices=SENSORS_CHOICES)
     finished = models.BooleanField(default=False)
 
 
@@ -76,10 +77,15 @@ class Project(models.Model):
 class Data(models.Model):
     """ A partir deste objeto é possiver fornecer os dados recolhidos a cada projeto """
 
+    owner = models.ForeignKey(Donator, on_delete=models.CASCADE, related_name="data")
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="data")
-    data = models.CharField( max_length=50)
+    alls = models.CharField( max_length=50)
+    camera = models.CharField( max_length=50)
+    light = models.CharField( max_length=50)
+    ground = models.CharField( max_length=50)
+    
     def __str__(self):
-        return "informação deste projeto" + self.data
+        return "informação deste projeto" + self.alls
 
 #Model que permite ligar o donator aos projects
 class DataGive(models.Model):
@@ -95,5 +101,6 @@ class DataGive(models.Model):
             este projeto ainda é passivel de requisição de dados """
         self.givingFinished = True
         return self.givingFinished
+
     
     

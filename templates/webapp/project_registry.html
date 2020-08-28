@@ -61,15 +61,15 @@
         <div class="card mb-4 shadow-sm">
             <div class="card-header text-center">
                 {% if in_project %}
-                <h4>Thank you for registering</h4>
+                <h4>Thank you for being a part of this project</h4>
                 <a href="{% url 'webapp:donator_list' %}" class="btn btn-lg btn-light" type="button">Back to List</a>
                 {% else %}
-                <h4>Register Here</h4>
+                <h4>Know More Here</h4>
             </div> 
             <div class="card-body">
                 <form enctype="multipart/form-data" method="POST">
                     {% csrf_token %}
-                    <h5>You really want to be part of this project?</h5>
+                    <h5>To know more about the project you must join. Confirm registry?</h5>
                     <input type="submit" class="btn btn-lg btn-secondary" name="" value="Yes">
                     <a href="{% url 'webapp:donator_list' %}" class="btn btn-lg btn-danger" type="button">No</a>
                 </form>

@@ -96,7 +96,7 @@
               <div class="form-group row">
                 <label for="id_first_name" class="col-4 col-form-label">First Name: </label>
                 <div class="col-4 text-left border-bottom">
-                  {{user.scientist.first_name}}
+                  {{request.user.scientist.first_name}}
                 </div>
                 <div class="col-4">
                   <input id="id_first_name" name="first_name" placeholder="First Name" class="form-control here"
@@ -106,7 +106,7 @@
               <div class="form-group row">
                 <label for="id_last_name" class="col-4 col-form-label">Last Name: </label>
                 <div class="col-4 text-left border-bottom">
-                  {{user.scientist.last_name}}
+                  {{request.user.scientist.last_name}}
                 </div>
                 <div class="col-4">
                   <input id="id_last_name" name="last_name" placeholder="Last Name" class="form-control here"
