@@ -24,7 +24,7 @@
     .jumbotron {
         background-color: #ffffff;
         color: #000000;
-        font-size: 13px !important;        
+        font-size: 15px !important;        
         padding: 100px 30px;
         font-family: Montserrat, sans-serif;
     }
@@ -92,38 +92,53 @@
                         <form enctype="multipart/form-data" method="POST">
                             {% csrf_token %}
                             <div class="form-group row">
-                                <label for="id_name" class="col-4 col-form-label">Name</label>
+                                <label for="id_name" class="col-4 col-form-label">Name: </label>
                                 <div class="col-8 text-left border-bottom">
                                     {{ project.name }}
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="id_description" class="col-4 col-form-label">Description</label>
+                                <label for="id_description" class="col-4 col-form-label">Description: </label>
                                 <div class="col-8 text-left border-bottom">
                                     {{project.description}}
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="id_sensorsChoice" class="col-4 col-form-label">Choose The Sensor you
-                                    Need</label>
+                                <label for="id_sensorsChoice" class="col-4 col-form-label">Sensors Used: </label>
                                 <div class="col-8 text-left border-bottom">
                                     {{project.sensorsChoice}}
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="id_periodChoice" class="col-4 col-form-label">Choose How Many Times the
-                                    Program will Run</label>
+                                <label for="id_periodChoice" class="col-4 col-form-label">Amount of Times Program will run: </label>
                                 <div class="col-8 text-left border-bottom">
                                     {{project.periodChoice}}
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="id_spacetimeChoice" class="col-4 col-form-label">Choose the period of time
-                                    between Data Analysis</label>
+                                <label for="id_spacetimeChoice" class="col-4 col-form-label">Period of time between Data Analysis: </label>
                                 <div class="col-8 text-left border-bottom">
                                     {{project.spacetimeChoice}}
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label for="id_spacetimeChoice" class="col-4 col-form-label">Number of Donators: </label>
+                                <div class="col-8 text-left border-bottom">
+                                    {{number_of_donators}}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="id_spacetimeChoice" class="col-4 col-form-label">Number of Data collected: </label>
+                                <div class="col-8 text-left border-bottom">
+                                    {{number_of_data}}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="id_spacetimeChoice" class="col-4 col-form-label">Creation Date: </label>
+                                <div class="col-8 text-left border-bottom">
+                                    {{created_date}}
+                                </div>
+                            </div>                      
                         </form>
                         {% if project.finished %}
                         <br>
@@ -141,12 +156,8 @@
                                 href="{% url 'webapp:delete' pk=project.pk  %}">Delete</a>
                             <a class="btn btn-lg btn-secondary" href="{% url 'webapp:finish' pk=project.pk  %}">Finish
                                 Project</a>
-                            <a class="btn btn-lg btn-secondary" href="{% url 'webapp:export_data' pk=project.pk  %}">Download Data from the project</a>
-                            {{number_of_donators}}
-                            {{number_of_data}}
-                            {{created_date}}
+                            <a class="btn btn-lg btn-secondary" href="{% url 'webapp:export_data' pk=project.pk  %}">Download Data</a>
                             {% endif %}
-
                             {% endif %}
                             {% if user.donator.is_donator %}
                             <a class="btn btn-lg btn-secondary" href="{% url 'webapp:datagivedelete' pk=project.pk %}">Leave the

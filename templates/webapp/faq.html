@@ -1,0 +1,198 @@
+{% extends "webapp/base.html" %}
+{% block body_block %}
+
+<style>
+  .helptext {
+    visibility: hidden;
+    display: none;
+  }
+
+  body {
+    color: #343a40;
+    background-color: #f1f1f1;
+    text-align: left;
+    letter-spacing: 4px;
+    font-family: Montserrat, sans-serif;
+
+  }
+
+  .btn-secondary {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+  }
+
+  h4 {
+    font-size: 19px;
+    line-height: 1.375em;
+    color: #ffffff;
+    font-weight: 400;
+    margin-bottom: 30px;
+  }
+
+  label {
+    color: #4573a1;
+  }
+
+  .card-header {
+    background-color: #ffffff;
+  }
+
+  .panel-heading {
+    color: #fff !important;
+    background-color: #343a40 !important;
+    padding: 25px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+
+  .jumbotron {
+    background-color: #ffffff;
+    color:#343A40;
+    padding: 10px 25px;
+    font-family: Montserrat, sans-serif;
+  }
+  
+</style>
+
+<div class="jumbotron">
+  <h1>Frequently Asked Questions</h1>
+  <div class="col-md-9">
+    <h2>Who we are</h2>
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+              Basic Info</a>
+          </h4>
+        </div>
+        <div id="collapse1" class="panel-collapse collapse">
+          <div class="panel-body">We are a computer engineering student duo who want to make a difference and develop applications not only to learn but to improve the world.<br>
+            
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+              Mariana</a>
+          </h4>
+        </div>
+        <div id="collapse2" class="panel-collapse collapse">
+          <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+            commodo consequat.</div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+              João</a>
+          </h4>
+        </div>
+        <div id="collapse3" class="panel-collapse collapse">
+          <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+            commodo consequat.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <h2>Accounts</h2>
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+              How to get an account</a>
+          </h4>
+        </div>
+        <div id="collapse4" class="panel-collapse collapse">
+          <div class="panel-body">If you are a scientist in need of data for research, you need to click register and select the scientist option, you will need to give us and email, personal and job information, phone and BI.<br>
+          If you are a possible donor, and want to join a project and help in research, you need to click register and select the donor option, you will need to give us an email and age, minors are not allowed to participate.
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+              Donor</a>
+          </h4>
+        </div>
+        <div id="collapse5" class="panel-collapse collapse">
+          <div class="panel-body">Donors welcome! Without you this project is nothing. Everything done in this program requires your data</div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">
+              Scientist</a>
+          </h4>
+        </div>
+        <div id="collapse6" class="panel-collapse collapse">
+          <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+            commodo consequat.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <h2>Other Questions</h2>
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">
+              Where to Download App</a>
+          </h4>
+        </div>
+        <div id="collapse7" class="panel-collapse collapse">
+          <div class="panel-body">To download the app you must register and log in as a donor. A download link will show up in the home page.</div>
+        </div>
+      </div>
+      <!-- <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+              Collapsible Group 2</a>
+          </h4>
+        </div>
+        <div id="collapse8" class="panel-collapse collapse">
+          <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+            commodo consequat.</div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+              Collapsible Group 3</a>
+          </h4>
+        </div>
+        <div id="collapse9" class="panel-collapse collapse">
+          <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+            commodo consequat.</div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+{% endblock %}

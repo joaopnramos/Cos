@@ -13,7 +13,7 @@
     body {
       font: 400 15px Lato, sans-serif;
       line-height: 1.8;
-      color: #ffffff;
+      color: #000000;
       text-align: left;
       font-family: Montserrat, sans-serif;
 
@@ -29,7 +29,7 @@
     h2 {
       font-size: 24px;
       text-transform: uppercase;
-      color: #091929;
+      color: #221663;
       font-weight: 600;
       margin-bottom: 30px;
       text-align: center;
@@ -39,7 +39,7 @@
     h4 {
       font-size: 19px;
       line-height: 1.375em;
-      color: #1f72c4;
+      color: #362c72;
       font-weight: 400;
       margin-bottom: 30px;
     }
@@ -172,20 +172,15 @@
   <!-- Container (About Section) -->
   <div class="container-fluid bg-grey">
     <div class="row">
-      <div class="col-sm-4 text-center h-75">
+      <div class="col-sm-4 text-center">
         <span class="glyphicon glyphicon-globe logo slideanim"></span>
       </div>
       <div class="col-sm-8">
-        <h2>Our Values</h2><br>
-        <h4><strong>MISSION:</strong> Our mission lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-          ullamco laboris nisi ut aliquip ex ea commodo consequat.</h4><br>
-        <p><strong>VISION:</strong> Our vision Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat.</p>
+        <h2>Who We Are</h2><br>
+        <h4><strong>OBJECTIVE:</strong> We are a computer engineering duo from Portugaç who wanted to create an app that allows science 
+          researchers to use data collected from everyday's people phones for research.</h4><br>
+        <p><strong>HOW WE'RE DOING IT:</strong> Using a combination of knowledge we learned in the three years of our bachelors, some Django, Bootstrap, and Android Studio, 
+          we were able to not only create a functional website, but also an application for android devices to collect said data for research.</p>
         {% if user.donator.is_donator %}
         <a href="{% url "webapp:download_apk" %}">Download Here</a>
         {% endif %}
@@ -199,43 +194,43 @@
     <h4>What we offer</h4>
     <br>
     <div class="row slideanim">
-      <div class="col-sm-4">
+      <div class="col">
         <span class="glyphicon glyphicon-off logo-small"></span>
         <h4>POWER</h4>
-        <p>Lorem ipsum dolor sit amet..</p>
+        <p>Our app works fast and efficiently.</p>
       </div>
-      <div class="col-sm-4">
+      <div class="col">
         <span class="glyphicon glyphicon-heart logo-small"></span>
-        <h4>LOVE</h4>
-        <p>Lorem ipsum dolor sit amet..</p>
+        <h4>PRIVACY</h4>
+        <p>The data provided will always require the consent of donors.</p>
       </div>
-      <div class="col-sm-4">
+      <!-- <div class="col-sm-4">
         <span class="glyphicon glyphicon-lock logo-small"></span>
         <h4>JOB DONE</h4>
         <p>Lorem ipsum dolor sit amet..</p>
-      </div>
+      </div> -->
     </div>
     <br><br>
     <div class="row slideanim">
-      <div class="col-sm-4">
+      <!-- <div class="col-sm-4">
         <span class="glyphicon glyphicon-leaf logo-small"></span>
         <h4>GREEN</h4>
         <p>Lorem ipsum dolor sit amet..</p>
-      </div>
-      <div class="col-sm-4">
+      </div> -->
+      <div class="col">
         <span class="glyphicon glyphicon-certificate logo-small"></span>
         <h4>CERTIFIED</h4>
-        <p>Lorem ipsum dolor sit amet..</p>
+        <p>Endorsed by: *adicionar o nome do site dos cientistas*</p>
       </div>
-      <div class="col-sm-4">
+      <div class="col">
         <span class="glyphicon glyphicon-wrench logo-small"></span>
         <h4 style="color:#303030;">HARD WORK</h4>
-        <p>Lorem ipsum dolor sit amet..</p>
+        <p>We worked hard for months to make sure this worked.</p>
       </div>
     </div>
   </div>
 
-  <h2>What our customers say</h2>
+  <h2></h2>
   <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
@@ -247,14 +242,13 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
       <div class="item active">
-        <h4>"This company is the best. I am so happy with the result!"<br><span>Michael Roe, Vice President, Comment
-            Box</span></h4>
+        <h4>"This app is the best!"<br><span>Researchers around the World</span></h4>
       </div>
       <div class="item">
-        <h4>"One word... WOW!!"<br><span>John Doe, Salesman, Rep Inc</span></h4>
+        <h4>"One word... WOW!!"<br><span>Prof. Daniel</span></h4>
       </div>
       <div class="item">
-        <h4>"Could I... BE any more happy with this company?"<br><span>Chandler Bing, Actor, FriendsAlot</span></h4>
+        <h4>"One Large Pepperoni Pizza Please"<br><span>Me, at 2 am, having worked for 15 hours</span></h4>
       </div>
     </div>
 
@@ -272,12 +266,12 @@
 
   <!-- Container (Contact Section) -->
   <div id="contact" class="container-fluid bg-grey">
-    <h2 class="text-center">CONTACT</h2>
+    <h2 class="text-center">CONTACT US</h2>
     <div class="row">
       <div class="col-sm-5">
-        <p>Contact us and we'll get back to you within 24 hours.</p>
+        <p>Contact us and we'll get back to you.</p>
         <p><span class="glyphicon glyphicon-map-marker"></span> Lisbon, PT</p>
-        <p><span class="glyphicon glyphicon-phone"></span> +351 111111111</p>
+        <p><span class="glyphicon glyphicon-phone"></span> +351 932127740</p>
         <p><span class="glyphicon glyphicon-envelope"></span> citizensonscience2020@gmail.com</p>
       </div>
       <div class="col-sm-7 slideanim">

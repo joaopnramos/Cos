@@ -213,13 +213,15 @@ class ProjectDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProjectDetailView, self).get_context_data(**kwargs)
         """ numero de donators """
-        number_donators = DataGive.objects.filter(project=self.kwargs.get('pk')).count()
+        number_donators = DataGive.objects.filter(
+            project=self.kwargs.get('pk')).count()
         """ numero de donates """
-        number_of_data = Data.objects.filter(project=self.kwargs.get('pk')).count()
+        number_of_data = Data.objects.filter(
+            project=self.kwargs.get('pk')).count()
 
         """ quando o projeto foi criado """
         created_date = Project.objects.get(id=self.kwargs.get('pk'))
-        
+
         context['number_of_donators'] = number_donators
         context['number_of_data'] = number_of_data
         context['created_date'] = created_date.created_at
@@ -233,7 +235,8 @@ class ProjectDetailView(DetailView):
 class ProjectUpdateView(UpdateView):
     """ Esta view serve para atualizar o projeto """
     model = models.Project
-    fields = ("name", "description", "sensorsChoice", "periodChoice", "spacetimeChoice")
+    fields = ("name", "description", "sensorsChoice",
+              "periodChoice", "spacetimeChoice")
     success_url = reverse_lazy('webapp:list')
 
 # Serve para apagar um projeto
@@ -251,7 +254,7 @@ class ProjectDeleteView(DeleteView):
 def DataGiveView(request, pk):
     """ Cria o objeto DataGive, ou seja, a partir da criação deste objeto o donator faz parte do projeto"""
 
-    pro =  Project.objects.filter(id=pk)
+    pro = Project.objects.filter(id=pk)
     for pr in pro:
         if pr.finished:
             return redirect("webapp:myDprojects")
@@ -285,9 +288,9 @@ def DonatorList(request):
     dt = DataGive.objects.filter(donator=request.user.donator.id)
     for i in dt:
         list_of_not.append(i.project.id)
-    
-    pd_list = Project.objects.filter(finished=False).order_by("name").exclude(id__in=list_of_not)
 
+    pd_list = Project.objects.filter(finished=False).order_by(
+        "name").exclude(id__in=list_of_not)
 
     return render(request, "webapp/project_donator_list.html", context={"pd_list": pd_list})
 
@@ -298,19 +301,83 @@ def DonatorList(request):
 @scientist_required
 def profileScientist(request):
     """ Perfil do cientista """
-
+    user = request.user
     if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST, instance=request.user)
-        if u_form.is_valid():
-            u_form.save()
+        u_form = UserUpdateForm(data=request.POST)
+        s_form = ScientistUpdate(data=request.POST)
+
+        if u_form.is_valid() and s_form.is_valid():
+            users = request.user.scientist
+
+            emails = user.email
+            first_name = users.first_name
+            last_name = users.last_name
+            uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+
+            if request.POST.get("first_name"):
+                users.first_name = request.POST['first_name']
+                users.save()
+
+            if request.POST.get("work_local"):
+                users.work_local = request.POST['work_local']
+                users.save()
+
+            if request.POST.get("bi"):
+                bi = s_form.cleaned_data.get("bi")
+                bis = Scientist.objects.order_by("bi")
+                for u in bis:
+                    if bi == u.bi:
+                        messages.success(request, 'This BI is already in use.')
+                        return redirect('/webapp/profile/')
+                users.bi = request.POST['bi']
+                users.save()
+
+            if request.POST.get("last_name"):
+                users.last_name = request.POST['last_name']
+                users.save()
+
+            if request.POST.get("address"):
+                users.address = request.POST['address']
+                users.save()
+
+            if request.POST.get("email"):
+                user.email = request.POST["email"]
+                user.save()
+
+            if request.POST.get("password"):
+                password = request.POST["password"]
+
+                user.is_active = False
+                domain = get_current_site(request).domain
+                link = reverse("activate", kwargs={
+                               "uidb64": uidb64, "token": tokengenerator.make_token(user)})
+                email_subject = "Activate you accounts"
+                activate_url = "http://" + domain+link
+                email_body = "Hi " + first_name + " " + last_name + "! \n" \
+                    "Please use this link to verify the password change:\n" + activate_url \
+                    + "\nIf this isn't you, ignore this email." + "\n\nFrom the CoS Team."
+                email = EmailMessage(
+                    email_subject, email_body, "noreply@semycolon.com", [emails],)
+                email.send(fail_silently=False)
+                user.set_password(password)  # replace with your real password
+                user.save()
+
+                return redirect("webapp:p_changed")
+
             messages.success(request, f'Your account has been updated!')
             return redirect('/webapp/profile/')
     else:
-        u_form = UserUpdateForm(instance=request.user)
+        u_form = UserUpdateForm()
+        s_form = ScientistUpdate()
 
-    context = {'u_form': u_form}
+    context = {'u_form': u_form, "s_form": s_form}
     return render(request, 'webapp/profile.html', context)
 
+class PasswordChangedView(TemplateView):
+    """ Pagina inicial do projeto """
+
+    template_name = "webapp/password_change.html"
+    
 # Projetos dos proprios cientistas
 
 
@@ -521,25 +588,22 @@ def faq(request):
 
 def export_data(request, pk):
     """ Serve para traduzir as choices """
-    sensors_dict = {"a":"alls", "c":"camera", "l":"light", "g":"ground"}
+    sensors_dict = {"a": "alls", "c": "camera", "l": "light", "g": "ground"}
     """ Recolhe os sensores requesitados pelo cientistas """
     sensors_requested = []
     alls_data = []
-    camera_data=[]
+    camera_data = []
     light_data = []
-    ground_data=[]
-    data_export=[]
+    ground_data = []
+    data_export = []
     length = 0
-
 
     """ Função para recolher os sensores do projeto """
     pj = Project.objects.get(pk=pk)
-    
 
     for i in pj.sensorsChoice:
         a = sensors_dict[i]
         sensors_requested.append(a)
-
 
     for sensor in sensors_requested:
         """ Organizado por utilizador de forma a poder ser recolhida a informação de uma forma mais simples """
@@ -549,17 +613,17 @@ def export_data(request, pk):
                 alls_data.append(a)
 
             elif sensor == "camera":
-                 a = re.sub('[()]', '', data[0])
-                 camera_data.append(a)
+                a = re.sub('[()]', '', data[0])
+                camera_data.append(a)
 
             elif sensor == "light":
-                 a = re.sub('[()]', '', data[0])
-                 light_data.append(a)
+                a = re.sub('[()]', '', data[0])
+                light_data.append(a)
 
             elif sensor == "ground":
-                 a = re.sub('[()]', '', data[0])
-                 ground_data.append(a)
-    
+                a = re.sub('[()]', '', data[0])
+                ground_data.append(a)
+
     if len(alls_data) != 0:
         length = len(alls_data)
     else:
@@ -568,23 +632,24 @@ def export_data(request, pk):
         else:
             if len(light_data) != 0:
                 length = len(light_data)
-            
+
             else:
                 length = len(ground_data)
 
-    
     response = HttpResponse(content_type="text/csv")
     writer = csv.writer(response)
-    response['Content-Disposition'] = 'attachment; filename="{}_data.csv"'.format(pj.name)
+    response['Content-Disposition'] = 'attachment; filename="{}_data.csv"'.format(
+        pj.name)
     writer.writerow(sensors_requested)
 
     a = 0
     leng = length
-    for i in range (leng):
+    for i in range(leng):
         if int(pj.periodChoice) == a:
-                writer.writerow(["**************************Another user***********************"])
-                a = 0
-        a = a +1 
+            writer.writerow(
+                ["**************************Another user***********************"])
+            a = 0
+        a = a + 1
         data_export = []
         if alls_data:
             data_export.append(alls_data[i])
@@ -597,15 +662,8 @@ def export_data(request, pk):
 
         if ground_data:
             data_export.append(ground_data[i])
-        
+
         writer.writerow(data_export)
         i = i+1
-        
-        
-        
-
 
     return response
-
-
-    

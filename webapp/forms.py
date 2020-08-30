@@ -74,10 +74,18 @@ class ProjectForm(forms.ModelForm):
     # name = forms.CharField(max_length=100, required=True)
 
 #Form que serve para dar update ao user!
-class UserUpdateForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['username', 'email']
+class UserUpdateForm(forms.Form):
+
+    email = forms.EmailField(required=False)
+    password = forms.CharField( max_length=250, required=False)
+
+class ScientistUpdate(forms.Form):
+
+    first_name = forms.CharField(required=False)
+    last_name = forms.CharField(required=False)
+    address = forms.CharField(required=False)
+    work_local = forms.CharField(required=False)
+    bi = forms.IntegerField(required=False)
 
 # class DataForm(forms.Form):
 #     file = forms.FileField()

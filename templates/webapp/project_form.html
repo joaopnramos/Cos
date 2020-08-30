@@ -3,43 +3,36 @@
 
 <style>
     body {
-        color: #000000;
+        color: #343a40;
         background-color: #f1f1f1;
-        text-align: left;
+        text-align: right;
         letter-spacing: 4px;
         font-family: Montserrat, sans-serif;
 
     }
 
-    h1 {
-        color: #343a40;
+    h2 {
+        color: #000000;
+        text-align: left;
+        font-weight: bolder;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        text-align: center;
     }
 
     .jumbotron {
         background-color: #ffffff;
         color: #000000;
-        padding: 10px 25px;
+        font-size: 15px !important;        
+        padding: 100px 30px;
         font-family: Montserrat, sans-serif;
     }
 
-    .jumbotron h1 {
-        font-size: 63px;
-        color: #303030;
-    }
-
-    label {
-        display: inline-block;
-        max-width: 100%;
-        font-size: 15px;
-        margin-bottom: 5px;
-        font-weight: 700;
-    }
-
-    input, select {
-        color: #000000;
-        font-size: 15px;
-        letter-spacing: 4px;
-        font-family: Montserrat, sans-serif;
+    .a {
+        background-color: #343a40;
     }
 
     .btn-lg {
@@ -49,37 +42,95 @@
         font-size: 15px;
         line-height: 1.3333333;
         border-radius: 6px;
-    }    
-    
+    }
+
     .btn-secondary {
         color: #fff;
-        background-color: #343A40;
-        border-color: #343A40;
-    }
-
-    .a {
         background-color: #343a40;
+        border-color: #343a40;
     }
+
+    .col-md-12 {
+        position: relative;
+        min-height: 1px;
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+
+    .col-4 {
+        padding-top: 5px;
+    }
+
+    .alert-success {
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+    }
+
+    .alert {
+        padding: 15px;
+        margin-left: 50%;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
 </style>
-
+  
 <div class="jumbotron">
-    <div class="card mb-4 shadow-sm">
-        <div class="card border-bottom border-gray">
-            {% if not form.instance.pk %}
-            <h1>Create Project</h1>
-            {% else %}
-            <h1>Update Project</h1>
-            {% endif %}
-        </div>
-
-        <div class="card-body">
-            <form method="POST">
-                {% csrf_token %}
-                {{form.as_p}}
-                <input type="submit" class="btn btn-lg btn-secondary" value="Submit">
-            </form>
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 border-bottom">
+                        {% if not form.instance.pk %}
+                        <h2>Create Project</h2>
+                        {% else %}
+                        <h2>Update Project</h2>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="id_name" class="col-4 col-form-label">Name: </label>
+                                <div class="col-4 text-left">
+                                    {{ form.name }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="id_description" class="col-4 col-form-label">Description: </label>
+                                <div class="col-4 text-left">
+                                    {{form.description}}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="id_sensorsChoice" class="col-4 col-form-label">Sensors Used: </label>
+                                <div class="col-4 text-left">
+                                    {{form.sensorsChoice}}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="id_periodChoice" class="col-4 col-form-label">Amount of Times Program will
+                                    run: </label>
+                                <div class="col-4 text-left">
+                                    {{form.periodChoice}}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="id_spacetimeChoice" class="col-4 col-form-label">Period of time between Data
+                                    Analysis: </label>
+                                <div class="col-4 text-left">
+                                    {{form.spacetimeChoice}}
+                                </div>
+                            </div>
+                            <input type="submit" class="btn btn-lg btn-secondary" value="Submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
 {% endblock body_block %}
