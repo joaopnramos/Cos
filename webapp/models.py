@@ -22,8 +22,6 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 #Cientista!
 class Scientist(models.Model):
     user = models.OneToOneField(User, related_name='scientist', on_delete=models.CASCADE)
-    phone = models.PositiveIntegerField(unique=True)
-    image = models.ImageField()
     email = models.EmailField(max_length=254, null=False, unique=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)

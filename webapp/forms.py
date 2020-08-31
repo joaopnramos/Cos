@@ -31,7 +31,6 @@ class ScientistForm(forms.Form):
     address = forms.CharField(required=True)
     work_local = forms.CharField(required=True)
     bi = forms.IntegerField(required=True)
-    phone = forms.IntegerField(required=True)
     
     
     # def clean_phone(self, *args, **kwargs):

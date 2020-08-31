@@ -49,7 +49,6 @@ def scientist_register(request):
             emails = user_form.cleaned_data.get("email")
             first_name = scientist_form.cleaned_data.get("first_name")
             last_name = scientist_form.cleaned_data.get("last_name")
-            phone = scientist_form.cleaned_data.get("phone")
             address = scientist_form.cleaned_data.get("address")
             work_local = scientist_form.cleaned_data.get("work_local")
             bi = scientist_form.cleaned_data.get("bi")
@@ -58,9 +57,9 @@ def scientist_register(request):
             for u in bis:
                 if bi == u.bi:
                     return messages.error(request, 'This BI already exists. Use another BI.')
-            if 10000000 < bi < 99999999 and 90000000 < phone < 999999999:
+            if 10000000 < bi < 99999999:
                 scientist_profile = Scientist(
-                    first_name=first_name, last_name=last_name, address=address, work_local=work_local, bi=bi, phone=phone, email=emails)
+                    first_name=first_name, last_name=last_name, address=address, work_local=work_local, bi=bi, email=emails)
                 user = user_form.save()
                 user.set_password(user.password)
                 user.is_active = False
