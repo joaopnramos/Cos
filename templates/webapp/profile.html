@@ -61,6 +61,10 @@
     padding-right: 20px;
     padding-left: 20px;
   }
+  img{
+    max-width:200px;
+    max-height:200px;
+}
 </style>
 
 
@@ -90,6 +94,14 @@
                   {{user.username}}
                 </div>
               </div>
+              {% if request.user.scientist.profile_pic %}
+              <div class="form-group row">
+                <label for="id_image" class="col-4 col-form-label">image </label>
+                <div class="col-5 text-left border-bottom">
+                  <img src="{{request.user.scientist.profile_pic.url}}" alt="Profile Pic" class="profile-photo" />
+                </div>
+              </div>
+              {% endif %}
               <div class="form-group row">
                 <label for="id_first_name" class="col-4 col-form-label">First Name: </label>
                 <div class="col-5 text-left border-bottom">
@@ -152,12 +164,7 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              {% for message in messages %}
-              <div class="alert alert-success">
-                <a class="close" href="#" data-dismiss="alert">×</a>
-                {{ message }}
-              </div>
-              {% endfor %}
+              
               <form enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
                 <!-- <div class="form-group row">
@@ -206,6 +213,12 @@
                   <label for="id_password" class="col-4 col-form-label">New Password</label>
                   <div class="col-4 text-left">
                     {{u_form.password}}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="id_photo" class="col-4 col-form-label">Profile pic </label>
+                  <div class="col-4 text-left">
+                    {{s_form.profile_pic}}
                   </div>
                 </div>
                 <div class="form-group row">

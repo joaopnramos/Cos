@@ -27,6 +27,26 @@ import os
 import csv
 import re
 
+def StartView(request):
+    context = {}
+    if request.method == "POST":
+        sue_form = SendUsEmail(data=request.POST)
+        if sue_form.is_valid():
+            name = sue_form.cleaned_data.get("name")
+            message = sue_form.cleaned_data.get("message")
+            emails = "citizensonscience2020@gmail.com"
+            email_subject = "Suggestion"
+            email_body = "Hi " + name + "! \n" + message
+            email = EmailMessage(
+                    email_subject, email_body, "noreply@semycolon.com", [emails],)
+            email.send(fail_silently=False)
+
+                    
+
+    
+    context["send_us_email"] = SendUsEmail
+    return render(request, "webapp/index.html", context)
+
 
 # Start View
 class RegisterView(TemplateView):
@@ -56,10 +76,12 @@ def scientist_register(request):
 
             for u in bis:
                 if bi == u.bi:
-                    return messages.error(request, 'This BI already exists. Use another BI.')
+                    messages.error(request, 'This BI already exists. Use another BI.')
+                    
             if 10000000 < bi < 99999999:
-                scientist_profile = Scientist(
-                    first_name=first_name, last_name=last_name, address=address, work_local=work_local, bi=bi, email=emails)
+                scientist_profile = Scientist(first_name=first_name, last_name=last_name, address=address, work_local=work_local, bi=bi, email=emails)
+                if scientist_form.cleaned_data.get("profile_pic"):
+                    scientist_profile.profile_pic = scientist_form.cleaned_data.get("profile_pic")
                 user = user_form.save()
                 user.set_password(user.password)
                 user.is_active = False
@@ -171,6 +193,10 @@ def ProjectCreateView(request):
         project_form = ProjectForm(data=request.POST)
         if project_form.is_valid:
             if request.user:
+                name = request.POST.get("name")
+                if Project.objects.filter(name=name).exists():
+                    messages.error(request, "There is already a project with this name")
+                    return redirect('webapp:project_create')
                 project = project_form.save(commit=False)
                 project.owner = request.user.scientist.id
                 project.scientist = request.user.scientist
@@ -192,6 +218,7 @@ class ProjectListView(ListView):
     """ Esta vista serve para ver todos os projeto """
     context_object_name = "projects"
     model = models.Project
+    ordering = ['finished']
 
 # Serve para demonstrar os detalhes de um projeto
 
@@ -320,13 +347,17 @@ def profileScientist(request):
             if request.POST.get("work_local"):
                 users.work_local = request.POST['work_local']
                 users.save()
+            
+            if "profile_pic" in request.FILES:
+                users.profile_pic = request.FILES['profile_pic']
+                users.save()
 
             if request.POST.get("bi"):
                 bi = s_form.cleaned_data.get("bi")
                 bis = Scientist.objects.order_by("bi")
                 for u in bis:
                     if bi == u.bi:
-                        messages.success(request, 'This BI is already in use.')
+                        messages.error(request, 'This BI is already in use.')
                         return redirect('/webapp/profile/')
                 users.bi = request.POST['bi']
                 users.save()
@@ -345,7 +376,17 @@ def profileScientist(request):
 
             if request.POST.get("password"):
                 password = request.POST["password"]
+                MIN_LENGTH = 8
+                """Serve para verificar se o comprimento da password é o indicado """
+                if len(password) < MIN_LENGTH:
+                    messages.error(request, "The new password must be at least 8 characters long")
+                    return redirect('/webapp/profile/')
 
+                """Serve para verificar se existe pelo menos uma letra e caracter não letra """
+                first_isalpha = password[0].isalpha()
+                if all(c.isalpha() == first_isalpha for c in password):
+                    messages.error(request, 'The new password must contain at least one letter and at least one digit or punctuation character')
+                    return redirect('/webapp/profile/')
                 user.is_active = False
                 domain = get_current_site(request).domain
                 link = reverse("activate", kwargs={
@@ -666,3 +707,45 @@ def export_data(request, pk):
         i = i+1
 
     return response
+
+
+def see_scientist_profile(request, pk):
+
+    """ Serve para os donators verem o perfil dos cientistas """
+    scientist = Scientist.objects.get(id=pk)
+    u = User.objects.get(id=pk)
+    context = {}
+    context["uscientist"] = u
+    context["scientist"] = scientist
+
+    return render(request, "webapp/scientist_profile.html", context)
+
+
+def FinalizingView(request, pk):
+    """ Finalizar um projeto e enviar um email a todos os donators"""
+    project = Project.objects.get(id=pk)
+    if request.method == "POST":
+        """ Finalizado """
+        sue_form = SendEmailForm(data=request.POST)
+        if sue_form.is_valid():
+            message = sue_form.cleaned_data.get("message")
+            email_subject = "Finished of project " + project.name
+            donators = DataGive.objects.filter(project= pk)
+            email_list = []
+            for i in donators:
+                email = i.donator.email
+                email_list.append(email)
+
+            email_body = "Hi this is a message from the owner scientist of the project " + project.name + "\n" + message
+            email = EmailMessage(
+                    email_subject, email_body, "noreply@semycolon.com", email_list,)
+            email.send(fail_silently=False)
+            pks = str(pk)
+
+            return HttpResponseRedirect("finish/" + pks )
+
+    context = {}
+    context["send_us_email"] = SendEmailForm
+    context["project_name"] = project.name
+    context["project_id"] = project.id
+    return render(request, "webapp/project_finishing.html", context)

@@ -62,7 +62,7 @@
             </div>
             <div class="card-body">
                 {% if registered %}
-                <h1>Conta criada!</h1>
+                <h1>Um email de verificação foi enviado para o seu email. Clique no link para ativar a conta e fazer o log in.</h1>
                 <a href="{% url 'user_login' %}" class="btn btn-lg btn-block btn-secondary">Log In</a>
                 {% else %}
                 {% for message in messages %}

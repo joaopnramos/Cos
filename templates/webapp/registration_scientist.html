@@ -53,6 +53,10 @@
         .card-header {
             background-color: #343a40;
         }
+        .errorlist nonfield {
+            position: relative;
+            right :100px;
+        }
     </style>
 </head>
 <br>
@@ -79,7 +83,11 @@
                 <form enctype="multipart/form-data" method="POST">
                     {% csrf_token %}
                     {{ user_form.as_p }}
-                    {{ scientist_form.as_p }}
+                    {{ scientist_form.first_name }}
+                    {{ scientist_form.last_name }}
+                    {{ scientist_form.address }}
+                    {{ scientist_form.bi }}
+                    
                     <input type="submit" value="Register" class="btn btn-lg btn-block btn-secondary">
                 </form>
             </div>

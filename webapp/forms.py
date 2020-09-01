@@ -4,26 +4,56 @@ from .models import *
 from webapp.choices import SENSORS_CHOICES
 # from django.core.validators import MinLengthValidator, MaxValueValidator
 
-#Form de criar user em geral!
+# Form de criar user em geral!
+
+
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
-    confirm_password=forms.CharField(widget=forms.PasswordInput())
+    confirm_password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta():
         model = User
         fields = ("username", "email", "password")
-    
+
     def clean(self):
+        MIN_LENGTH = 8
         cleaned_data = super(UserForm, self).clean()
         password = cleaned_data.get("password")
+        email = cleaned_data.get("email")
         confirm_password = cleaned_data.get("confirm_password")
 
+        """Serve para verificar se as passwords inseridas são iguais """
         if password != confirm_password:
             raise forms.ValidationError(
-                "password and confirm_password does not match"
+                "Password and confirm_password does not match."
             )
+        """Serve para verificar se o comprimento da password é o indicado """
+        if len(password) < MIN_LENGTH:
+            raise forms.ValidationError("The new password must be at least %d characters long." % MIN_LENGTH)
 
-#Form de criar um cientista
+        """Serve para verificar se existe pelo menos uma letra e caracter não letra """
+        first_isalpha = password[0].isalpha()
+        if all(c.isalpha() == first_isalpha for c in password):
+            raise forms.ValidationError("The new password must contain at least one letter and at least one digit or punctuation character.")
+            
+
+    def clean_email(self):
+        username = self.cleaned_data.get("username")
+        email = self.cleaned_data.get("email")
+        if email and User.objects.filter(email=email).exclude(username=username).count():          
+            raise forms.ValidationError("This email is already in use! Try another email.")
+        return email
+    
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+        email = self.cleaned_data.get("email")
+        if username and User.objects.filter(username=username).exclude(email=email).count():
+            raise forms.ValidationError("This username has already been taken!")
+        return username
+
+
+
+# Form de criar um cientista
 class ScientistForm(forms.Form):
 
     first_name = forms.CharField(required=True)
@@ -31,20 +61,10 @@ class ScientistForm(forms.Form):
     address = forms.CharField(required=True)
     work_local = forms.CharField(required=True)
     bi = forms.IntegerField(required=True)
+    profile_pic = forms.ImageField(required=False)
     
-    
-    # def clean_phone(self, *args, **kwargs):
-    #     phone = self.cleaned_data.get("phone")
-    #     phones = Scientist.objects.order_by("phone")
-    #     for u in phones:
-    #         if u.phone == phone:
-    #             raise forms.ValidationError("this phone already exists")
 
-    #         else:
-    #             return phone
-   
-
-#Form de criar um donator
+# Form de criar um donator
 class DonatorForm(forms.ModelForm):
     class Meta():
         model = Donator
@@ -57,7 +77,7 @@ class DonatorForm(forms.ModelForm):
         
 
 
-#Form de um projeto
+# Form de um projeto
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
@@ -69,14 +89,13 @@ class ProjectForm(forms.ModelForm):
     
 
     sensorsChoice = forms.MultipleChoiceField(choices=SENSORS_CHOICES)
-    description = forms.CharField(required=True, widget=forms.Textarea(attrs={"rows":5, "cols":20}))
-    # name = forms.CharField(max_length=100, required=True)
+    description = forms.CharField(required=True, widget=forms.Textarea(attrs={"rows":2, "cols":50}))
 
-#Form que serve para dar update ao user!
+# Form que serve para dar update ao user!
 class UserUpdateForm(forms.Form):
 
     email = forms.EmailField(required=False)
-    password = forms.CharField( max_length=250, required=False)
+    password = forms.CharField( max_length=250, required=False, widget=forms.PasswordInput)
 
 class ScientistUpdate(forms.Form):
 
@@ -85,13 +104,19 @@ class ScientistUpdate(forms.Form):
     address = forms.CharField(required=False)
     work_local = forms.CharField(required=False)
     bi = forms.IntegerField(required=False)
+    profile_pic = forms.ImageField(required=False)
 
 # class DataForm(forms.Form):
 #     file = forms.FileField()
 
 
+class SendUsEmail(forms.Form):
+    name = forms.CharField(max_length=100, required=True)
+    email = forms.EmailField(required=True)
+    message = forms.CharField(required=True, widget=forms.Textarea(attrs={"rows":2, "cols":50}))
 
-
+class SendEmailForm(forms.Form):
+    message = forms.CharField(required=True, widget=forms.Textarea(attrs={"rows":10, "cols":25}))
 
     
  

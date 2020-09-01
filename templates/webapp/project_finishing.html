@@ -1,0 +1,80 @@
+{% extends "webapp/base.html" %}
+{% block body_block %}
+
+
+
+<style>
+    body {
+        color: rgb(0, 0, 0);
+        background-color: #f1f1f1;
+        text-align: center;
+        letter-spacing: 4px;
+        font-family: Montserrat, sans-serif;
+    }
+
+    h4 {
+        font-size: 20px;
+        color: #ffffff;
+        margin-bottom: 30px;
+    }
+
+    h5 {
+        font-size: 15px;
+        line-height: 1.375em;
+        color: #000000;
+        margin: 20px 20px 20px 20px;
+    }
+
+    label {
+        color: #343a40;
+    }
+
+    .btn-secondary {
+        color: #fff;
+        background-color: #343a40;
+        border-color: #343a40;
+    }
+
+    .card {
+        width: 30rem;
+    }
+
+    .card-header {
+        background-color: #343a40;
+    }
+</style>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="d-flex p-4 justify-content-center">
+    <div class="card-deck ">
+        <div class="card mb-4 shadow-sm">
+             <div class="card-body">
+                <form enctype="multipart/form-data" method="POST">
+                    {% csrf_token %}
+                    {{project_name}}
+                    <h5>If you want to finish the project please send a note to all the donators who have been part of all of this project?</h5>
+                    {{send_us_email.message}}
+                    <input href="{% url "webapp:finish" pk=project_id %}" class="btn btn-lg btn-danger" type="submit" value= "Finish Project">
+                    <a href="{% url "webapp:list" %}" class="btn btn-lg btn-danger" type="button">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

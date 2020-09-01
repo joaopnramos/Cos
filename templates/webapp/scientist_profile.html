@@ -1,0 +1,22 @@
+{% extends "webapp/base.html" %}
+{% block body_block%}
+
+<style>
+
+img{
+    max-width:250px;
+    max-height:250px;
+}
+</style>
+{% if scientist.profile_pic %}
+    <img src="{{ scientist.profile_pic.url }}" alt="Profile Pic" class="profile-photo" />
+{% endif %}
+    <h4>{{ scientist.email }}</h4>
+    <h4>{{ scientist.first_name }}</h4>
+    <h4>{{ scientist.last_name }}</h4>
+    <h4>{{ uscientist.email }}</h4>
+    <h4>{{ scientist.work_local }}</h4>
+
+
+
+{% endblock %}

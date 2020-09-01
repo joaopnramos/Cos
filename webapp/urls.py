@@ -27,9 +27,10 @@ urlpatterns = [
     path("list/", views.ProjectListView.as_view(), name="list"),
     path("update/<int:pk>", views.ProjectUpdateView.as_view(), name="update"),
     path("delete/<int:pk>", views.ProjectDeleteView.as_view(), name="delete"),
-    path("finish/<int:pk>", views.finishthedproject, name="finish"),
+    path("finishingview/finish/<int:pk>", views.finishthedproject, name="finish"),
     path("list/archived", views.MyArchivedProjectsS, name="archived_list"),
     path("list/active", views.MyActiveProjectsS, name="active_list"),
+    path("finishingview/<int:pk>", views.FinalizingView, name="finalizing"),
     
     path("donator/list_all", views.DonatorList, name="donator_list"),
     path("donator/list_all/archived", views.MyArchivedProjectsD, name="donator_list_arc"),
@@ -40,7 +41,7 @@ urlpatterns = [
     path("donator_register/", views.donator_register, name="donator_reg"),
     path("export_data/<int:pk>", views.export_data, name="export_data"),
     path("password/", views.PasswordChangedView.as_view(), name= "p_changed"),
-
+    path("sprofile/<int:pk>", views.see_scientist_profile, name="sprofile")
 
     # path("uploaddonatorfiles/<int:pk>", views.uploadDonatorFilesView, name="uploadFiles"),
 ]

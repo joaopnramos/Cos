@@ -98,6 +98,17 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label for="id_name" class="col-4 col-form-label">Scientist: </label>
+                                <div class="col-8 text-left border-bottom">
+                                    {% if request.user.donator %}
+                                    <a href="{% url 'webapp:sprofile' pk=project.scientist.pk  %}">{{ project.scientist.first_name }} {{ project.scientist.last_name }} </a>
+                                    {% else %}
+                                    {{ project.scientist.first_name }} {{ project.scientist.last_name }} 
+                                    {% endif %}
+                                    
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="id_description" class="col-4 col-form-label">Description: </label>
                                 <div class="col-8 text-left border-bottom">
                                     {{project.description}}
@@ -154,7 +165,7 @@
                                 href="{% url 'webapp:update' pk=project.pk  %}">Update</a>
                             <a class="btn btn-lg btn-secondary"
                                 href="{% url 'webapp:delete' pk=project.pk  %}">Delete</a>
-                            <a class="btn btn-lg btn-secondary" href="{% url 'webapp:finish' pk=project.pk  %}">Finish
+                            <a class="btn btn-lg btn-secondary" href="{% url 'webapp:finalizing' pk=project.pk  %}">Finish
                                 Project</a>
                             <a class="btn btn-lg btn-secondary" href="{% url 'webapp:export_data' pk=project.pk  %}">Download Data</a>
                             {% endif %}
