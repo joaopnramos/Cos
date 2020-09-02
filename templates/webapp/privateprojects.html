@@ -3,77 +3,103 @@
 
 
 <style>
-
   body {
-      color: #000000;
-      background-color: #f1f1f1;
-      text-align: left;
-      letter-spacing: 4px;
-      font-family: Montserrat, sans-serif;
+    color: #000000;
+    background-color: #f1f1f1;
+    text-align: left;
+    letter-spacing: 4px;
+    font-family: Montserrat, sans-serif;
 
+  }
+
+  .finished {
+    color: #FF0000
+  }
+
+  .ongoing {
+    color: #006400
   }
 
   .jumbotron {
-      background-color: #ffffff;
-      color: #000000;
-      padding: 10px 25px;
-      font-family: Montserrat, sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px 25px;
+    font-family: Montserrat, sans-serif;
   }
 
   .jumbotron h1 {
-      font-size: 63px;
-      color: #303030;
+    font-size: 63px;
+    color: #303030;
   }
 
   .text-muted {
-      color: #000000!important;
+    color: #000000 !important;
   }
 
   .navbar {
-      position: relative;
-      min-height: 50px;
-      margin-bottom: 0px;
-      border: 1px solid transparent;
+    position: relative;
+    min-height: 50px;
+    margin-bottom: 0px;
+    border: 1px solid transparent;
   }
 
   .btn-lg {
-      padding: 10px 16px;
-      letter-spacing: 4px;
-      font-family: Montserrat, sans-serif;
-      font-size: 15px;
-      line-height: 1.3333333;
-      border-radius: 6px;
-  }    
-  
+    padding: 10px 16px;
+    letter-spacing: 4px;
+    font-family: Montserrat, sans-serif;
+    font-size: 15px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+  }
+
   .btn-secondary {
-      color: #fff;
-      background-color: #343A40;
-      border-color: #343A40;
+    color: #fff;
+    background-color: #343A40;
+    border-color: #343A40;
+    text-align: center;
   }
 
   h4 {
-      font-size: 20px;
-      font-weight: bold;
-      color: #343A40;
+    font-size: 20px;
+    font-weight: bold;
+    color: #343A40;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
   }
 
   label {
-      display: inline-block;
-      max-width: 100%;
-      margin-left: 15px;
-      font-weight: 700;
+    display: inline-block;
+    max-width: 100%;
+    margin-left: 15px;
+    font-weight: 700;
+  }
+
+  .card-header {
+    background-color: #343a40;
   }
 
   small {
-      font-size: 15px;
-  }
-  .col{
-      position: relative;
-      width: 100%;
-      padding: 15px 15px 15px 15px;
+    font-size: 15px;
   }
 
+  .col {
+    position: relative;
+    width: 100%;
+    padding: 15px 15px 15px 15px;
+  }
 
+  h5 {
+    font-size: 14px;
+    margin: 0 10px;
+  }
+
+  a {
+    text-align: center;
+  }
 </style>
 
 {% if data %}
@@ -86,7 +112,7 @@
   {% endif %}
   <h1 class="border-bottom border-gray pb-2 mb-0">Here are your Projects</h1>
   {% endif %}
- 
+
 
   {% for project in data %}
   <div class="row row-cols-1 row-cols-md-1">
@@ -119,9 +145,17 @@
               {{project.spacetimeChoice}}
             </div>
           </div>
-          
+          <div class="form-group row">
+            <label for="id_username" class="row-4 row-form-label">State: </label>
+            <div class="row-4 text-left border-bottom">
+              {% if project.finished %}
+              <h5 class="finished"> Finalized </h5>
+              {% else %}
+              <h5 class="ongoing"> Ongoing </h5>
+              {% endif %}
+            </div>
+          </div>
           <a type="button" class="btn btn-lg btn-secondary" href="{{project.id}}">Click here to see! </a>
-          
         </div>
       </div>
     </div>
@@ -129,8 +163,37 @@
   {% endfor %}
 </div>
 {% else %}
-<h4>Sorry but at this moment you dont have any project</h4>
-<h5>Go to navbar and click in list of project to join one!</h5>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="d-flex p-4 justify-content-center">
+  <div class="card-deck text-center" style="width: auto;">
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header text-center">
+        <h3 class="my-0 font-weight-normal">My Projects</h3>
+      </div>
+      {% if register.scientist %}
+      <div class="card-body">
+        <h5>Sorry but at this moment you dont have any project. Create one now:</h5>
+      </div>
+      <div>
+        <a class="btn btn-lg btn-secondary" href="{% url "webapp:project_create" %}">Create a Project</a>
+      </div>
+      {% endif %}
+      {% if register.donor %}
+      <div class="card-body">
+        <h5>Sorry but at this moment you dont have any project. Create one now:</h5>
+      </div>
+      <div>
+        <a class="btn btn-lg btn-secondary" href="{% url "webapp:project_create" %}">Create a Project</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
 {% endif %}
 
 

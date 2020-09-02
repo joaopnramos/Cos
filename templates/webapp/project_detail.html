@@ -24,12 +24,13 @@
     .jumbotron {
         background-color: #ffffff;
         color: #000000;
-        font-size: 15px !important;        
+        font-size: 15px !important;
         padding: 100px 30px;
         font-family: Montserrat, sans-serif;
     }
 
     .a {
+        color: #000000;
         background-color: #343a40;
     }
 
@@ -59,6 +60,7 @@
         color: #3c763d;
         background-color: #dff0d8;
         border-color: #d6e9c6;
+        text-align: left;
     }
 
     .alert {
@@ -66,6 +68,12 @@
         margin-left: 50%;
         border: 1px solid transparent;
         border-radius: 4px;
+    }
+
+    p a {
+        font-size: 15px;
+        color: #000000;
+        margin: 0px 0px 0px;      
     }
 
 </style>
@@ -101,11 +109,14 @@
                                 <label for="id_name" class="col-4 col-form-label">Scientist: </label>
                                 <div class="col-8 text-left border-bottom">
                                     {% if request.user.donator %}
-                                    <a href="{% url 'webapp:sprofile' pk=project.scientist.pk  %}">{{ project.scientist.first_name }} {{ project.scientist.last_name }} </a>
+                                    <p><a href="{% url 'webapp:sprofile' pk=project.scientist.pk  %}">
+                                        {{ project.scientist.first_name }}
+                                        {{ project.scientist.last_name }} 
+                                    </a></p>
                                     {% else %}
-                                    {{ project.scientist.first_name }} {{ project.scientist.last_name }} 
+                                    {{ project.scientist.first_name }} {{ project.scientist.last_name }}
                                     {% endif %}
-                                    
+
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -121,25 +132,29 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="id_periodChoice" class="col-4 col-form-label">Amount of Times Program will run: </label>
+                                <label for="id_periodChoice" class="col-4 col-form-label">Amount of Times Program will
+                                    run: </label>
                                 <div class="col-8 text-left border-bottom">
                                     {{project.periodChoice}}
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="id_spacetimeChoice" class="col-4 col-form-label">Period of time between Data Analysis: </label>
+                                <label for="id_spacetimeChoice" class="col-4 col-form-label">Period of time between Data
+                                    Analysis: </label>
                                 <div class="col-8 text-left border-bottom">
                                     {{project.spacetimeChoice}}
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="id_spacetimeChoice" class="col-4 col-form-label">Number of Donators: </label>
+                                <label for="id_spacetimeChoice" class="col-4 col-form-label">Number of Donators:
+                                </label>
                                 <div class="col-8 text-left border-bottom">
                                     {{number_of_donators}}
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="id_spacetimeChoice" class="col-4 col-form-label">Number of Data collected: </label>
+                                <label for="id_spacetimeChoice" class="col-4 col-form-label">Number of Data collected:
+                                </label>
                                 <div class="col-8 text-left border-bottom">
                                     {{number_of_data}}
                                 </div>
@@ -149,7 +164,7 @@
                                 <div class="col-8 text-left border-bottom">
                                     {{created_date}}
                                 </div>
-                            </div>                      
+                            </div>
                         </form>
                         {% if project.finished %}
                         <br>
@@ -165,16 +180,19 @@
                                 href="{% url 'webapp:update' pk=project.pk  %}">Update</a>
                             <a class="btn btn-lg btn-secondary"
                                 href="{% url 'webapp:delete' pk=project.pk  %}">Delete</a>
-                            <a class="btn btn-lg btn-secondary" href="{% url 'webapp:finalizing' pk=project.pk  %}">Finish
+                            <a class="btn btn-lg btn-secondary"
+                                href="{% url 'webapp:finalizing' pk=project.pk  %}">Finish
                                 Project</a>
-                            <a class="btn btn-lg btn-secondary" href="{% url 'webapp:export_data' pk=project.pk  %}">Download Data</a>
+                            <a class="btn btn-lg btn-secondary"
+                                href="{% url 'webapp:export_data' pk=project.pk  %}">Download Data</a>
                             {% endif %}
                             {% endif %}
                             {% if user.donator.is_donator %}
-                            <a class="btn btn-lg btn-secondary" href="{% url 'webapp:datagivedelete' pk=project.pk %}">Leave the
+                            <a class="btn btn-lg btn-secondary"
+                                href="{% url 'webapp:datagivedelete' pk=project.pk %}">Leave the
                                 Project</a>
                             {% endif %}
-                            
+
                         </div>
                     </div>
                 </div>

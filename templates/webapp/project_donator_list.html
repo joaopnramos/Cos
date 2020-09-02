@@ -72,14 +72,23 @@
         padding: 15px 15px 15px 15px;
     }
 
+    .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+        color: #fff;
+        background-color: #343A40;
+    }
 
 </style>
 
 <div class="jumbotron">
-    <h1 class="border-bottom border-gray pb-2 mb-0">List of all Projects!</h1>
-    {% if pd_list %}
-    
-    {% for project in pd_list %}
+    {% if pd_list %}    
+    <h1 class="border-bottom border-gray pb-2 mb-0">List of all Projects</h1>
+   
+    {% for project in pd_list %}  
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:donator_list" %}">All</a>
+        <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:donator_list_arc" %}">Archived</a>
+        <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:donator_list_act" %}">Active</a>
+    </div>
     <div class="row row-cols-1 row-cols-md-1">
         <div class="col-md-9">
             <div class="card">
@@ -117,8 +126,25 @@
     </div>
 {% endfor %}
 {% else %}
-<h4>Sorry but at this moment there are no projects to show!</h4>
-<h5>It seems that there are no new projects!</h5>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="d-flex p-4 justify-content-center">
+  <div class="card-deck text-center" style="width: auto;">
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header text-center">
+        <h3 class="my-0 font-weight-normal">My Projects</h3>
+      </div>
+      <div class="card-body">
+        <h5>Sorry but at this moment you dont have any project. Check back in later!</h5>
+      </div>
+
+    </div>
+  </div>
+</div>
 {% endif %}
 </div>
 

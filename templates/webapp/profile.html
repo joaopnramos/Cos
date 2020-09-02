@@ -61,10 +61,18 @@
     padding-right: 20px;
     padding-left: 20px;
   }
-  img{
-    max-width:200px;
-    max-height:200px;
-}
+
+  img {
+    max-width: 200px;
+    max-height: 200px;
+  }
+
+  .alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    text-align: left;
+  }
 </style>
 
 
@@ -86,67 +94,64 @@
               {{ message }}
             </div>
             {% endfor %}
-            <form enctype="multipart/form-data" method="POST">
-              {% csrf_token %}
-              <div class="form-group row">
-                <label for="id_username" class="col-4 col-form-label">Username: </label>
-                <div class="col-5 text-left border-bottom">
-                  {{user.username}}
-                </div>
+            <div class="form-group row">
+              <label for="id_username" class="col-4 col-form-label">Username: </label>
+              <div class="col-5 text-left border-bottom">
+                {{user.username}}
               </div>
-              {% if request.user.scientist.profile_pic %}
-              <div class="form-group row">
-                <label for="id_image" class="col-4 col-form-label">image </label>
-                <div class="col-5 text-left border-bottom">
-                  <img src="{{request.user.scientist.profile_pic.url}}" alt="Profile Pic" class="profile-photo" />
-                </div>
+            </div>
+            {% if request.user.scientist.profile_pic %}
+            <div class="form-group row">
+              <label for="id_image" class="col-4 col-form-label">Profile Picture: </label>
+              <div class="col-5 text-left border-bottom">
+                <img src="{{request.user.scientist.profile_pic.url}}" alt="Profile Pic" class="profile-photo" />
               </div>
-              {% endif %}
-              <div class="form-group row">
-                <label for="id_first_name" class="col-4 col-form-label">First Name: </label>
-                <div class="col-5 text-left border-bottom">
-                  {{request.user.scientist.first_name}}
-                </div>
+            </div>
+            {% endif %}
+            <div class="form-group row">
+              <label for="id_first_name" class="col-4 col-form-label">First Name: </label>
+              <div class="col-5 text-left border-bottom">
+                {{request.user.scientist.first_name}}
               </div>
-              <div class="form-group row">
-                <label for="id_last_name" class="col-4 col-form-label">Last Name: </label>
-                <div class="col-5 text-left border-bottom">
-                  {{request.user.scientist.last_name}}
-                </div>
+            </div>
+            <div class="form-group row">
+              <label for="id_last_name" class="col-4 col-form-label">Last Name: </label>
+              <div class="col-5 text-left border-bottom">
+                {{request.user.scientist.last_name}}
               </div>
-              <div class="form-group row">
-                <label for="id_email" class="col-4 col-form-label">Email: </label>
-                <div class="col-5 text-left border-bottom">
-                  {{user.email}}
-                </div>
+            </div>
+            <div class="form-group row">
+              <label for="id_email" class="col-4 col-form-label">Email: </label>
+              <div class="col-5 text-left border-bottom">
+                {{user.email}}
               </div>
-              <div class="form-group row">
-                <label for="address" class="col-4 col-form-label">Address: </label>
-                <div class="col-5 text-left border-bottom">
-                  {{request.user.scientist.address}}
-                </div>
+            </div>
+            <div class="form-group row">
+              <label for="address" class="col-4 col-form-label">Address: </label>
+              <div class="col-5 text-left border-bottom">
+                {{request.user.scientist.address}}
               </div>
-              <div class="form-group row">
-                <label for="work_local" class="col-4 col-form-label">Work Place:</label>
-                <div class="col-5 text-left border-bottom">
-                  {{request.user.scientist.work_local}}
-                </div>
+            </div>
+            <div class="form-group row">
+              <label for="work_local" class="col-4 col-form-label">Work Place:</label>
+              <div class="col-5 text-left border-bottom">
+                {{request.user.scientist.work_local}}
               </div>
-              <div class="form-group row">
-                <label for="bi" class="col-4 col-form-label">BI: </label>
-                <div class="col-5 text-left border-bottom">
-                  {{request.user.scientist.bi}}
-                </div>
+            </div>
+            <div class="form-group row">
+              <label for="bi" class="col-4 col-form-label">BI: </label>
+              <div class="col-5 text-left border-bottom">
+                {{request.user.scientist.bi}}
               </div>
-              <div class="form-group row">
-                <div class="offset-8 col-4">
-                  <button class="btn btn-lg btn-block btn-secondary" type="button" data-toggle="collapse"
-                    data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                    Update Profile
-                  </button>
-                </div>
+            </div>
+            <div class="form-group row">
+              <div class="offset-8 col-4">
+                <button class="btn btn-lg btn-block btn-secondary" type="button" data-toggle="collapse"
+                  data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                  Update Profile
+                </button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
@@ -164,15 +169,9 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              
+
               <form enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
-                <!-- <div class="form-group row">
-                  <label for="id_username" class="col-4 col-form-label">Username: </label>
-                  <div class="col-5 text-left border-bottom">
-                    {{user.username}}
-                  </div>
-                </div> -->
                 <div class="form-group row">
                   <label for="id_first_name" class="col-4 col-form-label">First Name: </label>
                   <div class="col-4 text-left">

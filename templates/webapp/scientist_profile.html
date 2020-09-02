@@ -2,20 +2,137 @@
 {% block body_block%}
 
 <style>
+    body {
+      color: #343a40;
+      background-color: #f1f1f1;
+      text-align: right;
+      letter-spacing: 4px;
+      font-family: Montserrat, sans-serif;
+    }
+  
+    h2 {
+      color: #000000;
+      text-align: left;
+      font-weight: bolder;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  
+    h3 {
+      text-align: center;
+    }
+  
+    .jumbotron {
+      background-color: #ffffff;
+      color: #000000;
+      font-size: 15px !important;
+      padding: 100px 30px;
+      font-family: Montserrat, sans-serif;
+    }
+  
+    .a {
+      background-color: #343a40;
+    }
+  
+    .form-control {
+      letter-spacing: 4px;
+      font-size: 15px !important;
+      font-family: Montserrat, sans-serif;
+    }
+  
+    .btn-lg {
+      padding: 10px 16px;
+      letter-spacing: 4px;
+      font-family: Montserrat, sans-serif;
+      font-size: 15px;
+      line-height: 1.3333333;
+      border-radius: 6px;
+    }
+  
+    .btn-secondary {
+      color: #fff;
+      background-color: #343A40;
+      border-color: #343A40;
+    }
+  
+    .col-md-12 {
+      position: relative;
+      min-height: 1px;
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+    img{
+      max-width:200px;
+      max-height:200px;
+  }
+ 
+  </style>
+  
+  
+  <div class="jumbotron">
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <h2>Your Profile</h2>
+              <hr>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <form enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                {% if scientist.profile_pic %}
+                <div class="form-group row">
+                  <label for="id_image" class="col-4 col-form-label">image </label>
+                  <div class="col-5 text-left border-bottom">
+                    <img src="{{ scientist.profile_pic.url }}" alt="Profile Pic" class="profile-photo" />
+                  </div>
+                </div>
+                {% endif %}
+                <div class="form-group row">
+                  <label for="id_first_name" class="col-4 col-form-label">First Name: </label>
+                  <div class="col-5 text-left border-bottom">
+                    {{ scientist.first_name }}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="id_last_name" class="col-4 col-form-label">Last Name: </label>
+                  <div class="col-5 text-left border-bottom">
+                    {{ scientist.last_name }}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="id_email" class="col-4 col-form-label">Email: </label>
+                  <div class="col-5 text-left border-bottom">
+                    {{ scientist.email }}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="work_local" class="col-4 col-form-label">Work Place:</label>
+                  <div class="col-5 text-left border-bottom">
+                    {{ scientist.work_local }}
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-img{
-    max-width:250px;
-    max-height:250px;
-}
-</style>
-{% if scientist.profile_pic %}
+<!-- {% if scientist.profile_pic %}
     <img src="{{ scientist.profile_pic.url }}" alt="Profile Pic" class="profile-photo" />
 {% endif %}
     <h4>{{ scientist.email }}</h4>
     <h4>{{ scientist.first_name }}</h4>
     <h4>{{ scientist.last_name }}</h4>
     <h4>{{ uscientist.email }}</h4>
-    <h4>{{ scientist.work_local }}</h4>
+    <h4>{{ scientist.work_local }}</h4> -->
+
+
 
 
 

@@ -62,6 +62,18 @@
         color: #343A40;
     }
 
+    h3 {
+        font-size: 20px;
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+    
+    h5 {
+        font-size: 14px;
+        margin: 0 10px;
+    }
+
     label {
         display: inline-block;
         max-width: 100%;
@@ -78,16 +90,25 @@
         padding: 15px 15px 15px 15px;
     }
 
+    .card-header {
+        background-color: #343a40;
+    }
+
     .bg-light {
         background-color: #343A40!important;
         height: max-content;
 }
-
-
 </style>
-
+{% if projects %}
 <div class="jumbotron">
-    <h1 class="border-bottom border-gray pb-2 mb-0">List of all Projects</h1>
+    <div>
+        <h1 class="border-bottom border-gray pb-2 mb-0">List of all Projects</h1>       
+    </div>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:list" %}">All</a>
+        <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:archived_list" %}">Archived</a>
+        <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:active_list" %}">Active</a>
+    </div>    
     {% for project in projects %}
     <div class="row row-cols-1 row-cols-md-1">
         <div class="col-md-9">
@@ -136,5 +157,28 @@
     </div>
 {% endfor %}
 </div>
+{% else %}
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="d-flex p-4 justify-content-center">
+    <div class="card-deck text-center" style="width: auto;">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header text-center">
+                <h3 class="my-0 font-weight-normal">List of Projects</h3>
+            </div>
+            <div class="card-body">
+                <h5>Sorry but at this moment there are no projects on the list. Create one: </h5>
+            </div>
+            <div>
+                <a class="btn btn-lg btn-secondary" href="{% url "webapp:project_create" %}">Create a Project</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 {% endblock body_block %}
