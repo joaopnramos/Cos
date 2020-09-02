@@ -429,7 +429,7 @@ def privateScientistProjectView(request):
     user_id = request.user.scientist.id
     projects_list = Project.objects.filter(owner=user_id)
     context["data"] = projects_list
-    return render(request, "webapp/privateprojects.html", context)
+    return render(request, "webapp/statusprojects.html", context)
 
 # Projetos de quais o donator faz parte
 
@@ -448,7 +448,7 @@ def privateDonatorProjectView(request):
     context["data"] = pj_list
     context["leave"] = True
 
-    return render(request, "webapp/privateprojects.html", context)
+    return render(request, "webapp/statusprojects.html", context)
 
 # Serve para os cientistas finalizarem os projetos
 
@@ -540,7 +540,7 @@ def MyActiveProjectsD(request):
     context["data"] = pj_list
     context["Finalized"] = False
 
-    return render(request, "webapp/privateprojects.html", context)
+    return render(request, "webapp/statusprojects.html", context)
 
 # Projetos arquivados Donator
 
@@ -557,7 +557,7 @@ def MyArchivedProjectsD(request):
 
     context["data"] = pj_list
     context["Finalized"] = True
-    return render(request, "webapp/privateprojects.html", context)
+    return render(request, "webapp/statusprojects.html", context)
 
 # Projetos ativos Cientista
 
@@ -569,14 +569,14 @@ def MyActiveProjectsS(request):
 
     user = request.user.scientist
     scientist_objects = Project.objects.filter(
-        finished=False).filter(scientist=user)
+        finished=False)
     for pj in scientist_objects:
         pj_list.append(pj)
 
     context["data"] = pj_list
     context["Finalized"] = False
 
-    return render(request, "webapp/privateprojects.html", context)
+    return render(request, "webapp/statusprojects.html", context)
 
 # Prpjetos arquivados Cientista
 
@@ -587,14 +587,14 @@ def MyArchivedProjectsS(request):
     pj_list = []
     user = request.user.scientist
     scientist_objects = Project.objects.filter(
-        finished=True).filter(scientist=user)
+        finished=True)
     for pj in scientist_objects:
         pj_list.append(pj)
 
     context["data"] = pj_list
     context["Finalized"] = True
 
-    return render(request, "webapp/privateprojects.html", context)
+    return render(request, "webapp/statusprojects.html", context)
 
 # Download Apk
 

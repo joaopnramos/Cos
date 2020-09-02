@@ -10,6 +10,8 @@ router.register("projectStart", views.ProjectViewSet, basename="Project-viewset"
 
 app_name = "webapp"
 
+
+
 urlpatterns = [
     path("register/", views.RegisterView.as_view(), name="register"),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
