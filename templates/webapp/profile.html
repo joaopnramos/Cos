@@ -104,7 +104,7 @@
             <div class="form-group row">
               <label for="id_image" class="col-4 col-form-label">Profile Picture: </label>
               <div class="col-5 text-left border-bottom">
-                <img src="{{request.user.scientist.profile_pic.url}}" alt="Profile Pic" class="profile-photo" />
+                <img class="rounded" src="{{request.user.scientist.profile_pic.url}}" alt="Profile Pic" class="profile-photo" />
               </div>
             </div>
             {% endif %}
@@ -209,13 +209,13 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="id_password" class="col-4 col-form-label">New Password</label>
+                  <label for="id_password" class="col-4 col-form-label">New Password: </label>
                   <div class="col-4 text-left">
                     {{u_form.password}}
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="id_photo" class="col-4 col-form-label">Profile pic </label>
+                  <label for="id_photo" class="col-4 col-form-label">Profile Picture: </label>
                   <div class="col-4 text-left">
                     {{s_form.profile_pic}}
                   </div>

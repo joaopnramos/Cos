@@ -105,12 +105,12 @@
 {% if data %}
 <div class="jumbotron">
   {% if Finalized %}
-  <h1 class="border-bottom border-gray pb-2 mb-0">Here are your finalized projects</h1>
+  <h1 class="border-bottom border-gray pb-2 mb-0">Finalized Projects</h1>
   {% else %}
   {% if active %}
-  <h1 class="border-bottom border-gray pb-2 mb-0">Here are your active Projects!</h1>
+  <h1 class="border-bottom border-gray pb-2 mb-0">Active Projects</h1>
   {% endif %}
-  <h1 class="border-bottom border-gray pb-2 mb-0">Here are your Projects</h1>
+  <h1 class="border-bottom border-gray pb-2 mb-0">Your Projects</h1>
   {% endif %}
 
 
@@ -177,7 +177,7 @@
       </div>
       {% if register.scientist %}
       <div class="card-body">
-        <h5>Sorry but at this moment you dont have any project. Create one now:</h5>
+        <h5>Sorry but at this moment you don't have any project. Create one now:</h5>
       </div>
       <div>
         <a class="btn btn-lg btn-secondary" href="{% url "webapp:project_create" %}">Create a Project</a>
@@ -185,10 +185,10 @@
       {% endif %}
       {% if register.donor %}
       <div class="card-body">
-        <h5>Sorry but at this moment you dont have any project. Create one now:</h5>
+        <h5>Sorry but at this moment you don't have any project. Join one now:</h5>
       </div>
       <div>
-        <a class="btn btn-lg btn-secondary" href="{% url "webapp:project_create" %}">Create a Project</a>
+        <a class="btn btn-lg btn-secondary" href="{% url "webapp:donator_list" %}">Join a Project</a>
       </div>
       {% endif %}
     </div>

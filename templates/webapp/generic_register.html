@@ -1,65 +1,61 @@
 {% extends "webapp/base.html" %}
 {% block body_block %}
+{% load static %}
+
+
 <br>
 <br>
 <br>
 <br>
 
-<head>
-    <style>
-        html {
-            font-size: 12px;
-        }
 
-        @media (min-width: 768px) {
-            html {
-                font-size: 16px;
-            }
-        }
+<style>
+    html {
+        font-size: 12px;
+    }
 
-        .container {
-            max-width: 960px;
-        }
+    .container {
+        max-width: 960px;
+    }
 
-        .pricing-header {
-            max-width: 700px;
-        }
+    .pricing-header {
+        max-width: 700px;
+    }
 
-        .card-deck .card {
-            min-width: 220px;
-        }
+    .card-deck .card {
+        min-width: 220px;
+    }
 
-        body {
-            color: rgb(0, 0, 0);
-            background-color: #f1f1f1;
-            text-align: right;
-            font-family: Montserrat, sans-serif;
+    body {
+        color: rgb(0, 0, 0);
+        background-color: #f1f1f1;
+        text-align: right;
+        font-family: Montserrat, sans-serif;
 
-        }
+    }
 
-        h4 {
-            font-size: 19px;
-            line-height: 1.375em;
-            color: #ffffff;
-            font-weight: 400;
-            margin-bottom: 30px;
-        }
+    h4 {
+        font-size: 19px;
+        line-height: 1.375em;
+        color: #ffffff;
+        font-weight: 400;
+        margin-bottom: 30px;
+    }
 
-        label {
-            color: #343a40;
-        }
+    label {
+        color: #343a40;
+    }
 
-        .btn-secondary {
-            color: #fff;
-            background-color: #343a40;
-            border-color: #343a40;
-        }
+    .btn-secondary {
+        color: #fff;
+        background-color: #343a40;
+        border-color: #343a40;
+    }
 
-        .card-header {
-            background-color: #343a40;
-        }
-    </style>
-</head>
+    .card-header {
+        background-color: #343a40;
+    }
+</style>
 
 <div class="container p-4">
     <div class="card-deck mb-3 text-center">
@@ -67,9 +63,14 @@
             <div class="card-header">
                 <h4 class="my-0 font-weight-normal">Scientist</h4>
             </div>
-            <div class="card-body">
+            <div class="card-body">                
+                <h3 class="card-title pricing-card-title">Get Data for Research </h3>                
+                <img class="rounded-circle" src="{% static "research.png" %}" width="400" height="300">
                 <ul class="list-unstyled mt-3 mb-4">
-                    <p></p>
+                    <p>- Create Projects for your research</p>
+                    <p>- Update and Delete Projects at a click of a button</p>
+                    <p>- Download Data from your projects</p>
+
                 </ul>
                 <a href="{% url 'webapp:scientist_reg' %}" class="btn btn-lg btn-block btn-secondary">Create Account</a>
             </div>
@@ -79,8 +80,12 @@
                 <h4 class="my-0 font-weight-normal">Donor</h4>
             </div>
             <div class="card-body">
+                <h3 class="card-title pricing-card-title">Give Data for Research </h3>
+                <img class="rounded-circle" src="{% static "donor.png" %}" width="400" height="300">
                 <ul class="list-unstyled mt-3 mb-4">
-                    <p></p>
+                    <p>- Join Projects</p>
+                    <p>- Leave Projects whenever you want</p>
+                    <p>- Help Researchers around the world</p>
                 </ul>
                 <a href="{% url 'webapp:donator_reg' %}" class="btn btn-lg btn-block btn-secondary">Create Account</a>
             </div>
