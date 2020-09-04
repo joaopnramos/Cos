@@ -1,12 +1,13 @@
 from django.urls import path, include
 from webapp import views
-from rest_framework.authtoken.views import obtain_auth_token
+from .views import CustomObtainAuthToken
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register("dataStart", views.DataViewSet, basename="Data-viewset")
 router.register("dataGiveStart", views.DataGiveViewSet, basename="DataGive-viewset")
 router.register("projectStart", views.ProjectViewSet, basename="Project-viewset")
+router.register("DonatorStart", views.DonatorViewSet, basename="Donator-viewset")
 
 app_name = "webapp"
 
@@ -14,7 +15,7 @@ app_name = "webapp"
 
 urlpatterns = [
     path("register/", views.RegisterView.as_view(), name="register"),
-    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
+    path('api-token-auth/', CustomObtainAuthToken.as_view()),
     path("list/<int:pk>", views.ProjectDetailView.as_view(), name="detail"),
     path('apks/', views.download_apk, name='download_apk'),
     path("faq/", views.faq, name="faq"),

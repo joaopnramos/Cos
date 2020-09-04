@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.urls import reverse
 from .decorators import scientist_required, donator_required, owner_required
 from webapp import models
-from .serializers import DataSerializer, ProjectSerializer, DataGiveSerializer
+from .serializers import DataSerializer, ProjectSerializer, DataGiveSerializer, DonatorSerializer
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib import messages
@@ -22,6 +22,9 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from .utils import tokengenerator
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
 from cos.settings import DOWNLOAD_DIR
 import os
 import csv
@@ -498,6 +501,16 @@ class DataGiveViewSet(ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ("donator",)
 
+class DonatorViewSet(ModelViewSet):
+    """ Permite adicionar dados aos projetos através de gson, basicamente é um end point """
+
+    serializer_class = DonatorSerializer
+    queryset = Donator.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ['user__id']
+
 # Verificação do token
 
 
@@ -749,3 +762,10 @@ def FinalizingView(request, pk):
     context["project_name"] = project.name
     context["project_id"] = project.id
     return render(request, "webapp/project_finishing.html", context)
+
+
+class CustomObtainAuthToken(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        response = super(CustomObtainAuthToken, self).post(request, *args, **kwargs)
+        token = Token.objects.get(key=response.data['token'])
+        return Response({'token': token.key, 'id': token.user_id})

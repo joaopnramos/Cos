@@ -6,8 +6,8 @@ PERIOD_CHOICES = (
     ("5","5 times"),
 )
 SPACE_TIME_CHOICES = (
-    ("30","30 minutes"),
-    ("1","1 hour"),
+    ("30","30 seconds"),
+    ("1","1 minute"),
     ("2","2 hours"),
     ("12","12 hours"),
     ("24","1 Day"),

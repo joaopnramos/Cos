@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import DataGive, Data, Project
+from .models import DataGive, Data, Project, Donator
 
 
 class DataSerializer(serializers.ModelSerializer):
@@ -8,7 +8,13 @@ class DataSerializer(serializers.ModelSerializer):
     class Meta:
         model = Data
         fields = "__all__"
-        
+
+class DonatorSerializer(serializers.ModelSerializer):
+    """ Serializa a Data, ou seja, transforma em gson e disponibiliza """
+
+    class Meta:
+        model = Donator
+        fields = "__all__"        
     
 class ProjectSerializer(serializers.ModelSerializer):
     """ Serializa o Projeto, ou seja, transforma em gson e disponibiliza """

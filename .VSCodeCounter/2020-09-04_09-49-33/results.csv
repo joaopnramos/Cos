@@ -1,0 +1,48 @@
+"filename", "language", "Python", "Django txt", "Django HTML", "Markdown", "comment", "blank", "total"
+"c:\Users\joaop\Desktop\Cos\ComandosDjango.txt", "Django txt", 0, 25, 0, 0, 0, 18, 43
+"c:\Users\joaop\Desktop\Cos\ComandsDjango.md", "Markdown", 0, 0, 0, 19, 0, 18, 37
+"c:\Users\joaop\Desktop\Cos\DjangoBaby.md", "Markdown", 0, 0, 0, 208, 0, 116, 324
+"c:\Users\joaop\Desktop\Cos\cos\__init__.py", "Python", 3, 0, 0, 0, 0, 0, 3
+"c:\Users\joaop\Desktop\Cos\cos\asgi.py", "Python", 4, 0, 0, 0, 8, 5, 17
+"c:\Users\joaop\Desktop\Cos\cos\settings.py", "Python", 89, 0, 0, 0, 26, 37, 152
+"c:\Users\joaop\Desktop\Cos\cos\urls.py", "Python", 25, 0, 0, 0, 15, 5, 45
+"c:\Users\joaop\Desktop\Cos\cos\wsgi.py", "Python", 4, 0, 0, 0, 8, 5, 17
+"c:\Users\joaop\Desktop\Cos\manage.py", "Python", 15, 0, 0, 0, 2, 5, 22
+"c:\Users\joaop\Desktop\Cos\requirements_personal.txt", "Django txt", 0, 46, 0, 0, 0, 0, 46
+"c:\Users\joaop\Desktop\Cos\templates\webapp\base.html", "Django HTML", 0, 0, 172, 0, 0, 22, 194
+"c:\Users\joaop\Desktop\Cos\templates\webapp\faq.html", "Django HTML", 0, 0, 190, 0, 0, 12, 202
+"c:\Users\joaop\Desktop\Cos\templates\webapp\generic_register.html", "Django HTML", 0, 0, 79, 0, 0, 15, 94
+"c:\Users\joaop\Desktop\Cos\templates\webapp\index.html", "Django HTML", 0, 0, 304, 0, 0, 44, 348
+"c:\Users\joaop\Desktop\Cos\templates\webapp\login.html", "Django HTML", 0, 0, 71, 0, 0, 11, 82
+"c:\Users\joaop\Desktop\Cos\templates\webapp\password_change.html", "Django HTML", 0, 0, 17, 0, 0, 4, 21
+"c:\Users\joaop\Desktop\Cos\templates\webapp\password_reset.html", "Django HTML", 0, 0, 60, 0, 0, 10, 70
+"c:\Users\joaop\Desktop\Cos\templates\webapp\password_reset_complete.html", "Django HTML", 0, 0, 56, 0, 0, 10, 66
+"c:\Users\joaop\Desktop\Cos\templates\webapp\password_reset_confirm.html", "Django HTML", 0, 0, 68, 0, 0, 11, 79
+"c:\Users\joaop\Desktop\Cos\templates\webapp\password_reset_done.html", "Django HTML", 0, 0, 45, 0, 0, 13, 58
+"c:\Users\joaop\Desktop\Cos\templates\webapp\profile.html", "Django HTML", 0, 0, 223, 0, 0, 16, 239
+"c:\Users\joaop\Desktop\Cos\templates\webapp\project_confirm_delete.html", "Django HTML", 0, 0, 70, 0, 0, 11, 81
+"c:\Users\joaop\Desktop\Cos\templates\webapp\project_detail.html", "Django HTML", 0, 0, 184, 0, 0, 21, 205
+"c:\Users\joaop\Desktop\Cos\templates\webapp\project_donator_list.html", "Django HTML", 0, 0, 132, 0, 0, 19, 151
+"c:\Users\joaop\Desktop\Cos\templates\webapp\project_finishing.html", "Django HTML", 0, 0, 64, 0, 0, 17, 81
+"c:\Users\joaop\Desktop\Cos\templates\webapp\project_form.html", "Django HTML", 0, 0, 130, 0, 0, 13, 143
+"c:\Users\joaop\Desktop\Cos\templates\webapp\project_list.html", "Django HTML", 0, 0, 165, 0, 0, 19, 184
+"c:\Users\joaop\Desktop\Cos\templates\webapp\project_registry.html", "Django HTML", 0, 0, 70, 0, 0, 16, 86
+"c:\Users\joaop\Desktop\Cos\templates\webapp\registration_donator.html", "Django HTML", 0, 0, 76, 0, 0, 11, 87
+"c:\Users\joaop\Desktop\Cos\templates\webapp\registration_scientist.html", "Django HTML", 0, 0, 87, 0, 0, 14, 101
+"c:\Users\joaop\Desktop\Cos\templates\webapp\scientist_profile.html", "Django HTML", 0, 0, 121, 0, 0, 18, 139
+"c:\Users\joaop\Desktop\Cos\templates\webapp\statusprojects.html", "Django HTML", 0, 0, 175, 0, 0, 25, 200
+"c:\Users\joaop\Desktop\Cos\webapp\__init__.py", "Python", 0, 0, 0, 0, 0, 1, 1
+"c:\Users\joaop\Desktop\Cos\webapp\admin.py", "Python", 7, 0, 0, 0, 1, 1, 9
+"c:\Users\joaop\Desktop\Cos\webapp\apps.py", "Python", 3, 0, 0, 0, 0, 3, 6
+"c:\Users\joaop\Desktop\Cos\webapp\choices.py", "Python", 20, 0, 0, 0, 0, 2, 22
+"c:\Users\joaop\Desktop\Cos\webapp\decorators.py", "Python", 44, 0, 0, 0, 4, 5, 53
+"c:\Users\joaop\Desktop\Cos\webapp\forms.py", "Python", 78, 0, 0, 0, 11, 34, 123
+"c:\Users\joaop\Desktop\Cos\webapp\migrations\0001_initial.py", "Python", 74, 0, 0, 0, 1, 7, 82
+"c:\Users\joaop\Desktop\Cos\webapp\migrations\__init__.py", "Python", 0, 0, 0, 0, 0, 1, 1
+"c:\Users\joaop\Desktop\Cos\webapp\models.py", "Python", 65, 0, 0, 0, 17, 23, 105
+"c:\Users\joaop\Desktop\Cos\webapp\serializers.py", "Python", 14, 0, 0, 0, 3, 12, 29
+"c:\Users\joaop\Desktop\Cos\webapp\tests.py", "Python", 1, 0, 0, 0, 1, 2, 4
+"c:\Users\joaop\Desktop\Cos\webapp\urls.py", "Python", 40, 0, 0, 0, 1, 9, 50
+"c:\Users\joaop\Desktop\Cos\webapp\utils.py", "Python", 6, 0, 0, 0, 2, 3, 11
+"c:\Users\joaop\Desktop\Cos\webapp\views.py", "Python", 506, 0, 0, 0, 72, 174, 752
+"Total", "-", 998, 71, 2559, 227, 172, 838, 4865

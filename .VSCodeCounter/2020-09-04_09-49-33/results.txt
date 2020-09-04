@@ -1,0 +1,78 @@
+Date : 2020-09-04 09:49:33
+Directory : c:\Users\joaop\Desktop\Cos
+Total : 46 files,  3855 codes, 172 comments, 838 blanks, all 4865 lines
+
+Languages
++-------------+------------+------------+------------+------------+------------+
+| language    | files      | code       | comment    | blank      | total      |
++-------------+------------+------------+------------+------------+------------+
+| Django HTML |         22 |      2,559 |          0 |        352 |      2,911 |
+| Python      |         20 |        998 |        172 |        334 |      1,504 |
+| Markdown    |          2 |        227 |          0 |        134 |        361 |
+| Django txt  |          2 |         71 |          0 |         18 |         89 |
++-------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                     | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                        |         46 |      3,855 |        172 |        838 |      4,865 |
+| cos                                                                      |          5 |        125 |         57 |         52 |        234 |
+| templates                                                                |         22 |      2,559 |          0 |        352 |      2,911 |
+| templates\webapp                                                         |         22 |      2,559 |          0 |        352 |      2,911 |
+| webapp                                                                   |         14 |        858 |        113 |        277 |      1,248 |
+| webapp\migrations                                                        |          2 |         74 |          1 |          8 |         83 |
++--------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------+-------------+------------+------------+------------+------------+
+| filename                                                                 | language    | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------+-------------+------------+------------+------------+------------+
+| c:\Users\joaop\Desktop\Cos\ComandosDjango.txt                            | Django txt  |         25 |          0 |         18 |         43 |
+| c:\Users\joaop\Desktop\Cos\ComandsDjango.md                              | Markdown    |         19 |          0 |         18 |         37 |
+| c:\Users\joaop\Desktop\Cos\DjangoBaby.md                                 | Markdown    |        208 |          0 |        116 |        324 |
+| c:\Users\joaop\Desktop\Cos\cos\__init__.py                               | Python      |          3 |          0 |          0 |          3 |
+| c:\Users\joaop\Desktop\Cos\cos\asgi.py                                   | Python      |          4 |          8 |          5 |         17 |
+| c:\Users\joaop\Desktop\Cos\cos\settings.py                               | Python      |         89 |         26 |         37 |        152 |
+| c:\Users\joaop\Desktop\Cos\cos\urls.py                                   | Python      |         25 |         15 |          5 |         45 |
+| c:\Users\joaop\Desktop\Cos\cos\wsgi.py                                   | Python      |          4 |          8 |          5 |         17 |
+| c:\Users\joaop\Desktop\Cos\manage.py                                     | Python      |         15 |          2 |          5 |         22 |
+| c:\Users\joaop\Desktop\Cos\requirements_personal.txt                     | Django txt  |         46 |          0 |          0 |         46 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\base.html                    | Django HTML |        172 |          0 |         22 |        194 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\faq.html                     | Django HTML |        190 |          0 |         12 |        202 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\generic_register.html        | Django HTML |         79 |          0 |         15 |         94 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\index.html                   | Django HTML |        304 |          0 |         44 |        348 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\login.html                   | Django HTML |         71 |          0 |         11 |         82 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\password_change.html         | Django HTML |         17 |          0 |          4 |         21 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\password_reset.html          | Django HTML |         60 |          0 |         10 |         70 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\password_reset_complete.html | Django HTML |         56 |          0 |         10 |         66 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\password_reset_confirm.html  | Django HTML |         68 |          0 |         11 |         79 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\password_reset_done.html     | Django HTML |         45 |          0 |         13 |         58 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\profile.html                 | Django HTML |        223 |          0 |         16 |        239 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\project_confirm_delete.html  | Django HTML |         70 |          0 |         11 |         81 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\project_detail.html          | Django HTML |        184 |          0 |         21 |        205 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\project_donator_list.html    | Django HTML |        132 |          0 |         19 |        151 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\project_finishing.html       | Django HTML |         64 |          0 |         17 |         81 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\project_form.html            | Django HTML |        130 |          0 |         13 |        143 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\project_list.html            | Django HTML |        165 |          0 |         19 |        184 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\project_registry.html        | Django HTML |         70 |          0 |         16 |         86 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\registration_donator.html    | Django HTML |         76 |          0 |         11 |         87 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\registration_scientist.html  | Django HTML |         87 |          0 |         14 |        101 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\scientist_profile.html       | Django HTML |        121 |          0 |         18 |        139 |
+| c:\Users\joaop\Desktop\Cos\templates\webapp\statusprojects.html          | Django HTML |        175 |          0 |         25 |        200 |
+| c:\Users\joaop\Desktop\Cos\webapp\__init__.py                            | Python      |          0 |          0 |          1 |          1 |
+| c:\Users\joaop\Desktop\Cos\webapp\admin.py                               | Python      |          7 |          1 |          1 |          9 |
+| c:\Users\joaop\Desktop\Cos\webapp\apps.py                                | Python      |          3 |          0 |          3 |          6 |
+| c:\Users\joaop\Desktop\Cos\webapp\choices.py                             | Python      |         20 |          0 |          2 |         22 |
+| c:\Users\joaop\Desktop\Cos\webapp\decorators.py                          | Python      |         44 |          4 |          5 |         53 |
+| c:\Users\joaop\Desktop\Cos\webapp\forms.py                               | Python      |         78 |         11 |         34 |        123 |
+| c:\Users\joaop\Desktop\Cos\webapp\migrations\0001_initial.py             | Python      |         74 |          1 |          7 |         82 |
+| c:\Users\joaop\Desktop\Cos\webapp\migrations\__init__.py                 | Python      |          0 |          0 |          1 |          1 |
+| c:\Users\joaop\Desktop\Cos\webapp\models.py                              | Python      |         65 |         17 |         23 |        105 |
+| c:\Users\joaop\Desktop\Cos\webapp\serializers.py                         | Python      |         14 |          3 |         12 |         29 |
+| c:\Users\joaop\Desktop\Cos\webapp\tests.py                               | Python      |          1 |          1 |          2 |          4 |
+| c:\Users\joaop\Desktop\Cos\webapp\urls.py                                | Python      |         40 |          1 |          9 |         50 |
+| c:\Users\joaop\Desktop\Cos\webapp\utils.py                               | Python      |          6 |          2 |          3 |         11 |
+| c:\Users\joaop\Desktop\Cos\webapp\views.py                               | Python      |        506 |         72 |        174 |        752 |
+| Total                                                                    |             |      3,855 |        172 |        838 |      4,865 |
++--------------------------------------------------------------------------+-------------+------------+------------+------------+------------+
