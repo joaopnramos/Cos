@@ -30,7 +30,9 @@ import os
 import csv
 import re
 
-def StartView(request):
+#Index, pagina inicial
+def indexView(request):
+    """ pagina inicial, com form para enviar sugestões """
     context = {}
     if request.method == "POST":
         sue_form = SendUsEmail(data=request.POST)
@@ -44,22 +46,18 @@ def StartView(request):
                     email_subject, email_body, "noreply@semycolon.com", [emails],)
             email.send(fail_silently=False)
 
-                    
-
-    
     context["send_us_email"] = SendUsEmail
     return render(request, "webapp/index.html", context)
 
 
-# Start View
+#Register View
 class RegisterView(TemplateView):
-    """ Pagina inicial do projeto """
+    """ Pagina de escolha do tipo de utilizador que se
+        pretende registrar """
 
     template_name = "webapp/generic_register.html"
 
 # Registro do Cientista!!
-
-
 def scientist_register(request):
     """ View destinada ao registo do cientista """
 
@@ -80,7 +78,7 @@ def scientist_register(request):
             for u in bis:
                 if bi == u.bi:
                     messages.error(request, 'This BI already exists. Use another BI.')
-                    
+
             if 10000000 < bi < 99999999:
                 scientist_profile = Scientist(first_name=first_name, last_name=last_name, address=address, work_local=work_local, bi=bi, email=emails)
                 if scientist_form.cleaned_data.get("profile_pic"):
@@ -108,7 +106,7 @@ def scientist_register(request):
                 registered = True
 
             else:
-                messages.error(request, 'Phone number or BI is wrong.')
+                messages.error(request, 'Phone number or CC is wrong.')
 
         else:
             print(user_form.errors, scientist_form.errors)
@@ -122,8 +120,6 @@ def scientist_register(request):
                    "registered": registered})
 
 # Registro do donator!
-
-
 def donator_register(request):
     """ View destinada ao registo do donator """
 
@@ -140,8 +136,23 @@ def donator_register(request):
             age = donator_form.cleaned_data.get("age")
             email = user_form.cleaned_data.get("email")
             donator_profile = Donator(age=age, email=email)
+            user.is_active = False
+            user.save()
             donator_profile.user = user
             donator_profile.save()
+            uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+
+            domain = get_current_site(request).domain
+            link = reverse("activate", kwargs={
+                            "uidb64": uidb64, "token": tokengenerator.make_token(user)})
+            email_subject = "Activate you accounts"
+            activate_url = "http://" + domain+link
+            email_body = "Hi " + user.username + "! \n" \
+                "Please use this link to verify the account:\n" + activate_url \
+                + "\nIf this isn't you, ignore this email." + "\n\nFrom the CoS Team."
+            email = EmailMessage(
+                email_subject, email_body, "noreply@semycolon.com", [email],)
+            email.send(fail_silently=False)
             registered = True
         else:
             print(user_form.errors, donator_form.errors)
@@ -155,8 +166,6 @@ def donator_register(request):
                    "registered": registered})
 
 # Login generalista
-
-
 def user_login(request):
     """ Login generalista, este login serve tanto para os donators como para os cientistas """
 
@@ -175,9 +184,8 @@ def user_login(request):
         form = AuthenticationForm()
         return render(request, "webapp/login.html", {'form': form})
 
+
 # Logout!
-
-
 @login_required
 def user_logout(request):
     """ Permite fazer o logout """
@@ -185,8 +193,6 @@ def user_logout(request):
     return HttpResponseRedirect(reverse("index"))
 
 # View que permite a criação de um projeto!
-
-
 @scientist_required
 @login_required
 def ProjectCreateView(request):
@@ -213,9 +219,7 @@ def ProjectCreateView(request):
         project_form = ProjectForm
     return render(request, "webapp/project_form.html", {"form": project_form})
 
-# Demonstra uma lista de todos os proejetos aos cientistas
-
-
+# Demonstra uma lista de todos os projetos aos cientistas
 @method_decorator([login_required, scientist_required], name='dispatch')
 class ProjectListView(ListView):
     """ Esta vista serve para ver todos os projeto """
@@ -224,8 +228,6 @@ class ProjectListView(ListView):
     ordering = ['finished']
 
 # Serve para demonstrar os detalhes de um projeto
-
-
 @method_decorator([login_required], name='dispatch')
 class ProjectDetailView(DetailView):
     """ Esta view serve para ver os detalhes do projeto """
@@ -258,8 +260,6 @@ class ProjectDetailView(DetailView):
         return context
 
 # Serve para atulizar um projeto e só está disponivel para os cientistas e para os donos no projeto
-
-
 @method_decorator([login_required, scientist_required, owner_required], name='dispatch')
 class ProjectUpdateView(UpdateView):
     """ Esta view serve para atualizar o projeto """
@@ -269,8 +269,6 @@ class ProjectUpdateView(UpdateView):
     success_url = reverse_lazy('webapp:list')
 
 # Serve para apagar um projeto
-
-
 @method_decorator([login_required, scientist_required, owner_required], name='dispatch')
 class ProjectDeleteView(DeleteView):
     """ Esta view serve para apagar um projeto """
@@ -278,8 +276,6 @@ class ProjectDeleteView(DeleteView):
     success_url = reverse_lazy("webapp:list")
 
 # Faz a entrada de um donator num projeto
-
-
 def DataGiveView(request, pk):
     """ Cria o objeto DataGive, ou seja, a partir da criação deste objeto o donator faz parte do projeto"""
 
@@ -305,27 +301,18 @@ def DataGiveView(request, pk):
     return render(request, "webapp/project_registry.html", {"in_project": in_project})
 
 # Lista de todos projetos existentes disponiveis para o donator
-
-
 @login_required
 @donator_required
 def DonatorList(request):
     """ Lista de todos os projetos do donator """
-
     list_of_not = []
-
     dt = DataGive.objects.filter(donator=request.user.donator.id)
     for i in dt:
         list_of_not.append(i.project.id)
-
-    pd_list = Project.objects.filter(finished=False).order_by(
-        "name").exclude(id__in=list_of_not)
-
+    pd_list = Project.objects.filter(finished=False).order_by("name").exclude(id__in=list_of_not)
     return render(request, "webapp/project_donator_list.html", context={"pd_list": pd_list})
 
 # Profile
-
-
 @login_required
 @scientist_required
 def profileScientist(request):
@@ -350,7 +337,7 @@ def profileScientist(request):
             if request.POST.get("work_local"):
                 users.work_local = request.POST['work_local']
                 users.save()
-            
+
             if "profile_pic" in request.FILES:
                 users.profile_pic = request.FILES['profile_pic']
                 users.save()
@@ -416,11 +403,12 @@ def profileScientist(request):
     context = {'u_form': u_form, "s_form": s_form}
     return render(request, 'webapp/profile.html', context)
 
+#Template para alertar a alteração da parlvra pass
 class PasswordChangedView(TemplateView):
     """ Pagina inicial do projeto """
 
     template_name = "webapp/password_change.html"
-    
+
 # Projetos dos proprios cientistas
 
 
@@ -463,6 +451,9 @@ def finishthedproject(request, pk):
     project = get_object_or_404(Project, pk=pk)
     project.project_finished()
     project.save()
+    dtobjs = DataGive.objects.filter(project=pk)
+    for i in dtobjs:
+        i.delete()
     pks = str(pk)
     return HttpResponseRedirect(reverse("index"))
 
@@ -538,8 +529,8 @@ class Verification(View):
         return redirect("user_login")
 
 # Projetos ativos cientista
-
-
+@login_required
+@donator_required
 def MyActiveProjectsD(request):
     """ View que demonstra os projetos ativos do utilizador donator  """
     context = {}
@@ -557,7 +548,8 @@ def MyActiveProjectsD(request):
 
 # Projetos arquivados Donator
 
-
+@login_required
+@donator_required
 def MyArchivedProjectsD(request):
     """ View que demonstra os projetos arquivados do utilizador donator  """
     context = {}
@@ -574,7 +566,8 @@ def MyArchivedProjectsD(request):
 
 # Projetos ativos Cientista
 
-
+@login_required
+@scientist_required
 def MyActiveProjectsS(request):
     """ View que demonstra os projetos ativos do utilizador  """
     context = {}
@@ -593,7 +586,8 @@ def MyActiveProjectsS(request):
 
 # Prpjetos arquivados Cientista
 
-
+@login_required
+@scientist_required
 def MyArchivedProjectsS(request):
     """ View que demonstra os projetos arquivados do utilizador  """
     context = {}
@@ -625,7 +619,8 @@ def download_apk(request):
             return response
     raise Http404
 
-
+@login_required
+@donator_required
 def donator_exit_project(request, pk):
     """ Permite ao cientista finalizar o projeto """
     project = get_object_or_404(Project, pk=pk)
@@ -634,11 +629,12 @@ def donator_exit_project(request, pk):
     datag.delete()
     return redirect("webapp:myDprojects")
 
-
+@login_required
 def faq(request):
     return render(request, "webapp/faq.html")
 
-
+@login_required
+@scientist_required
 def export_data(request, pk):
     """ Serve para traduzir as choices """
     sensors_dict = {"a": "alls", "c": "camera", "l": "light", "g": "ground"}
@@ -721,19 +717,20 @@ def export_data(request, pk):
 
     return response
 
-
+@login_required
 def see_scientist_profile(request, pk):
 
     """ Serve para os donators verem o perfil dos cientistas """
     scientist = Scientist.objects.get(id=pk)
-    u = User.objects.get(id=pk)
+    u = User.objects.get(id=scientist.user.id)
     context = {}
     context["uscientist"] = u
     context["scientist"] = scientist
 
     return render(request, "webapp/scientist_profile.html", context)
 
-
+@login_required
+@scientist_required
 def FinalizingView(request, pk):
     """ Finalizar um projeto e enviar um email a todos os donators"""
     project = Project.objects.get(id=pk)

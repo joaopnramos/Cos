@@ -76,6 +76,8 @@
                     {% csrf_token %}
                     {{ user_form.as_p }}
                     {{ donator_form.as_p }}
+                    <small>Note: Please use a password with at least 8 characters, <br>
+                    with a mix of letters and numbers.</small>
                     <input type="submit" value="Register" class="btn btn-lg btn-block btn-secondary">
                 </form>
             </div>

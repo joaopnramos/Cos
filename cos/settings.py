@@ -28,7 +28,7 @@ SECRET_KEY = '^7)qhvo$3#-(@j(=7#1#a4_%c(+2@ai1)1=hj@nnca0vovk*=@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "webapp",
-    
+
 ]
 
 REST_FRAMEWORK = {
@@ -88,8 +88,11 @@ WSGI_APPLICATION = 'cos.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Takayah1$cos',
+        'USER': 'Takayah1',
+        'PASSWORD': 'ramos123',
+        'HOST': 'Takayah1.mysql.pythonanywhere-services.com',
     }
 }
 
@@ -147,5 +150,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'citizensonscience2020@gmail.com'
+EMAIL_HOST_USER = 'citizensonscienceproject@gmail.com'
 EMAIL_HOST_PASSWORD = 'Citizen1234!'

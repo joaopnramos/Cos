@@ -73,7 +73,7 @@
     p a {
         font-size: 15px;
         color: #000000;
-        margin: 0px 0px 0px;      
+        margin: 0px 0px 0px;
     }
 
 </style>
@@ -108,10 +108,10 @@
                             <div class="form-group row">
                                 <label for="id_name" class="col-4 col-form-label">Scientist: </label>
                                 <div class="col-8 text-left border-bottom">
-                                    {% if request.user.donator %}
+                                    {% if project.scientist.user.id != request.user.id %}
                                     <p><a href="{% url 'webapp:sprofile' pk=project.scientist.pk  %}">
                                         {{ project.scientist.first_name }}
-                                        {{ project.scientist.last_name }} 
+                                        {{ project.scientist.last_name }}
                                     </a></p>
                                     {% else %}
                                     {{ project.scientist.first_name }} {{ project.scientist.last_name }}
@@ -167,6 +167,10 @@
                             </div>
                         </form>
                         {% if project.finished %}
+                        <div class="container offset-4 col-2">
+                            <a class="btn btn-lg btn-secondary"
+                                href="{% url 'webapp:export_data' pk=project.pk  %}">Download Data</a>
+                        </div>
                         <br>
                         <br>
                         <br>

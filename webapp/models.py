@@ -29,7 +29,6 @@ class Scientist(models.Model):
     bi = models.PositiveIntegerField(unique=True)
     address = models.CharField(max_length=100, blank=True)
     is_scientist = models.BooleanField(default=True)
-    verified = models.BooleanField(default=False)
     profile_pic = models.ImageField(null = True, blank=True)
 
     def __str__(self):
@@ -42,7 +41,7 @@ class Donator(models.Model):
     email = models.EmailField(max_length=254, null=False, unique=True)
     user = models.OneToOneField(User, related_name='donator', on_delete=models.CASCADE)
     is_donator = models.BooleanField(default=True)
-    
+
 
 #Projetos dos cientistas
 class Project(models.Model):
@@ -82,7 +81,7 @@ class Data(models.Model):
     camera = models.CharField( max_length=50)
     light = models.CharField( max_length=50)
     ground = models.CharField( max_length=50)
-    
+
     def __str__(self):
         return "informação deste projeto" + self.alls
 
@@ -96,10 +95,9 @@ class DataGive(models.Model):
     givingFinished = models.BooleanField(default=False)
 
     def projectDone(self):
-        """ Esta variavel boleana permite á query no telemovel saber se 
+        """ Esta variavel boleana permite á query no telemovel saber se
             este projeto ainda é passivel de requisição de dados """
         self.givingFinished = True
         return self.givingFinished
 
-    
-    
+
