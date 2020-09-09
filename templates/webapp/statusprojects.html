@@ -98,21 +98,43 @@
   }
 
   a {
-    text-align: center;
+    text-align: left;
   }
+
+    .dropdown-item {
+        display: block;
+        width: 100%;
+        padding: .25rem 1.5rem;
+        clear: both;
+        font-weight: 400;
+        color: #000;
+        text-align: inherit;
+        white-space: nowrap;
+        background-color: #fff;
+        border: 0;
+    }
 </style>
 
 {% if data %}
 <div class="jumbotron">
   {% if Finalized %}
-  <h1 class="border-bottom border-gray pb-2 mb-0">Finalized Projects</h1>
+  <h1 class="border-bottom border-gray pb-2 mb-0">Your Finalized Projects</h1>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:list" %}">All</a>
+        <a type="button" class="btn btn-lg btn-secondary active" href="{% url "webapp:archived_list" %}">Archived</a>
+        <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:active_list" %}">Active</a>
+    </div>
   {% else %}
   {% if active %}
-  <h1 class="border-bottom border-gray pb-2 mb-0">Active Projects</h1>
+  <h1 class="border-bottom border-gray pb-2 mb-0">Your Active Projects</h1>
   {% endif %}
   <h1 class="border-bottom border-gray pb-2 mb-0">Your Projects</h1>
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:list" %}">All</a>
+        <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:archived_list" %}">Archived</a>
+        <a type="button" class="btn btn-lg btn-secondary active" href="{% url "webapp:active_list" %}">Active</a>
+    </div>
   {% endif %}
-
 
   {% for project in data %}
   <div class="row row-cols-1 row-cols-md-1">

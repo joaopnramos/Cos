@@ -70,7 +70,7 @@
     <div class="card-deck text-right" style="width: auto;">
         <div class="card mb-4 shadow-sm">
             <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Registro Cientista</h4>
+                <h4 class="my-0 font-weight-normal">Scientist Registry</h4>
             </div>
             <div class="card-body">
                 {% if registered %}
@@ -90,8 +90,7 @@
                     <p><label>Address: </label>{{ scientist_form.address }} </p>
                     <p><label>Work Place: </label>{{ scientist_form.work_local }} </p>
                     <p><label>BI: </label>{{ scientist_form.bi }}</p>
-                    <small>Note: Please use a password with at least 8 characters, <br>
-                    with a mix of letters and numbers.</small>
+                    <small class="form-text text-muted">Note: Your password must be 8-20 characters long, contain letters and numbers,<br> and must not contain spaces, special characters, or emoji.</small>
                     <input type="submit" value="Register" class="btn btn-lg btn-block btn-secondary">
                 </form>
             </div>

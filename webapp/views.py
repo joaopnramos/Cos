@@ -25,7 +25,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-from cos.settings import DOWNLOAD_DIR
+from cos.settings import DOWNLOAD_DIR, STATIC_DIR
 import os
 import csv
 import re
@@ -39,7 +39,7 @@ def indexView(request):
         if sue_form.is_valid():
             name = sue_form.cleaned_data.get("name")
             message = sue_form.cleaned_data.get("message")
-            emails = "citizensonscience2020@gmail.com"
+            emails = "citizensonscienceproject@gmail.com"
             email_subject = "Suggestion"
             email_body = "Hi " + name + "! \n" + message
             email = EmailMessage(
@@ -490,7 +490,7 @@ class DataGiveViewSet(ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     filter_backends = (filters.SearchFilter,)
-    search_fields = ("donator",)
+    search_fields = ("donator__id",)
 
 class DonatorViewSet(ModelViewSet):
     """ Permite adicionar dados aos projetos através de gson, basicamente é um end point """
@@ -608,7 +608,7 @@ def MyArchivedProjectsS(request):
 
 def download_apk(request):
     # Full path of file
-    file_path = DOWNLOAD_DIR + '\cos.apk'
+    file_path = STATIC_DIR + '\cos.apk'
     print(file_path)
     if os.path.exists(file_path):
         with open(file_path, 'rb') as fh:
@@ -629,7 +629,7 @@ def donator_exit_project(request, pk):
     datag.delete()
     return redirect("webapp:myDprojects")
 
-@login_required
+
 def faq(request):
     return render(request, "webapp/faq.html")
 

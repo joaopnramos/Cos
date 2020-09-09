@@ -75,6 +75,62 @@
         margin: 0px 0px 20px 0px margin-left: 50%;
         ;
     }
+
+    .dropdown-item {
+        display: block;
+        width: 100%;
+        padding: .25rem 1.5rem;
+        clear: both;
+        font-weight: 400;
+        color: #000;
+        text-align: inherit;
+        white-space: nowrap;
+        background-color: #fff;
+        border: 0;
+    }
+
+    input {
+        line-height: normal;
+        height:40px;
+        width:162px;
+    }
+
+    select {
+        line-height: normal;
+        height:40px;
+        width:162px;
+    }
+
+    textarea {
+        -webkit-writing-mode: horizontal-tb !important;
+        text-rendering: auto;
+        color: -internal-light-dark(black, white);
+        height:148px;
+        width:400px;
+        letter-spacing: normal;
+        word-spacing: normal;
+        text-transform: none;
+        text-indent: 0px;
+        text-shadow: none;
+        display: inline-block;
+        text-align: start;
+        appearance: textarea;
+        background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
+        -webkit-rtl-ordering: logical;
+        flex-direction: column;
+        resize: both;
+        cursor: text;
+        white-space: pre-wrap;
+        overflow:auto;
+        overflow-wrap: break-word;
+        margin: 0em;
+        font: 400 13.3333px Arial;
+        border-width: 1px;
+        border-style: solid;
+        border-color: -internal-light-dark(rgb(118, 118, 118), rgb(195, 195, 195));
+        border-image: initial;
+        padding: 2px;
+    }
 </style>
 
 <div class="jumbotron">
@@ -132,7 +188,12 @@
                                     {{form.spacetimeChoice}}
                                 </div>
                             </div>
-                            <input type="submit" class="btn btn-lg btn-secondary" value="Submit">
+                            <div class="form-group row">
+                              <div class="offset-8 col-4">
+                                <input type="submit" class="btn btn-lg btn-secondary" value="Submit">
+                              </div>
+                            </div>
+
                         </form>
                     </div>
                 </div>

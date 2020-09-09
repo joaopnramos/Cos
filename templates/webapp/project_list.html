@@ -1,6 +1,6 @@
 {% extends 'webapp/base.html' %}
 {{% block body_block %}
-   
+
 <style>
 
     body {
@@ -48,8 +48,8 @@
         font-size: 15px;
         line-height: 1.3333333;
         border-radius: 6px;
-    }    
-    
+    }
+
     .btn-secondary {
         color: #fff;
         background-color: #343A40;
@@ -68,7 +68,7 @@
         color: #ffffff;
     }
 
-    
+
     h5 {
         font-size: 14px;
         margin: 0 10px;
@@ -97,18 +97,31 @@
     .bg-light {
         background-color: #343A40!important;
         height: max-content;
-}
+    }
+
+    .dropdown-item {
+        display: block;
+        width: 100%;
+        padding: .25rem 1.5rem;
+        clear: both;
+        font-weight: 400;
+        color: #000;
+        text-align: inherit;
+        white-space: nowrap;
+        background-color: #fff;
+        border: 0;
+    }
 </style>
 {% if projects %}
 <div class="jumbotron">
     <div>
-        <h1 class="border-bottom border-gray pb-2 mb-0">List of all Projects</h1>       
+        <h1 class="border-bottom border-gray pb-2 mb-0">List of all Projects</h1>
     </div>
     <div class="btn-group" role="group" aria-label="Basic example">
         <a type="button" class="btn btn-lg btn-secondary active" href="{% url "webapp:list" %}">All</a>
         <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:archived_list" %}">Archived</a>
         <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:active_list" %}">Active</a>
-    </div>    
+    </div>
     {% for project in projects %}
     <div class="row row-cols-1 row-cols-md-1">
         <div class="col-md-9">
