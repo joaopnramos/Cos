@@ -230,7 +230,9 @@
           we were able to not only create a functional website, but also an application for android devices to collect
           said data for research.</p>
         {% if user.donator.is_donator %}
-        <a href="{% url "webapp:download_apk" %}">Download Here</a>
+        <br>
+        <p><strong>To get the app, click here: </strong></p>
+        <a class="btn btn-lg btn-secondary" href="{% url "webapp:download_apk" %}"> Download App</a>
         {% endif %}
       </div>
     </div>

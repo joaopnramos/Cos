@@ -112,6 +112,7 @@
         border: 0;
     }
 </style>
+
 {% if projects %}
 <div class="jumbotron">
     <div>
@@ -169,14 +170,13 @@
         </div>
     </div>
 {% endfor %}
-</div>
+
 {% else %}
 <br>
 <br>
 <br>
 <br>
 <br>
-
 <div class="d-flex p-4 justify-content-center">
     <div class="card-deck text-center" style="width: auto;">
         <div class="card mb-4 shadow-sm">
@@ -193,5 +193,5 @@
     </div>
 </div>
 {% endif %}
-
+</div>
 {% endblock body_block %}

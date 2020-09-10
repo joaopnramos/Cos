@@ -101,39 +101,38 @@
     text-align: left;
   }
 
-    .dropdown-item {
-        display: block;
-        width: 100%;
-        padding: .25rem 1.5rem;
-        clear: both;
-        font-weight: 400;
-        color: #000;
-        text-align: inherit;
-        white-space: nowrap;
-        background-color: #fff;
-        border: 0;
-    }
+  .dropdown-item {
+    display: block;
+    width: 100%;
+    padding: .25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #000;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: #fff;
+    border: 0;
+  }
 </style>
 
 {% if data %}
 <div class="jumbotron">
   {% if Finalized %}
   <h1 class="border-bottom border-gray pb-2 mb-0">Your Finalized Projects</h1>
-    <div class="btn-group" role="group" aria-label="Basic example">
-        <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:list" %}">All</a>
-        <a type="button" class="btn btn-lg btn-secondary active" href="{% url "webapp:archived_list" %}">Archived</a>
-        <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:active_list" %}">Active</a>
-    </div>
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:list" %}">All</a>
+    <a type="button" class="btn btn-lg btn-secondary active" href="{% url "webapp:archived_list" %}">Archived</a>
+    <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:active_list" %}">Active</a>
+  </div>
   {% else %}
   {% if active %}
-  <h1 class="border-bottom border-gray pb-2 mb-0">Your Active Projects</h1>
   {% endif %}
-  <h1 class="border-bottom border-gray pb-2 mb-0">Your Projects</h1>
-      <div class="btn-group" role="group" aria-label="Basic example">
-        <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:list" %}">All</a>
-        <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:archived_list" %}">Archived</a>
-        <a type="button" class="btn btn-lg btn-secondary active" href="{% url "webapp:active_list" %}">Active</a>
-    </div>
+  <h1 class="border-bottom border-gray pb-2 mb-0">Your Active Projects</h1>
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:list" %}">All</a>
+    <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:archived_list" %}">Archived</a>
+    <a type="button" class="btn btn-lg btn-secondary active" href="{% url "webapp:active_list" %}">Active</a>
+  </div>
   {% endif %}
 
   {% for project in data %}
@@ -183,40 +182,40 @@
     </div>
   </div>
   {% endfor %}
-</div>
-{% else %}
-<br>
-<br>
-<br>
-<br>
-<br>
 
-<div class="d-flex p-4 justify-content-center">
-  <div class="card-deck text-center" style="width: auto;">
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header text-center">
-        <h3 class="my-0 font-weight-normal">My Projects</h3>
+{% else %}
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <div class="d-flex p-4 justify-content-center">
+    <div class="card-deck text-center" style="width: auto;">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header text-center">
+          <h3 class="my-0 font-weight-normal">My Projects</h3>
+        </div>
+        {% if user.scientist.is_scientist %}
+        <div class="card-body">
+          <h5>Sorry but at this moment you don't have any project. Create one now:</h5>
+        </div>
+        <div>
+          <a class="btn btn-lg btn-secondary" href="{% url "webapp:project_create" %}">Create a Project</a>
+        </div>
+        {% endif %}
+        {% if user.donator.is_donator %}
+        <div class="card-body">
+          <h5>Sorry but at this moment you don't have any project. Join one now:</h5>
+        </div>
+        <div>
+          <a class="btn btn-lg btn-secondary" href="{% url "webapp:donator_list" %}">Join a Project</a>
+        </div>
+        {% endif %}
       </div>
-      {% if register.scientist %}
-      <div class="card-body">
-        <h5>Sorry but at this moment you don't have any project. Create one now:</h5>
-      </div>
-      <div>
-        <a class="btn btn-lg btn-secondary" href="{% url "webapp:project_create" %}">Create a Project</a>
-      </div>
-      {% endif %}
-      {% if register.donor %}
-      <div class="card-body">
-        <h5>Sorry but at this moment you don't have any project. Join one now:</h5>
-      </div>
-      <div>
-        <a class="btn btn-lg btn-secondary" href="{% url "webapp:donator_list" %}">Join a Project</a>
-      </div>
-      {% endif %}
     </div>
   </div>
-</div>
 {% endif %}
-
+</div>
 
 {% endblock body_block %}

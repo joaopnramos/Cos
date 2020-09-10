@@ -75,7 +75,6 @@
         color: #000000;
         margin: 0px 0px 0px;
     }
-
 </style>
 
 
@@ -110,9 +109,9 @@
                                 <div class="col-8 text-left border-bottom">
                                     {% if project.scientist.user.id != request.user.id %}
                                     <p><a href="{% url 'webapp:sprofile' pk=project.scientist.pk  %}">
-                                        {{ project.scientist.first_name }}
-                                        {{ project.scientist.last_name }}
-                                    </a></p>
+                                            {{ project.scientist.first_name }}
+                                            {{ project.scientist.last_name }}
+                                        </a></p>
                                     {% else %}
                                     {{ project.scientist.first_name }} {{ project.scientist.last_name }}
                                     {% endif %}
@@ -170,6 +169,8 @@
                         <div class="container offset-4 col-2">
                             <a class="btn btn-lg btn-secondary"
                                 href="{% url 'webapp:export_data' pk=project.pk  %}">Download Data</a>
+                            <a class="btn btn-lg btn-secondary"
+                                href="{% url 'webapp:delete' pk=project.pk  %}">Delete</a>
                         </div>
                         <br>
                         <br>
