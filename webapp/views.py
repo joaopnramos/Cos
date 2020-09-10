@@ -637,13 +637,13 @@ def faq(request):
 @scientist_required
 def export_data(request, pk):
     """ Serve para traduzir as choices """
-    sensors_dict = {"a": "alls", "c": "camera", "l": "light", "g": "ground"}
+    sensors_dict = {"t": "temperature", "c": "proximity", "l": "light", "p": "pressure"}
     """ Recolhe os sensores requesitados pelo cientistas """
     sensors_requested = []
-    alls_data = []
-    camera_data = []
+    temperature_data = []
+    proximity_data = []
     light_data = []
-    ground_data = []
+    pressure_data = []
     data_export = []
     length = 0
 
@@ -657,33 +657,33 @@ def export_data(request, pk):
     for sensor in sensors_requested:
         """ Organizado por utilizador de forma a poder ser recolhida a informação de uma forma mais simples """
         for data in Data.objects.filter(project=pk).order_by("owner").values_list(sensor):
-            if sensor == "alls":
+            if sensor == "temperature":
                 a = re.sub('[()]', '', data[0])
-                alls_data.append(a)
+                temperature_data.append(a)
 
-            elif sensor == "camera":
+            elif sensor == "proximity":
                 a = re.sub('[()]', '', data[0])
-                camera_data.append(a)
+                proximity_data.append(a)
 
             elif sensor == "light":
                 a = re.sub('[()]', '', data[0])
                 light_data.append(a)
 
-            elif sensor == "ground":
+            elif sensor == "pressure":
                 a = re.sub('[()]', '', data[0])
-                ground_data.append(a)
+                pressure_data.append(a)
 
-    if len(alls_data) != 0:
-        length = len(alls_data)
+    if len(temperature_data) != 0:
+        length = len(temperature_data)
     else:
-        if len(camera_data) != 0:
-            length = len(camera_data)
+        if len(proximity_data) != 0:
+            length = len(proximity_data)
         else:
             if len(light_data) != 0:
                 length = len(light_data)
 
             else:
-                length = len(ground_data)
+                length = len(pressure_data)
 
     response = HttpResponse(content_type="text/csv")
     writer = csv.writer(response)
@@ -716,6 +716,7 @@ def export_data(request, pk):
         i = i+1
 
     return response
+
 
 @login_required
 def see_scientist_profile(request, pk):

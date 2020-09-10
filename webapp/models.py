@@ -77,10 +77,10 @@ class Data(models.Model):
 
     owner = models.ForeignKey(Donator, on_delete=models.CASCADE, related_name="data")
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="data")
-    alls = models.CharField( max_length=50)
-    camera = models.CharField( max_length=50)
-    light = models.CharField( max_length=50)
-    ground = models.CharField( max_length=50)
+    temperature = models.CharField( max_length=200)
+    proximity = models.CharField( max_length=200)
+    light = models.CharField( max_length=200)
+    pressure = models.CharField( max_length=200)
 
     def __str__(self):
         return "informação deste projeto" + self.alls

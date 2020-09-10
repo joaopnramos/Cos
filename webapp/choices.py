@@ -14,9 +14,8 @@ SPACE_TIME_CHOICES = (
 )
 
 SENSORS_CHOICES = (
-    ("a","alls"),
-    ("c","camera"),
+    ("t","temperature"),
+    ("c","proximity"),
     ("l", "light"),
-    ("g", "ground"),
+    ("p", "pressure"),
 )
-    

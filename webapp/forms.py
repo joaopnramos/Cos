@@ -35,15 +35,15 @@ class UserForm(forms.ModelForm):
         first_isalpha = password[0].isalpha()
         if all(c.isalpha() == first_isalpha for c in password):
             raise forms.ValidationError("The new password must contain at least one letter and at least one digit or punctuation character.")
-            
+
 
     def clean_email(self):
         username = self.cleaned_data.get("username")
         email = self.cleaned_data.get("email")
-        if email and User.objects.filter(email=email).exclude(username=username).count():          
+        if email and User.objects.filter(email=email).exclude(username=username).count():
             raise forms.ValidationError("This email is already in use! Try another email.")
         return email
-    
+
     def clean_username(self):
         username = self.cleaned_data.get("username")
         email = self.cleaned_data.get("email")
@@ -62,19 +62,19 @@ class ScientistForm(forms.Form):
     work_local = forms.CharField(required=True)
     bi = forms.IntegerField(required=True)
     profile_pic = forms.ImageField(required=False)
-    
+
 
 # Form de criar um donator
 class DonatorForm(forms.ModelForm):
     class Meta():
         model = Donator
         fields = ("age",)
-    
+
     def clean(self):
         cleaned_data = super().clean()
         if cleaned_data.get('age') <18:
             raise forms.ValidationError('Sorry, but users with age less than 18 can´t register to our website')
-        
+
 
 
 # Form de um projeto
@@ -86,7 +86,7 @@ class ProjectForm(forms.ModelForm):
         "sensorsChoice": "Choose The Sensor You Need",
         "periodChoice":"Choose How Many Time The Program Will Run",
         "spacetimeChoice": "Choose The period of time beetween data analysis" }
-    
+
 
     sensorsChoice = forms.MultipleChoiceField(choices=SENSORS_CHOICES)
     description = forms.CharField(required=True, widget=forms.Textarea(attrs={"rows":2, "cols":50}))
@@ -118,5 +118,5 @@ class SendUsEmail(forms.Form):
 class SendEmailForm(forms.Form):
     message = forms.CharField(required=True, widget=forms.Textarea(attrs={"rows":10, "cols":25}))
 
-    
- 
+
+
