@@ -40,8 +40,8 @@ def indexView(request):
             name = sue_form.cleaned_data.get("name")
             message = sue_form.cleaned_data.get("message")
             emails = "citizensonscienceproject@gmail.com"
-            email_subject = "Suggestion"
-            email_body = "Hi " + name + "! \n" + message
+            email_subject = "Suggestion by " + name
+            email_body = "User " + name + " has a suggestion." + "The message is: \n" + message + "."
             email = EmailMessage(
                     email_subject, email_body, "noreply@semycolon.com", [emails],)
             email.send(fail_silently=False)
