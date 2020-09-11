@@ -88,13 +88,11 @@ WSGI_APPLICATION = 'cos.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Takayah1$cos',
-        'USER': 'Takayah1',
-        'PASSWORD': 'ramos123',
-        'HOST': 'Takayah1.mysql.pythonanywhere-services.com',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
 
 
 # Password validation
