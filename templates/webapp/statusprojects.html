@@ -125,14 +125,17 @@
     <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:active_list" %}">Active</a>
   </div>
   {% else %}
-  {% if active %}
-  {% endif %}
+  {% if user.scientist.is_scientist %}
   <h1 class="border-bottom border-gray pb-2 mb-0">Your Active Projects</h1>
   <div class="btn-group" role="group" aria-label="Basic example">
     <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:list" %}">All</a>
     <a type="button" class="btn btn-lg btn-secondary" href="{% url "webapp:archived_list" %}">Archived</a>
     <a type="button" class="btn btn-lg btn-secondary active" href="{% url "webapp:active_list" %}">Active</a>
   </div>
+  {% endif %}
+  {% if user.donator.is_donator %}
+  <h1 class="border-bottom border-gray pb-2 mb-0">Your Active Projects</h1>
+  {% endif %}
   {% endif %}
 
   {% for project in data %}
@@ -198,11 +201,11 @@
         </div>
         {% if user.scientist.is_scientist %}
         <div class="card-body">
-          <h5>Sorry but at this moment you don't have any project. Create one now:</h5>
+          <h5>Sorry but at this moment you don't have any projects in this page.</h5>
         </div>
-        <div>
+        <!-- <div>
           <a class="btn btn-lg btn-secondary" href="{% url "webapp:project_create" %}">Create a Project</a>
-        </div>
+        </div> -->
         {% endif %}
         {% if user.donator.is_donator %}
         <div class="card-body">
