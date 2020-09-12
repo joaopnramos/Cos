@@ -56,11 +56,11 @@ class UserForm(forms.ModelForm):
 # Form de criar um cientista
 class ScientistForm(forms.Form):
 
-    first_name = forms.CharField(required=True)
-    last_name = forms.CharField(required=True)
-    address = forms.CharField(required=True)
-    work_local = forms.CharField(required=True)
-    bi = forms.IntegerField(required=True)
+    first_name = forms.CharField(required=True, max_length=100)
+    last_name = forms.CharField(required=True, max_length=100)
+    address = forms.CharField(required=True, max_length=100)
+    work_local = forms.CharField(required=True, max_length=100)
+    bi = forms.IntegerField(required=True, max_value=100)
     profile_pic = forms.ImageField(required=False)
 
 
@@ -86,10 +86,11 @@ class ProjectForm(forms.ModelForm):
         "sensorsChoice": "Choose The Sensor You Need",
         "periodChoice":"Choose How Many Time The Program Will Run",
         "spacetimeChoice": "Choose The period of time beetween data analysis" }
-
-
+    
+    name = forms.CharField(required=True, max_length=50)
     sensorsChoice = forms.MultipleChoiceField(choices=SENSORS_CHOICES)
-    description = forms.CharField(required=True, widget=forms.Textarea(attrs={"rows":2, "cols":50}))
+
+    description = forms.CharField(required=True, widget=forms.Textarea(attrs={"rows":2, "cols":50, 'maxlength': 500}))
 
 # Form que serve para dar update ao user!
 class UserUpdateForm(forms.Form):
@@ -99,10 +100,10 @@ class UserUpdateForm(forms.Form):
 
 class ScientistUpdate(forms.Form):
 
-    first_name = forms.CharField(required=False)
-    last_name = forms.CharField(required=False)
-    address = forms.CharField(required=False)
-    work_local = forms.CharField(required=False)
+    first_name = forms.CharField(required=False, max_length=100)
+    last_name = forms.CharField(required=False, max_length=100)
+    address = forms.CharField(required=False, max_length=100)
+    work_local = forms.CharField(required=False, max_length=100)
     bi = forms.IntegerField(required=False)
     profile_pic = forms.ImageField(required=False)
 
