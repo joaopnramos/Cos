@@ -700,17 +700,17 @@ def export_data(request, pk):
             a = 0
         a = a + 1
         data_export = []
-        if alls_data:
-            data_export.append(alls_data[i])
+        if temperature_data:
+            data_export.append(temperature_data[i])
 
-        if camera_data:
-            data_export.append(camera_data[i])
+        if proximity_data:
+            data_export.append(proximity_data[i])
 
         if light_data:
             data_export.append(light_data[i])
 
-        if ground_data:
-            data_export.append(ground_data[i])
+        if pressure_data:
+            data_export.append(pressure_data[i])
 
         writer.writerow(data_export)
         i = i+1
