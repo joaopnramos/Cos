@@ -60,7 +60,7 @@ class ScientistForm(forms.Form):
     last_name = forms.CharField(required=True, max_length=100)
     address = forms.CharField(required=True, max_length=100)
     work_local = forms.CharField(required=True, max_length=100)
-    bi = forms.IntegerField(required=True, max_value=100)
+    bi = forms.IntegerField(required=True)
     profile_pic = forms.ImageField(required=False)
 
 
