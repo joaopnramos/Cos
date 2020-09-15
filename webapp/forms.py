@@ -107,9 +107,6 @@ class ScientistUpdate(forms.Form):
     bi = forms.IntegerField(required=False)
     profile_pic = forms.ImageField(required=False)
 
-# class DataForm(forms.Form):
-#     file = forms.FileField()
-
 
 class SendUsEmail(forms.Form):
     name = forms.CharField(max_length=100, required=True)
